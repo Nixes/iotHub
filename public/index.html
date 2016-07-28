@@ -8,7 +8,12 @@
   </head>
   <body ng-app="iotHub">
 
-    <div ng-controller="OverviewController"></div>
+    <div ng-controller="OverviewController">
+      <div ng-repeat="sensor in sensors">
+        <h1>{{sensor.name}}</h1>
+        <p>{{sensor.value}}</p>
+      </div>
+    </div>
 
   </body>
 </html>
