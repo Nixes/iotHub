@@ -2,13 +2,17 @@ var express = require('express');
 var router = express.Router();
 
 router
-.get('/', function(req, res, next) {
-    res.send('respond with some data from the server');
+.get('/' ,function(req, res, next){
+    res.send('Go read the api docs');
+  }
+)
+.get('/sensor', function(req, res, next) {
+    res.send('return some information about the given sensor');
   }
 )
 // post sensor data to server
-.post('/', function(req, res, next) {
-    res.send('you sent some data to the server, which was promptly ignored');
+.post('/sensor', function(req, res, next) {
+    res.send('you sent something about a particular sensor');
   }
 );
 
