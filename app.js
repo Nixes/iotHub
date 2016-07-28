@@ -57,4 +57,7 @@ app.use(function(err, req, res, next) {
 });
 
 
+// give the user some usefull instructions
+console.log("Server started, see it at http://localhost:3000");
+
 module.exports = app;
