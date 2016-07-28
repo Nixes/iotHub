@@ -4,14 +4,18 @@
     <meta charset="utf-8">
     <title>iot Hub</title>
     <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
     <script src="/javascripts/main.js"></script>
   </head>
-  <body ng-app="iotHub">
+  <body ng-app="iotHub" class="container">
 
-    <div ng-controller="OverviewController">
-      <div ng-repeat="sensor in sensors">
-        <h1>{{sensor.name}}</h1>
-        <p>{{sensor.value}}</p>
+    <div class="panel-body-variable clearfix" ng-controller="OverviewController">
+      <div class="panel panel-default column-variable" ng-repeat="sensor in sensors">
+        <div class="panel-heading clearfix"><h1>{{sensor.name}}</h1></div>
+        <div class="panel-body"><p>{{sensor.value}}</p></div>
       </div>
     </div>
 
