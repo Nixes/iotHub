@@ -1,7 +1,7 @@
 #API Design Notes
  api is found at /api
 
-##to send sensor data to the application
+##send sensor data to the server
 ```
 {sensor_id:"some sensor id here", value:"the value returned from the sensor" , collection_time:"time that sensor was sampled" }
 ```
@@ -12,21 +12,21 @@ POST:  /api/sensor/data
  ```
 
 
-##to obtain all data for a given sensor
+##obtain all data for a given sensor
 ```
 GET: /api/sensor/:sensor_id/data
 ```
 
 
-##to obtain the latest sample from a given sensor
+##obtain the latest sample from a given sensor
 ```
 GET: /api/sensor/:sensor_id/data/latest
 ```
 
 
-##to update an existing sensors metadata
+##update an existing sensors metadata
 ```
-{sensor_name:"the human friendly sensor name",sensor_description:"a short description of the sensor", data_type:"number"}
+{name:"the human friendly sensor name",sensor_description:"a short description of the sensor", data_type:"number"}
 ```
 Note data_type may be any of String, Number or Boolean
 ```
