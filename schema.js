@@ -7,7 +7,7 @@ var dataSchema = mongoose.Schema({
 
 // create schema
 var sensorSchema = mongoose.Schema({
-    id:  mongoose.Schema.Types.ObjectId,
+    // don't need an id as mongodb creates one for us anyway
     name: String,
     description: String,
     data_type: String,

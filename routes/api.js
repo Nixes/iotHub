@@ -22,18 +22,17 @@ router
 // add a sensor to the database
 .post('/sensors/:sensor_id/', function(req, res, next) {
   var sensor = new Sensor();
-  //sensor.id = req.params.sensor_id;
   sensor.name = req.body.name;
   sensor.description = req.body.description;
   console.log("Tried to add a new sensor: " + sensor.id + ", name: " +sensor.name + ", description: " +sensor.description );
 
   // handle issues with conversion
-  sensor.save(function(err) {
+  sensor.save(function(err,sensor) {
     if (err) {
       console.log("Failed to add sensor err: "+err);
       res.send({success:false});
     } else {
-      res.send({success:true});
+      res.send({success:true, id:sensor.id});
     }
   });
 
