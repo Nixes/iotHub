@@ -1,7 +1,7 @@
 var mongoose = require( 'mongoose' );
 
 var dataSchema = mongoose.Schema({
-  value: mongoose.Schema.Types.Mixed, // mixed might be the wrong type for this
+  value: Number, // mongoose.Schema.Types.Mixed might be the wrong type for this
   collection_time: { type: Date, default: Date.now }
 });
 

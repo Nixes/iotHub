@@ -59,18 +59,24 @@ router
     } else {
       var data;
       if (req.body.collection_time !== null) {
-        data = {data: req.body.value,collection_time:req.body.collection_time};
+        data = {value: req.body.value,collection_time:req.body.collection_time};
       } else {
-        data = {data: req.body.value};
+        data = {value: req.body.value};
       }
       sensor.data.push(data);
-      sensor.save();
-      res.send({success:true});
+      sensor.save( function(err) {
+        if (err) {
+          console.log("Something broke: "+err);
+          res.send({success:false});
+        } else {
+          res.send({success:true});
+        }
+      });
     }
   });
 })
 
-// return all date provided by a sensor with the given id
+// return all data provided by the sensor with the given id
 .get('/sensors/:sensor_id/data',function(req, res, next){
   Sensor.findById(req.params.sensor_id, function(err,sensor){
     if (err) {
