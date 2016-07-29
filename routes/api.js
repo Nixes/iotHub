@@ -4,7 +4,6 @@ var mongoose = require( 'mongoose' );
 
 // include models
 var Sensor = mongoose.model('Sensor');
-var Data = mongoose.model('Data');
 
 
 router
@@ -58,12 +57,14 @@ router
       console.log("Sensor not registered err: "+err);
       res.send({success:false});
     } else {
-      var data = new Data();
-      data.value = req.body.value;
+      var data;
       if (req.body.collection_time !== null) {
-        data.collection_time = req.body.collection_time;
+        data = {data: req.body.value,collection_time:req.body.collection_time};
+      } else {
+        data = {data: req.body.value};
       }
-      console.log(sensor.data.push(data));
+      sensor.data.push(data);
+      sensor.save();
       res.send({success:true});
     }
   });
