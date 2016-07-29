@@ -12,24 +12,11 @@ var api = require('./routes/api');
 var app = express();
 
 
-// MONGOOSE
-
 // include mongoose
 var mongoose = require('mongoose');
 mongoose.connect('mongodb://localhost/test');
-
-// create schema
-var sensorSchema = mongoose.Schema({
-    sensor_id: Number,
-    sensor_name: String,
-    sensor_description: String,
-    data_type: String
-});
-
-// include models
-var Sensor = mongoose.model('Sensor',sensorSchema);
-
-
+// schema
+require('./schema.js');
 
 // check connection was successful
 var db = mongoose.connection;
