@@ -11,6 +11,34 @@ var api = require('./routes/api');
 
 var app = express();
 
+
+// MONGOOSE
+
+// include mongoose
+var mongoose = require('mongoose');
+mongoose.connect('mongodb://localhost/test');
+
+// create schema
+var sensorSchema = mongoose.Schema({
+    sensor_id: Number,
+    sensor_name: String,
+    sensor_description: String,
+    data_type: String
+});
+
+// include models
+var Sensor = mongoose.model('Sensor',sensorSchema);
+
+
+
+// check connection was successful
+var db = mongoose.connection;
+db.on('error', console.error.bind(console, 'connection error:'));
+db.once('open', function() {
+  // we're connected!
+});
+
+
 // view engine setup
 //app.set('views', path.join(__dirname, 'views'));
 //app.set('view engine', 'jade');
