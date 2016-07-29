@@ -13,7 +13,7 @@ router
 )
 // return a list of sensor ids and names
 .get('/sensors', function(req, res, next) {
-    Sensor.find(function (err, sensors) {
+    Sensor.find({},'-data -__v',function (err, sensors) {
       if (err) return console.error(err);
       console.log(sensors);
       res.send(sensors);
