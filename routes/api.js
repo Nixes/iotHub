@@ -19,8 +19,9 @@ router
       res.send(sensors);
     });
 })
+
 // add a sensor to the database
-.post('/sensors/:sensor_id/', function(req, res, next) {
+.post('/sensors/', function(req, res, next) {
   var sensor = new Sensor();
   sensor.name = req.body.name;
   sensor.description = req.body.description;
@@ -35,12 +36,20 @@ router
       res.send({success:true, id:sensor.id});
     }
   });
-
 })
+
 // get information about a specific sensor
 .get('/sensors/:sensor_id/', function(req, res, next){
-  res.send({sensor_id:req.params.sensor_id, sensor_name: 'name'});
+  Sensor.findOne({ _id: req.params.sensor_id }, function(err,sensors){
+    if (err) {
+      console.log("Failed to find sensor err: "+err);
+      res.send({success:false});
+    } else {
+      res.send(sensor);
+    }
+  });
 })
+
 // add sensor data to the database
 .post('/sensors/:sensor_id/data',function(){
   res.send({sensor_id:req.params.sensor_id, sensor_name: 'name'});
