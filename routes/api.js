@@ -40,7 +40,7 @@ router
 
 // get information about a specific sensor
 .get('/sensors/:sensor_id/', function(req, res, next){
-  Sensor.findById(req.params.sensor_id, function(err,sensor){
+  Sensor.findById(req.params.sensor_id,'-data -__v', function(err,sensor){
     if (err) {
       console.log("Sensor not registered err: "+err);
       res.send({success:false});
@@ -78,7 +78,7 @@ router
 
 // return all data provided by the sensor with the given id
 .get('/sensors/:sensor_id/data',function(req, res, next){
-  Sensor.findById(req.params.sensor_id, function(err,sensor){
+  Sensor.findById(req.params.sensor_id,"data", function(err,sensor){
     if (err) {
       console.log("Sensor not registered err: "+err);
       res.send({success:false});
