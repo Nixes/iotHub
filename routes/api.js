@@ -4,6 +4,7 @@ var mongoose = require( 'mongoose' );
 
 // include models
 var Sensor = mongoose.model('Sensor');
+var Data = mongoose.model('Data');
 
 
 router
@@ -42,7 +43,7 @@ router
 .get('/sensors/:sensor_id/', function(req, res, next){
   Sensor.findById(req.params.sensor_id, function(err,sensor){
     if (err) {
-      console.log("Failed to find sensor err: "+err);
+      console.log("Sensor not registered err: "+err);
       res.send({success:false});
     } else {
       res.send(sensor);
@@ -51,8 +52,33 @@ router
 })
 
 // add sensor data to the database
-.post('/sensors/:sensor_id/data',function(){
-  res.send({sensor_id:req.params.sensor_id, sensor_name: 'name'});
+.post('/sensors/:sensor_id/data',function(req, res, next){
+  Sensor.findById(req.params.sensor_id, function(err,sensor){
+    if (err) {
+      console.log("Sensor not registered err: "+err);
+      res.send({success:false});
+    } else {
+      var data = new Data();
+      data.value = req.body.value;
+      if (req.body.collection_time !== null) {
+        data.collection_time = req.body.collection_time;
+      }
+      console.log(sensor.data.push(data));
+      res.send({success:true});
+    }
+  });
+})
+
+// return all date provided by a sensor with the given id
+.get('/sensors/:sensor_id/data',function(req, res, next){
+  Sensor.findById(req.params.sensor_id, function(err,sensor){
+    if (err) {
+      console.log("Sensor not registered err: "+err);
+      res.send({success:false});
+    } else {
+      res.send(sensor.data);
+    }
+  });
 })
 ;
 
