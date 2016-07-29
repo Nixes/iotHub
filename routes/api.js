@@ -16,17 +16,13 @@ router
     Sensor.find(function (err, sensors) {
       if (err) return console.error(err);
       console.log(sensors);
+      res.send(sensors);
     });
-    res.send([
-      {sensor_id:"54564",sensor_name:"something"},
-      {sensor_id:"86689",sensor_name:"something else"},
-      {sensor_id:"54453",sensor_name:"something even different"}
-    ]);
 })
 // add a sensor to the database
 .post('/sensors/:sensor_id/', function(req, res, next) {
   var sensor = new Sensor();
-  sensor.id = req.params.sensor_id;
+  //sensor.id = req.params.sensor_id;
   sensor.name = req.body.name;
   sensor.description = req.body.description;
   console.log("Tried to add a new sensor: " + sensor.id + ", name: " +sensor.name + ", description: " +sensor.description );
