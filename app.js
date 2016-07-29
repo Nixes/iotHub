@@ -4,6 +4,10 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+// include mongoose
+var mongoose = require('mongoose');
+// schema
+require('./schema.js');
 
 var routes = require('./routes/index');
 var users = require('./routes/users');
@@ -12,11 +16,8 @@ var api = require('./routes/api');
 var app = express();
 
 
-// include mongoose
-var mongoose = require('mongoose');
+// connect to mongoose server
 mongoose.connect('mongodb://localhost/test');
-// schema
-require('./schema.js');
 
 // check connection was successful
 var db = mongoose.connection;
