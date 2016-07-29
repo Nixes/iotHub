@@ -40,7 +40,7 @@ router
 
 // get information about a specific sensor
 .get('/sensors/:sensor_id/', function(req, res, next){
-  Sensor.findOne({ _id: req.params.sensor_id }, function(err,sensors){
+  Sensor.findById(req.params.sensor_id, function(err,sensor){
     if (err) {
       console.log("Failed to find sensor err: "+err);
       res.send({success:false});
