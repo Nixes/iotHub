@@ -96,15 +96,16 @@ router
   });
 })
 
+// good reference for time based data queries: http://stackoverflow.com/questions/17008683/doing-range-queries-in-mongoose-for-hour-day-month-year
+// also, aggregation seems like a great idea: http://stackoverflow.com/questions/13452745/extract-subarray-value-in-mongodb
 // return all data provided by the sensor with the given id within the last 24 hours
 .get('/sensors/:sensor_id/data/day',function(req, res, next){
-  Sensor.find( {data: { collection_time: {$lt: new Date(), $gt: new Date(year+','+month+','+day)}  } } , function(err,sensor){
+  Sensor.aggregate( { $match: { '_id':req.params.sensor_id } } ).unwind('data').exec(function(err,result) {
     if (err) {
       console.log("Sensor not registered err: "+err);
       res.send({success:false});
     } else {
-      //sensor.data.find({collection_time: { $lt: new Date(), $gt: new Date(year+','+month+','+day) } })
-      res.send(sensor.data);
+      res.send(result);
     }
   });
 })
