@@ -7,5 +7,13 @@ iotHub.controller('OverviewController', function OverviewController($scope, $htt
 
   });
 
-  }
-);
+});
+
+
+iotHub.controller('HistoricController', function OverviewController($scope, $http) {
+  $http.get('./api/sensors').success(function(data) {
+    $scope.sensors = data;
+
+  });
+
+});

@@ -5,28 +5,37 @@
     <title>iot Hub</title>
     <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
 
+    <script src="https://code.jquery.com/jquery-3.1.0.slim.min.js" charset="utf-8"></script>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 
+    <link rel="stylesheet" href="/stylesheets/style.css" media="screen" title="no title" charset="utf-8">
     <script src="/javascripts/main.js"></script>
   </head>
 <body>
   <div ng-app="iotHub" class="container">
     <h1 class="header center-block">
       <span class="glyphicon glyphicon-stats" aria-hidden="true"></span>
-       Sensor Hub
+       IOT Hub
     </h1>
 
     <ul class="nav nav-tabs">
-      <li class="active">
-        <a href="#summary-tab" data-toggle="tab">Summary</a></li>
-        <li><a href="#1-tab" data-toggle="tab">Env Node <span class="label label-success"><span class="glyphicon glyphicon-signal" aria-hidden="true"></span></span></a></li><li><a href="#2-tab" data-toggle="tab">Test Node <span class="label label-success"><span class="glyphicon glyphicon-signal" aria-hidden="true"></span></span></a></li></ul>
+      <li><a href="#overview-tab" data-toggle="tab">Overview</a></li>
+      <li><a href="#historic-tab" data-toggle="tab">Historic </a></li>
+    </ul>
 
-    <div class="panel-body-variable clearfix" ng-controller="OverviewController">
-      <div class="panel panel-default column-variable" ng-repeat="sensor in sensors">
-        <div class="panel-heading clearfix">{{sensor.name}}</div>
-        <div class="panel-body"><p>{{sensor.description}}</p></div>
+    <div class="tab-content">
+
+      <div id="overview-tab" class="tab-pane fade active" ng-controller="OverviewController">
+        <div class="panel panel-default column-variable" ng-repeat="sensor in sensors">
+          <div class="panel-heading clearfix">{{sensor.name}}</div>
+          <div class="panel-body"><p>{{sensor.description}}</p></div>
+        </div>
       </div>
+
+      <div id="historic-tab" class="tab-pane fade active" ng-controller="HistoricController">
+      </div>
+
     </div>
 
   </div>
