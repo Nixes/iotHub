@@ -6,6 +6,14 @@ var mongoose = require( 'mongoose' );
 var Sensor = mongoose.model('Sensor');
 
 
+var d = new Date(),
+hour = d.getHours(),
+min = d.getMinutes(),
+month = d.getMonth(),
+year = d.getFullYear(),
+sec = d.getSeconds(),
+day = d.getDate();
+
 router
 .get('/' ,function(req, res, next){
     res.send('Go read the api docs');
@@ -83,6 +91,19 @@ router
       console.log("Sensor not registered err: "+err);
       res.send({success:false});
     } else {
+      res.send(sensor.data);
+    }
+  });
+})
+
+// return all data provided by the sensor with the given id within the last 24 hours
+.get('/sensors/:sensor_id/data/day',function(req, res, next){
+  Sensor.find( {data: { collection_time: {$lt: new Date(), $gt: new Date(year+','+month+','+day)}  } } , function(err,sensor){
+    if (err) {
+      console.log("Sensor not registered err: "+err);
+      res.send({success:false});
+    } else {
+      //sensor.data.find({collection_time: { $lt: new Date(), $gt: new Date(year+','+month+','+day) } })
       res.send(sensor.data);
     }
   });
