@@ -4,6 +4,8 @@
     <meta charset="utf-8">
     <title>iot Hub</title>
     <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.2.0/Chart.min.js" charset="utf-8"></script>
+    <script src="https://cdn.jsdelivr.net/angular.chartjs/latest/angular-chart.min.js" charset="utf-8"></script>
 
     <script src="https://code.jquery.com/jquery-3.1.0.slim.min.js" charset="utf-8"></script>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
@@ -21,7 +23,7 @@
 
     <ul class="nav nav-tabs">
       <li><a href="#overview-tab" data-toggle="tab">Overview</a></li>
-      <li><a href="#historic-tab" data-toggle="tab">Historic </a></li>
+      <li><a href="#sensors-tab" data-toggle="tab">Sensors</a></li>
     </ul>
 
     <div class="tab-content">
@@ -33,7 +35,17 @@
         </div>
       </div>
 
-      <div id="historic-tab" class="tab-pane fade active" ng-controller="HistoricController">
+
+      <div id="sensors-tab" class="tab-pane fade" ng-controller="SensorsController">
+
+        <div class="form-group">
+          <label for="sensorselect">Select sensor:</label>
+          <select class="form-control" id="sensorselect">
+            <option ng-repeat="sensor in sensors">{{sensor.name}}</option>
+          </select>
+        </div>
+        <button type="button" class="btn btn-success">render</button>
+
       </div>
 
     </div>
