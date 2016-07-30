@@ -1,8 +1,28 @@
-body {
-  padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+#container {
+  margin: 0 auto;
+  max-width:600px;
 }
-
-a {
-  color: #00B7FF;
+.header {
+  width: 250px;
+}
+.tab-panel {
+  border-top: none;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+}
+.panel-body-variable {
+  padding: 0;
+  padding-top:20px;
+  padding-right: 20px;
+}
+.column-variable {
+    float: left!important;
+    margin-left: 20px;
+}
+@media only screen and (max-width:600px) {
+    #container {
+      margin:0;
+      padding:0;
+      width: 100%;
+    }
 }
