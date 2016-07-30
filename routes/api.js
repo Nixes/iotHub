@@ -100,12 +100,13 @@ router
 // also, aggregation seems like a great idea: http://stackoverflow.com/questions/13452745/extract-subarray-value-in-mongodb
 // return all data provided by the sensor with the given id within the last 24 hours
 .get('/sensors/:sensor_id/data/day',function(req, res, next){
-  Sensor.aggregate( { $match: { '_id':req.params.sensor_id } } ).unwind('data').exec(function(err,result) {
+  Sensor.aggregate( { $match: { 'id':req.params.sensor_id } }, function(err,result) {
     if (err) {
       console.log("Sensor not registered err: "+err);
       res.send({success:false});
     } else {
-      res.send(result);
+      console.log(result);
+      res.send(result.data);
     }
   });
 })
