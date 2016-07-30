@@ -10,14 +10,25 @@
 
     <script src="/javascripts/main.js"></script>
   </head>
-  <body ng-app="iotHub" class="container">
+<body>
+  <div ng-app="iotHub" class="container">
+    <h1 class="header center-block">
+      <span class="glyphicon glyphicon-stats" aria-hidden="true"></span>
+       Sensor Hub
+    </h1>
+
+    <ul class="nav nav-tabs">
+      <li class="active">
+        <a href="#summary-tab" data-toggle="tab">Summary</a></li>
+        <li><a href="#1-tab" data-toggle="tab">Env Node <span class="label label-success"><span class="glyphicon glyphicon-signal" aria-hidden="true"></span></span></a></li><li><a href="#2-tab" data-toggle="tab">Test Node <span class="label label-success"><span class="glyphicon glyphicon-signal" aria-hidden="true"></span></span></a></li></ul>
 
     <div class="panel-body-variable clearfix" ng-controller="OverviewController">
       <div class="panel panel-default column-variable" ng-repeat="sensor in sensors">
         <div class="panel-heading clearfix">{{sensor.name}}</div>
-        <div class="panel-body"><p>{{sensor.value}}</p></div>
+        <div class="panel-body"><p>{{sensor.description}}</p></div>
       </div>
     </div>
 
-  </body>
+  </div>
+</body>
 </html>
