@@ -44,11 +44,13 @@
       <div class="panel-body">
         <div class="form-group">
           <label for="sensorselect">Select sensor:</label>
-          <select class="form-control" id="sensorselect">
+          <select class="form-control" id="sensorselect"  ng-model="sensors.model">
             <option ng-repeat="sensor in sensors" value="{{sensor._id}}">{{sensor.name}} ({{sensor._id}})</option>
           </select>
         </div>
-        <button type="button" class="btn btn-success">render</button>
+
+        <h1>currently select sensor: {{sensors.model}}</h1>
+
       </div>
       </div>
       </div>
