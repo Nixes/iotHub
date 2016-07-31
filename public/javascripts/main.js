@@ -16,4 +16,5 @@ iotHub.controller('SensorsController', function OverviewController($scope, $http
   $http.get('./api/sensors',{ cache: true }).success(function(sensors) {
     $scope.sensors = sensors;
   });
+  $scope.model = null;
 });
