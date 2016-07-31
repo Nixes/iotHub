@@ -29,15 +29,19 @@
     <div class="tab-content">
 
       <div id="overview-tab" class="tab-pane fade active" ng-controller="OverviewController">
-        <div class="panel panel-default column-variable" ng-repeat="sensor in sensors">
-          <div class="panel-heading clearfix">{{sensor.name}}</div>
-          <div class="panel-body"><p>{{sensor.description}}</p></div>
-        </div>
+      <div class="panel tab-panel panel-defualt">
+      <div class="panel-body">
+          <div class="panel panel-default column-variable" ng-repeat="sensor in sensors">
+            <div class="panel-heading clearfix">{{sensor.name}}</div>
+            <div class="panel-body"><p>{{sensor.description}}</p></div>
+          </div>
+      </div>
+      </div>
       </div>
 
-
       <div id="sensors-tab" class="tab-pane fade" ng-controller="SensorsController">
-
+      <div class="panel tab-panel panel-defualt">
+      <div class="panel-body">
         <div class="form-group">
           <label for="sensorselect">Select sensor:</label>
           <select class="form-control" id="sensorselect">
@@ -45,7 +49,8 @@
           </select>
         </div>
         <button type="button" class="btn btn-success">render</button>
-
+      </div>
+      </div>
       </div>
 
     </div>
