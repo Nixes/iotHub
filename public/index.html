@@ -46,7 +46,7 @@
           <div class="panel-heading">
             <div class="form-group">
               <label for="sensorselect">Select sensor:</label>
-              <select class="form-control" id="sensorselect"  ng-model="sensors.selected_sensor" ng-change="change()">
+              <select class="form-control" id="sensorselect"  ng-model="selected_sensor" ng-change="change()">
                 <option ng-repeat="sensor in sensors" value="{{sensor._id}}">{{sensor.name}} ({{sensor._id}})</option>
               </select>
             </div>
