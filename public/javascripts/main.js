@@ -4,7 +4,8 @@ var iotHub = angular.module('iotHub', ['chart.js']);
 // utility functions for formating data for graphing
 function reformatData(data) {
   var finalData = [];
-  for (var point of data) {
+  for (var i = 0;  i<data.length; i++ ) {
+    var point = data[i];
     if (point.value !== undefined && point.collection_time !== undefined) {
       finalData.push({x:new Date(point.collection_time),y:point.value});
     }
@@ -28,9 +29,11 @@ iotHub.controller('SensorsController', function OverviewController($scope, $http
   });
   $scope.selected_sensor = null;
   $scope.data = null;
-
+  
   $scope.change = function () {
-    $http.get('./api/sensors/'+$scope.selected_sensor+'/data').success(function(data) {
+    console.log($scope.dummy);
+    console.log($scope.selected_sensor);
+    $http.get('./api/sensors/'+ $scope.selected_sensor +'/data').success(function(data) {
       $scope.data = reformatData(data);
     });
   };
