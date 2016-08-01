@@ -69,7 +69,7 @@ router
       console.log("value was: "+req.body.value);
       if (req.body.value !== (null || undefined)) {
         var data;
-        if (req.body.collection_time !== null) {
+        if (req.body.collection_time !== (null || undefined)) {
           data = {value: req.body.value,collection_time:req.body.collection_time};
         } else {
           data = {value: req.body.value};
