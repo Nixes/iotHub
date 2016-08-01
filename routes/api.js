@@ -59,6 +59,7 @@ router
 })
 
 // add sensor data to the database
+// note that Conetent-Type MUST be set to application/json for data to be accepted
 .post('/sensors/:sensor_id/data',function(req, res, next){
   Sensor.findById(req.params.sensor_id, function(err,sensor){
     if (err) {

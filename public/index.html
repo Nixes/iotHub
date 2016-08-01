@@ -42,19 +42,17 @@
       <div class="panel tab-panel panel-default">
       <div class="panel-body">
 
-        <div class="form-group">
-          <label for="sensorselect">Select sensor:</label>
-          <select class="form-control" id="sensorselect"  ng-model="sensors.model">
-            <option ng-repeat="sensor in sensors" value="{{sensor._id}}">{{sensor.name}} ({{sensor._id}})</option>
-          </select>
-        </div>
-
         <div class="panel panel-default">
-          <div class="panel-heading">currently selected sensor: {{sensors.model}}</div>
-          <div class="panel-body">
-            <div class="col-lg-6 col-sm-12 ng-scope" id="line-chart" ng-controller="LineCtrl">
-              <canvas id="line" class="chart chart-line ng-isolate-scope" chart-data="data" chart-labels="labels" chart-click="onClick" chart-hover="onHover" chart-series="series" chart-options="options" chart-dataset-override="datasetOverride" width="756" height="378" style="display: block; width: 688px; height: 344px;"></canvas>
+          <div class="panel-heading">
+            <div class="form-group">
+              <label for="sensorselect">Select sensor:</label>
+              <select class="form-control" id="sensorselect"  ng-model="sensors.selected_sensor" ng-change="change()">
+                <option ng-repeat="sensor in sensors" value="{{sensor._id}}">{{sensor.name}} ({{sensor._id}})</option>
+              </select>
             </div>
+          </div>
+          <div class="panel-body">
+              <canvas id="line" class="chart chart-line ng-isolate-scope" chart-data="data" chart-labels="labels" chart-click="onClick" chart-hover="onHover" chart-series="series" chart-options="options" chart-dataset-override="datasetOverride" width="756" height="378" style="display: block; width: 688px; height: 344px;"></canvas>
           </div>
         </div>
 

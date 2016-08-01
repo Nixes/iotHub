@@ -26,23 +26,15 @@ iotHub.controller('SensorsController', function OverviewController($scope, $http
   $http.get('./api/sensors',{ cache: true }).success(function(sensors) {
     $scope.sensors = sensors;
   });
-  $scope.model = null;
-});
+  $scope.selected_sensor = null;
+  $scope.data = null;
 
-iotHub.controller('LineCtrl', function ($scope, $http) {
-  $http.get('./api/sensors/579ae0246dc2e0a8192ea110/data').success(function(data) {
-    $scope.data = reformatData(data);
-  });
-  $scope.data =  [{
-                x: -10,
-                y: 0
-            }, {
-                x: 0,
-                y: 10
-            }, {
-                x: 10,
-                y: 5
-            }];
+  $scope.change = function () {
+    $http.get('./api/sensors/'+$scope.selected_sensor+'/data').success(function(data) {
+      $scope.data = reformatData(data);
+    });
+  };
+
   $scope.onClick = function (points, evt) {
     console.log(points, evt);
   };
