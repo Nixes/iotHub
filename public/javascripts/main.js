@@ -29,9 +29,8 @@ iotHub.controller('SensorsController', function OverviewController($scope, $http
   });
   $scope.selected_sensor = null;
   $scope.data = null;
-  
+
   $scope.change = function () {
-    console.log($scope.dummy);
     console.log($scope.selected_sensor);
     $http.get('./api/sensors/'+ $scope.selected_sensor +'/data').success(function(data) {
       $scope.data = reformatData(data);
