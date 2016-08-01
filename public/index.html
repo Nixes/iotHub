@@ -42,6 +42,7 @@
       <div id="sensors-tab" class="tab-pane fade in" ng-controller="SensorsController">
       <div class="panel tab-panel panel-default">
       <div class="panel-body">
+
         <div class="form-group">
           <label for="sensorselect">Select sensor:</label>
           <select class="form-control" id="sensorselect"  ng-model="sensors.model">
@@ -49,7 +50,13 @@
           </select>
         </div>
 
-        <h1>currently select sensor: {{sensors.model}}</h1>
+        <div class="panel panel-default">
+          <div class="panel-heading">currently selected sensor: {{sensors.model}}</div>
+          <div class="panel-body">
+            <canvas id="line" ng-controller="LineChart" class="chart chart-line" chart-data="data">
+            </canvas>
+          </div>
+        </div>
 
       </div>
       </div>
