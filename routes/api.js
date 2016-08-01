@@ -65,21 +65,45 @@ router
       console.log("Sensor not registered err: "+err);
       res.send({success:false});
     } else {
-      var data;
-      if (req.body.collection_time !== null) {
-        data = {value: req.body.value,collection_time:req.body.collection_time};
-      } else {
-        data = {value: req.body.value};
-      }
-      sensor.data.push(data);
-      sensor.save( function(err) {
-        if (err) {
-          console.log("Something broke: "+err);
-          res.send({success:false});
+      // make sure we actually obtained valid data
+      console.log("value was: "+req.body.value);
+      if (req.body.value !== (null || undefined)) {
+        var data;
+        if (req.body.collection_time !== null) {
+          data = {value: req.body.value,collection_time:req.body.collection_time};
         } else {
-          res.send({success:true});
+          data = {value: req.body.value};
         }
-      });
+        sensor.data.push(data);
+        sensor.save( function(err) {
+          if (err) {
+            console.log("Something broke: "+err);
+            res.send({success:false});
+          } else {
+            res.send({success:true});
+          }
+        });
+      } else {
+        res.send({success:false});
+      }
+    }
+  });
+})
+
+.delete('/sensors/:sensor_id/data',function(req, res, next){
+  Sensor.findById(req.params.sensor_id,"data", function(err,sensor){
+    if (err) {
+      console.log("Sensor not registered err: "+err);
+      res.send({success:false});
+    } else {
+      // empty the array
+      var i = sensor.data.length;
+      while (i--) {
+        var point = sensor.data[i];
+        sensor.data.remove(point); // or just task.remove()
+      }
+      sensor.save();
+      res.send({success:true});
     }
   });
 })
