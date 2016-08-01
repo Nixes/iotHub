@@ -3,8 +3,8 @@
   <head>
     <meta charset="utf-8">
     <title>iot Hub</title>
-    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.2.0/Chart.min.js" charset="utf-8"></script>
+    <script src="node_modules/angular/angular.min.js"></script>
+    <script src="node_modules/chart.js/dist/Chart.js"></script>
     <script src="https://cdn.jsdelivr.net/angular.chartjs/latest/angular-chart.min.js" charset="utf-8"></script>
 
     <script src="https://code.jquery.com/jquery-3.1.0.slim.min.js" charset="utf-8"></script>
@@ -12,7 +12,6 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 
     <link rel="stylesheet" href="/stylesheets/style.css" media="screen" title="no title" charset="utf-8">
-    <script src="/javascripts/main.js"></script>
   </head>
 <body>
   <div ng-app="iotHub" class="container">
@@ -53,8 +52,8 @@
         <div class="panel panel-default">
           <div class="panel-heading">currently selected sensor: {{sensors.model}}</div>
           <div class="panel-body">
-            <canvas id="line" ng-controller="LineChart" class="chart chart-line" chart-data="data">
-            </canvas>
+            <canvas class="chart chart-line" chart-data="data" chart-labels="labels"
+    chart-series="series" chart-click="onClick"></canvas>
           </div>
         </div>
 
@@ -65,6 +64,6 @@
     </div>
 
   </div>
-
+      <script src="/javascripts/main.js"></script>
 </body>
 </html>
