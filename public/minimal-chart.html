@@ -6,18 +6,13 @@
     <script src="node_modules/angular/angular.min.js"></script>
     <script src="node_modules/chart.js/dist/Chart.js"></script>
     <script src="https://cdn.jsdelivr.net/angular.chartjs/latest/angular-chart.min.js" charset="utf-8"></script>
-    <script src="/javascripts/main.js"></script>
+    <script src="/javascripts/chart_minimal.js"></script>
   </head>
 <body>
-<div ng-app="iotHub">
- <div class="col-lg-6 col-sm-12 ng-scope" id="line-chart" ng-controller="LineCtrl">
-          <div class="panel panel-default">
-            <div class="panel-heading">Line Chart</div>
-            <div class="panel-body"><iframe class="chartjs-hidden-iframe" style="width: 100%; display: block; border: 0px; height: 0px; margin: 0px; position: absolute; left: 0px; right: 0px; top: 0px; bottom: 0px;"></iframe>
-              <canvas id="line" class="chart chart-line ng-isolate-scope" chart-data="data" chart-labels="labels" chart-click="onClick" chart-hover="onHover" chart-series="series" chart-options="options" chart-dataset-override="datasetOverride" width="756" height="378" style="display: block; width: 688px; height: 344px;"></canvas>
-            </div>
-          </div>
+  <div ng-app="iotHub">
+    <div class="col-lg-6 col-sm-12 ng-scope" id="line-chart" ng-controller="LineCtrl">
+      <canvas id="line" class="chart chart-line ng-isolate-scope" chart-data="data" chart-labels="labels" chart-click="onClick" chart-hover="onHover" chart-series="series" chart-options="options" chart-dataset-override="datasetOverride" width="756" height="378" style="display: block; width: 688px; height: 344px;"></canvas>
     </div>
-</div>
+  </div>
 </body>
 </html>
