@@ -5,7 +5,7 @@ var mongoose = require( 'mongoose' );
 // include models
 var Sensor = mongoose.model('Sensor');
 
-
+// reference times for mongodb queries
 var d = new Date(),
 hour = d.getHours(),
 min = d.getMinutes(),
@@ -125,12 +125,14 @@ router
 // also, aggregation seems like a great idea: http://stackoverflow.com/questions/13452745/extract-subarray-value-in-mongodb
 // return all data provided by the sensor with the given id within the last 24 hours
 .get('/sensors/:sensor_id/data/day',function(req, res, next){
-  Sensor.aggregate( { $match: { 'id':req.params.sensor_id } }, function(err,result) {
+  console.log("Getting days sensor data for id:"+req.params.sensor_id);
+
+  Sensor.aggregate().match({"_id":req.params.sensor_id}).exec( function(err,result) {
     if (err) {
       console.log("Sensor not registered err: "+err);
       res.send({success:false});
     } else {
-      console.log(result);
+      console.log(result)
       res.send(result.data);
     }
   });
