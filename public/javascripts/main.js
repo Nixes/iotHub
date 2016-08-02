@@ -28,6 +28,7 @@ iotHub.controller('SensorsController', function OverviewController($scope, $http
     $scope.sensors = sensors;
   });
   $scope.selected_sensor = null;
+  $scope.time_period = null;
   $scope.data = null;
 
   $scope.change = function () {
