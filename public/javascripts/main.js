@@ -32,9 +32,11 @@ iotHub.controller('SensorsController', function OverviewController($scope, $http
 
   $scope.change = function () {
     console.log($scope.selected_sensor);
-    $http.get('./api/sensors/'+ $scope.selected_sensor +'/data').success(function(data) {
-      $scope.data = reformatData(data);
-    });
+    if ($scope.selected_sensor !== (null || undefined)) {
+      $http.get('./api/sensors/'+ $scope.selected_sensor +'/data').success(function(data) {
+        $scope.data = reformatData(data);
+      });
+    }
   };
 
   $scope.onClick = function (points, evt) {
