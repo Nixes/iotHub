@@ -46,6 +46,7 @@ iotHub.controller('SensorsController', function OverviewController($scope, $http
   $scope.onHover = function (points) {
     if (points.length > 0) {
       console.log('Point', points[0].value);
+      console.log(points);
     } else {
       console.log('No point');
     }
@@ -54,8 +55,8 @@ iotHub.controller('SensorsController', function OverviewController($scope, $http
   $scope.options = {
         scales: {
             xAxes: [{
-                type: 'linear',
-                position: 'bottom'
+                position: 'bottom',
+                type: 'time'
             }]
         }
   };
