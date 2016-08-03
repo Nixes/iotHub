@@ -8,12 +8,26 @@ var Data = mongoose.model('Data');
 
 
 // TODO optimisation: assume data is ordered, so when we find first element that fails check we should stop searching
-function filterData(data) {
+function filterData(data, filter_date_string) {
   // calculate comparison dates
   var today = new Date();
-  var last_week = new Date(today.getFullYear(), today.getMonth(), today.getDate() - 7);
-  var last_month = new Date(today.getFullYear(), today.getMonth() - 1, today.getDate());
-  var last_6month = new Date(today.getFullYear(), today.getMonth() - 6, today.getDate());
+  var compare_date;
+
+  if (filter_date_string === "day") {
+    // var last_hour
+    // var last_day
+  }
+  if (filter_date_string === "week") {
+    compare_date = new Date(today.getFullYear(), today.getMonth(), today.getDate() - 7);
+  }
+  if (filter_date_string === "month") {
+    compare_date = new Date(today.getFullYear(), today.getMonth() - 1, today.getDate());
+  }
+  if (filter_date_string === "sixmonth") {
+    compare_date = new Date(today.getFullYear(), today.getMonth() - 6, today.getDate());
+  }
+
+
   console.log("Today: "+ today.toDateString());
 
   var final_data = [];
@@ -23,8 +37,8 @@ function filterData(data) {
     var tmp_date = new Date(data[i].collection_time);
     console.log(tmp_date.toDateString());
 
-    if ( tmp_date > last_week) {
-      console.log("Passed")
+    if ( tmp_date > compare_date) {
+      console.log("Passed");
       final_data.push(data[i]);
     }
   }
@@ -150,14 +164,7 @@ router
       console.log("Sensor not registered err: "+err);
       res.send({success:false});
     } else {
-      /*filtered_data = data.filter(function(data){
-        if (data.collection_time > Date.now() - min  ) {
-          return data.collection_time;
-        }
-      });*/
-      //console.log("filtered_data: "+filtered_data);
-      var filtered_data = filterData(sensor.data);
-      console.log(filtered_data);
+      var filtered_data = filterData(sensor.data,req.params.time_period);
       res.send(filtered_data);
     }
   });
