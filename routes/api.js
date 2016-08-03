@@ -9,13 +9,15 @@ var Data = mongoose.model('Data');
 
 // TODO optimisation: assume data is ordered, so when we find first element that fails check we should stop searching
 function filterData(data, filter_date_string) {
-  // calculate comparison dates
   var today = new Date();
   var compare_date;
 
+  // determine type filter date, and calculate time period
+  if (filter_date_string === "hour") {
+    compare_date = new Date(today.getFullYear(), today.getMonth(), today.getDate(),today.getDay(), today.getHours() - 1);
+  }
   if (filter_date_string === "day") {
-    // var last_hour
-    // var last_day
+    compare_date = new Date(today.getFullYear(), today.getMonth(), today.getDate(),today.getDay() - 1);
   }
   if (filter_date_string === "week") {
     compare_date = new Date(today.getFullYear(), today.getMonth(), today.getDate() - 7);

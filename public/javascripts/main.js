@@ -33,8 +33,8 @@ iotHub.controller('SensorsController', function OverviewController($scope, $http
 
   $scope.change = function () {
     console.log($scope.selected_sensor);
-    if ($scope.selected_sensor !== (null || undefined)) {
-      $http.get('./api/sensors/'+ $scope.selected_sensor +'/data').success(function(data) {
+    if ($scope.selected_sensor !== (null || undefined) && $scope.time_period !== (null || undefined)) {
+      $http.get('./api/sensors/'+ $scope.selected_sensor +'/data/' + $scope.time_period ).success(function(data) {
         $scope.data = reformatData(data);
       });
     }
@@ -53,6 +53,7 @@ iotHub.controller('SensorsController', function OverviewController($scope, $http
   };
 
   $scope.options = {
+        tension: 0.0,
         scales: {
             xAxes: [{
                 position: 'bottom',
