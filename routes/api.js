@@ -4,15 +4,33 @@ var mongoose = require( 'mongoose' );
 
 // include models
 var Sensor = mongoose.model('Sensor');
+var Data = mongoose.model('Data');
 
-// reference times for mongodb queries
-var d = new Date(),
-hour = d.getHours(),
-min = d.getMinutes(),
-month = d.getMonth(),
-year = d.getFullYear(),
-sec = d.getSeconds(),
-day = d.getDate();
+
+// TODO optimisation: assume data is ordered, so when we find first element that fails check we should stop searching
+function filterData(data) {
+  // calculate comparison dates
+  var today = new Date();
+  var last_week = new Date(today.getFullYear(), today.getMonth(), today.getDate() - 7);
+  var last_month = new Date(today.getFullYear(), today.getMonth() - 1, today.getDate());
+  var last_6month = new Date(today.getFullYear(), today.getMonth() - 6, today.getDate());
+  console.log("Today: "+ today.toDateString());
+
+  var final_data = [];
+
+  for (var i = 0; i < data.length;i++) {
+    // parse date
+    var tmp_date = new Date(data[i].collection_time);
+    console.log(tmp_date.toDateString());
+
+    if ( tmp_date > last_week) {
+      console.log("Passed")
+      final_data.push(data[i]);
+    }
+  }
+  return final_data;
+}
+
 
 router
 .get('/' ,function(req, res, next){
@@ -123,17 +141,24 @@ router
 
 // good reference for time based data queries: http://stackoverflow.com/questions/17008683/doing-range-queries-in-mongoose-for-hour-day-month-year
 // also, aggregation seems like a great idea: http://stackoverflow.com/questions/13452745/extract-subarray-value-in-mongodb
-// return all data provided by the sensor with the given id within the last 24 hours
-.get('/sensors/:sensor_id/data/day',function(req, res, next){
+// return all data provided by the sensor with the given id within the the time period selected
+.get('/sensors/:sensor_id/data/:time_period',function(req, res, next){
   console.log("Getting days sensor data for id:"+req.params.sensor_id);
-
-  Sensor.aggregate().match({"_id":req.params.sensor_id}).exec( function(err,result) {
+  console.log("Requested sensor data from the last: "+ req.params.time_period);
+  Sensor.findById(req.params.sensor_id,"data", function(err,sensor){
     if (err) {
       console.log("Sensor not registered err: "+err);
       res.send({success:false});
     } else {
-      console.log(result)
-      res.send(result.data);
+      /*filtered_data = data.filter(function(data){
+        if (data.collection_time > Date.now() - min  ) {
+          return data.collection_time;
+        }
+      });*/
+      //console.log("filtered_data: "+filtered_data);
+      var filtered_data = filterData(sensor.data);
+      console.log(filtered_data);
+      res.send(filtered_data);
     }
   });
 })
