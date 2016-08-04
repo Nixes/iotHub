@@ -1,6 +1,13 @@
-#container {
-  margin: 0 auto;
-  max-width:600px;
+body {
+  background: #505050;
+}
+
+.nav li a {
+  color:#999;
+}
+
+.container {
+  padding:0;
 }
 .header {
   width: 250px;
