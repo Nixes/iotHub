@@ -11,7 +11,8 @@ function reformatData(data) {
     }
   }
   console.log(finalData);
-  return finalData;
+  // this is an odd undocumented requirement of angular-chartjs: http://stackoverflow.com/questions/38239877/unable-to-parse-color-in-line-chart-angular-chart-js
+  return [finalData];
 }
 
 $(document).ready(function() {
@@ -54,18 +55,6 @@ iotHub.controller('SensorsController', function OverviewController($scope, $http
       $http.get('./api/sensors/'+ $scope.selected_sensor +'/data/' + $scope.time_period ).success(function(data) {
         $scope.data = reformatData(data);
       });
-    }
-  };
-
-  $scope.onClick = function (points, evt) {
-    console.log(points, evt);
-  };
-  $scope.onHover = function (points) {
-    if (points.length > 0) {
-      console.log('Point', points[0].value);
-      console.log(points);
-    } else {
-      console.log('No point');
     }
   };
   $scope.options = {
