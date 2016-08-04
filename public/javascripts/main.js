@@ -16,7 +16,12 @@ function reformatData(data) {
 
 $(document).ready(function() {
     // show active tab on reload
-    if (location.hash !== '') $('a[href="' + location.hash + '"]').tab('show');
+    if (location.hash !== '') {
+      $('a[href="' + location.hash + '"]').tab('show');
+    } else {
+      // if no location hash go to a default page
+      $('a[href="' + "#overview-tab" + '"]').tab('show');
+    }
 
     // remember the hash in the URL without jumping
     $('a[data-toggle="tab"]').on('shown.bs.tab', function(e) {
