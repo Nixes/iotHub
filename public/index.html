@@ -31,6 +31,7 @@
       <div id="overview-tab" class="tab-pane fade in active" ng-controller="OverviewController">
       <div class="panel tab-panel panel-default">
       <div class="panel-body">
+        <h1>Overview</h1>
         <div class="panel panel-default column-variable" ng-repeat="sensor in sensors">
           <div class="panel-heading clearfix">{{sensor.name}}</div>
           <div class="panel-body"><p>{{sensor.description}}</p></div>
@@ -42,6 +43,7 @@
       <div id="sensors-tab" class="tab-pane fade in" ng-controller="SensorsController">
       <div class="panel tab-panel panel-default">
       <div class="panel-body">
+        <h1>Sensors</h1>
 
         <div class="panel panel-default">
           <div class="panel-heading">
