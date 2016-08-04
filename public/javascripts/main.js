@@ -51,14 +51,17 @@ iotHub.controller('SensorsController', function OverviewController($scope, $http
       console.log('No point');
     }
   };
-
   $scope.options = {
-        tension: 0.0,
-        scales: {
-            xAxes: [{
-                position: 'bottom',
-                type: 'time'
-            }]
+    elements: {
+        line: {
+          tension: 0
         }
+    },
+    scales: {
+      xAxes: [{
+        position: 'bottom',
+        type: 'time'
+      }]
+    }
   };
 });
