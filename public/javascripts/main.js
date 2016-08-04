@@ -33,7 +33,7 @@ iotHub.controller('SensorsController', function OverviewController($scope, $http
 
   $scope.change = function () {
     console.log($scope.selected_sensor);
-    if ($scope.selected_sensor !== (null || undefined) && $scope.time_period !== (null || undefined)) {
+    if ( ( $scope.selected_sensor !== null ) &&  ( $scope.time_period !== null ) ) {
       $http.get('./api/sensors/'+ $scope.selected_sensor +'/data/' + $scope.time_period ).success(function(data) {
         $scope.data = reformatData(data);
       });
