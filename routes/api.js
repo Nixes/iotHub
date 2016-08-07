@@ -175,7 +175,15 @@ router
 // return all data with a collection_time later than that Requested
 .get('/sensors/:sensor_id/data/after/:time',function(req, res, next){
   console.log("Requested all sensor data from "+ req.params.sensor_id + " collected after "+ req.params.time);
-
+  Sensor.findById(req.params.sensor_id,"data", function(err,sensor){
+    if (err) {
+      console.log("Sensor not registered err: "+err);
+      res.send({success:false});
+    } else {
+      var filtered_data = dataAfter(sensor.data,req.params.time);
+      res.send(filtered_data);
+    }
+  });
 })
 
 ;
