@@ -6,6 +6,22 @@ var mongoose = require( 'mongoose' );
 var Sensor = mongoose.model('Sensor');
 var Data = mongoose.model('Data');
 
+function dataAfter(data, time) {
+  var final_data = [];
+
+  for (var i = 0; i < data.length;i++) {
+    // parse date
+    var tmp_date = new Date(data[i].collection_time);
+    console.log(tmp_date.toDateString());
+
+    if ( tmp_date > time) {
+      console.log("Passed");
+      final_data.push(data[i]);
+    }
+  }
+  return final_data;
+}
+
 
 // TODO optimisation: assume data is ordered, so when we find the first element that fails the check we should stop searching
 function filterData(data, filter_date_string) {
@@ -29,22 +45,8 @@ function filterData(data, filter_date_string) {
     compare_date = new Date(today.getFullYear(), today.getMonth() - 6, today.getDate());
   }
 
-
   console.log("Today: "+ today.toDateString());
-
-  var final_data = [];
-
-  for (var i = 0; i < data.length;i++) {
-    // parse date
-    var tmp_date = new Date(data[i].collection_time);
-    console.log(tmp_date.toDateString());
-
-    if ( tmp_date > compare_date) {
-      console.log("Passed");
-      final_data.push(data[i]);
-    }
-  }
-  return final_data;
+  return dataAfter(data,compare_date);
 }
 
 
@@ -169,6 +171,13 @@ router
     }
   });
 })
+
+// return all data with a collection_time later than that Requested
+.get('/sensors/:sensor_id/data/after/:time',function(req, res, next){
+  console.log("Requested all sensor data from "+ req.params.sensor_id + " collected after "+ req.params.time);
+
+})
+
 ;
 
 module.exports = router;
