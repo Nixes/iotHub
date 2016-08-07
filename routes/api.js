@@ -7,7 +7,7 @@ var Sensor = mongoose.model('Sensor');
 var Data = mongoose.model('Data');
 
 
-// TODO optimisation: assume data is ordered, so when we find first element that fails check we should stop searching
+// TODO optimisation: assume data is ordered, so when we find the first element that fails the check we should stop searching
 function filterData(data, filter_date_string) {
   var today = new Date();
   var compare_date;
@@ -155,8 +155,6 @@ router
   });
 })
 
-// good reference for time based data queries: http://stackoverflow.com/questions/17008683/doing-range-queries-in-mongoose-for-hour-day-month-year
-// also, aggregation seems like a great idea: http://stackoverflow.com/questions/13452745/extract-subarray-value-in-mongodb
 // return all data provided by the sensor with the given id within the the time period selected
 .get('/sensors/:sensor_id/data/:time_period',function(req, res, next){
   console.log("Getting days sensor data for id:"+req.params.sensor_id);
