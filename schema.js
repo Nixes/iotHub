@@ -5,13 +5,25 @@ var dataSchema = mongoose.Schema({
   collection_time: { type: Date, default: Date.now }
 });
 
-// create schema
+var SensorSettingsSchema = mongoose.Schema({
+  polling_time: Number,
+});
+
 var sensorSchema = mongoose.Schema({
     // don't need an id as mongodb creates one for us anyway
     name: String,
     description: String,
     data_type: String,
+    historic: Boolean, // describes whether this sensor should have more than one data point stored
+    sensor_settings: SensorSettingsSchema,
     data: [dataSchema]
+});
+
+var overviewSchema = mongoose.Schema({
+  //user_id: // reference to user in user table
+  sensor: { type: Schema.Types.ObjectId, ref: 'Sensor' },// reference to the sensor to show
+  time_period: String,
+
 });
 
 // register as model to mongoose
