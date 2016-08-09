@@ -77,7 +77,7 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr ng-repeat="point in subdata">
+                  <tr ng-repeat="point in subdata | orderBy:'-x' | limitTo:table_count">
                     <td>{{point.y}}</td>
                     <td>{{point.x}}</td>
                   </tr>
