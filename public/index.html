@@ -89,7 +89,7 @@
         </div>
 
         <!-- Sensor Settings Modal -->
-        <div class="modal fade" id="SensorSettings" role="dialog">
+        <div class="modal fade" id="SensorSettings" role="dialog" ng-controller="SensorsConfigController">
           <div class="modal-dialog">
 
             <!-- Modal content-->
@@ -101,17 +101,22 @@
               <div class="modal-body">
 
                 <div class="form-group">
-                  <label for="SensorId">Sensor Id:</label>
-                  <input type="text" class="form-control" id="SensorId" disabled>
+                  <label for="SensorId">Sensor Id</label>
+                  <input type="text" class="form-control" id="SensorId" disabled value="{{sensor._id}}">
                 </div>
                 <div class="form-group">
-                  <label for="SensorName">Sensor Name:</label>
+                  <label for="SensorName">Sensor Name</label>
                   <input type="text" class="form-control" id="SensorName">
                 </div>
                 <div class="form-group">
-                  <label for="SensorDesc">Sensor Description:</label>
+                  <label for="SensorDesc">Sensor Description</label>
                   <input type="text" class="form-control" id="SensorDesc">
                 </div>
+                <div class="form-group">
+                  <label for="ShowOverview">Show on Overview?</label>
+                  <input type="checkbox" class="form-control" id="ShowOverview">
+                </div>
+
                 <button type="button" class="btn btn-danger" data-toggle="modal" id="WipeData">Wipe Collected Data</button>
 
               </div>
