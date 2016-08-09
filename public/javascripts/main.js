@@ -48,6 +48,7 @@ iotHub.controller('SensorsController', function OverviewController($scope, $http
   $scope.selected_sensor = null;
   $scope.time_period = null;
   $scope.data = null;
+  $scope.table_count = 5;
 
   $scope.change = function () {
     console.log($scope.selected_sensor);
