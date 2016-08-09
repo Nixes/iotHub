@@ -5,6 +5,7 @@ var dataSchema = mongoose.Schema({
   collection_time: { type: Date, default: Date.now }
 });
 
+// this will eventually become a package that is downloaded by the sensors to change device settings
 var SensorSettingsSchema = mongoose.Schema({
   polling_time: Number,
 });
@@ -15,13 +16,13 @@ var sensorSchema = mongoose.Schema({
     description: String,
     data_type: String,
     historic: Boolean, // describes whether this sensor should have more than one data point stored
-    sensor_settings: SensorSettingsSchema,
+    settings: SensorSettingsSchema,
     data: [dataSchema]
 });
 
 var overviewSchema = mongoose.Schema({
   //user_id: // reference to user in user table
-  sensor: { type: Schema.Types.ObjectId, ref: 'Sensor' },// reference to the sensor to show
+  sensor: { type: mongoose.Schema.Types.ObjectId, ref: 'Sensor' },// reference to the sensor to show
   time_period: String,
 
 });
