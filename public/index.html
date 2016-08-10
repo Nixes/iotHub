@@ -32,10 +32,15 @@
       <div class="panel tab-panel panel-default">
       <div class="panel-body">
         <h1>Overview</h1>
-        <div class="panel panel-default column-variable" ng-repeat="sensor in sensors">
-          <div class="panel-heading clearfix">{{sensor.name}}</div>
-          <div class="panel-body"><p>{{sensor.description}}</p></div>
+        <div class="panel panel-default column-variable" ng-repeat="item in overview_items">
+          <div class="panel-heading clearfix">{{item.name}}</div>
+          <div class="panel-body"><p>{{item.description}}</p></div>
         </div>
+
+        <div ng-show="overview_items.length === 0" class="alert alert-warning">
+          No Sensors set to show on Overview
+        </div>
+
       </div>
       </div>
       </div>
@@ -129,7 +134,6 @@
           </div>
         </div>
 
-      </div>
       </div>
       </div>
 
