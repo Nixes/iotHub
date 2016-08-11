@@ -123,6 +123,29 @@ router
   });
 })
 
+// update an existing sensor based on an id
+.post('/sensors/:sensor_id/', function(req, res, next) {
+
+  Sensor.findById(req.params.sensor_id,'-data -__v', function(err,sensor){
+    if (err) {
+      console.log("Sensor not registered err: "+err);
+      res.send({success:false});
+    } else {
+      sensor.name = req.body.name;
+      sensor.description = req.body.description;
+      // handle issues with conversion
+      sensor.save(function(err,sensor) {
+        if (err) {
+          console.log("Failed to update sensor err: "+err);
+          res.send({success:false});
+        } else {
+          res.send({success:true, request:req.body });
+        }
+      });
+    }
+  });
+})
+
 // get information about a specific sensor
 .get('/sensors/:sensor_id/', function(req, res, next){
   Sensor.findById(req.params.sensor_id,'-data -__v', function(err,sensor){
