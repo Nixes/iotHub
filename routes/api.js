@@ -59,12 +59,27 @@ router
 
 // return a list of all items set to show in the overview
 .get('/overview' ,function(req, res, next){
-  Overview.find({}, function (err, overview) {
+  Overview.find({}).populate('sensor').exec( function (err, overview) {
     if (err) {
       console.log("found no sensors with overviews");
       res.send({success:false});
     } else {
       res.send(overview);
+    }
+  });
+})
+
+.post('/overview/:sensor_id/' ,function(req, res, next){
+  var overview = new Overview();
+  overview.sensor = req.params.sensor_id;
+
+  // handle issues with conversion
+  overview.save(function(err,sensor) {
+    if (err) {
+      console.log("Failed to add overview err: "+err);
+      res.send({success:false});
+    } else {
+      res.send({success:true});
     }
   });
 })
