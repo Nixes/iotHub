@@ -111,15 +111,15 @@
 
                 <div class="form-group">
                   <label for="SensorId">Sensor Id</label>
-                  <input type="text" class="form-control" id="SensorId" disabled value="{{sensor._id}}">
+                  <input type="text" class="form-control" id="SensorId" disabled value="{{selected_sensor_contents._id}}">
                 </div>
                 <div class="form-group">
                   <label for="SensorName">Sensor Name</label>
-                  <input type="text" class="form-control" id="SensorName">
+                  <input type="text" class="form-control" id="SensorName" value="{{selected_sensor_contents.name}}">
                 </div>
                 <div class="form-group">
                   <label for="SensorDesc">Sensor Description</label>
-                  <input type="text" class="form-control" id="SensorDesc">
+                  <input type="text" class="form-control" id="SensorDesc" value="{{selected_sensor_contents.description}}">
                 </div>
                 <div class="form-group">
                   <label for="ShowOverview">Show on Overview?</label>
@@ -131,7 +131,7 @@
               </div>
               <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-success" data-dismiss="modal">Save</button>
+                <button type="button" class="btn btn-success" data-dismiss="modal" ngclick="SendUpdate()">Save</button>
               </div>
             </div>
 
