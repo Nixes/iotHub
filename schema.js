@@ -2,7 +2,7 @@ var mongoose = require( 'mongoose' );
 
 var dataSchema = mongoose.Schema({
   value: Number, // mongoose.Schema.Types.Mixed might be the wrong type for this
-  collection_time: { type: Date, default: Date.now }
+  collection_time: { type: Date, default: Date.now, required: true }
 });
 
 // this will eventually become a package that is downloaded by the sensors to change device settings
@@ -21,10 +21,9 @@ var sensorSchema = mongoose.Schema({
 });
 
 var overviewSchema = mongoose.Schema({
-  //user_id: // reference to user in user table
+  //user_id: // reference to user in user schema
   sensor: { type: mongoose.Schema.Types.ObjectId, ref: 'Sensor', required: true },// reference to the sensor to show
   time_period: String,
-
 });
 
 // register as model to mongoose
