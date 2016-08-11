@@ -22,7 +22,7 @@ var sensorSchema = mongoose.Schema({
 
 var overviewSchema = mongoose.Schema({
   //user_id: // reference to user in user table
-  sensor: { type: mongoose.Schema.Types.ObjectId, ref: 'Sensor' },// reference to the sensor to show
+  sensor: { type: mongoose.Schema.Types.ObjectId, ref: 'Sensor', required: true },// reference to the sensor to show
   time_period: String,
 
 });
