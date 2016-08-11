@@ -85,12 +85,23 @@ iotHub.controller('SensorsController', function OverviewController($scope, $http
 
 
 iotHub.controller('SensorsConfigController', function OverviewController($scope, $http) {
-  $scope.init = function () {
-    $http.get('./api/sensors/' + $scope.selected_sensor,{ cache: true }).success(function(sensor) {
-      console.log("Config selected_sensor:"+$scope.selected_sensor)
-      $scope.sensor = sensor;
-    });
-  }
+  $scope.new_sensor_contents = null;
+
+  // check the differences between current and new sensor properties
+  $scope.GenerateDiff = function() {
+
+  };
+
+  $scope.SendUpdate = function() {
+      var diff = $scope.GenerateDiff();
+      $http.post('./api/sensors/'+ $scope.selected_sensor,diff ).success(function(data) {
+        console.log("Received on post: " + data);
+      });
+  };
+
+  $scope.$watch('selected_sensor_contents', function() {
+    $scope.new_sensor_contents = $scope.selected_sensor_contents;
+  });
   // use $scope.selected_sensor to obtain id of sensor to edit
 
 });
