@@ -38,7 +38,8 @@ $(document).ready(function() {
 
 iotHub.controller('OverviewController', function OverviewController($scope, $http) {
   $http.get('./api/overview',{ cache: true }).success(function(data) {
-    $scope.sensors = data;
+    $scope.items = data;
+    console.log(data);
   });
 });
 
