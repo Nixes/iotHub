@@ -69,9 +69,9 @@ router
   });
 })
 
-.post('/overview/:sensor_id/' ,function(req, res, next){
+.post('/overview' ,function(req, res, next){
   var overview = new Overview();
-  overview.sensor = req.params.sensor_id;
+  overview.sensor = req.body.sensor;
 
   // handle issues with conversion
   overview.save(function(err,sensor) {
