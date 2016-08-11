@@ -136,7 +136,7 @@ router
 })
 
 // add sensor data to the database
-// note that Conetent-Type MUST be set to application/json for data to be accepted
+// note that Content-Type MUST be set to application/json for data to be accepted
 .post('/sensors/:sensor_id/data',function(req, res, next){
   Sensor.findById(req.params.sensor_id, function(err,sensor){
     if (err) {
@@ -178,7 +178,7 @@ router
       var i = sensor.data.length;
       while (i--) {
         var point = sensor.data[i];
-        sensor.data.remove(point); // or just task.remove()
+        sensor.data.remove(point);
       }
       sensor.save();
       res.send({success:true});
