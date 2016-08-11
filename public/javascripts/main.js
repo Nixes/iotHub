@@ -89,11 +89,23 @@ iotHub.controller('SensorsConfigController', function OverviewController($scope,
 
   // check the differences between current and new sensor properties
   $scope.GenerateDiff = function() {
+    var diff_object = null;
 
+    // compare name
+    if ($scope.selected_sensor_contents.name !== $scope.new_sensor_contents.name) {
+      diff_object.name = $scope.new_sensor_contents.name;
+    }
+
+    // compare description
+    if ($scope.selected_sensor_contents.description !== $scope.new_sensor_contents.description) {
+      diff_object.description = $scope.new_sensor_contents.description;
+    }
+    return diff_object;
   };
 
   $scope.SendUpdate = function() {
       var diff = $scope.GenerateDiff();
+      console.log("Sensor update sent to server: "+diff);
       $http.post('./api/sensors/'+ $scope.selected_sensor,diff ).success(function(data) {
         console.log("Received on post: " + data);
       });
