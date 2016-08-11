@@ -5,6 +5,7 @@ var mongoose = require( 'mongoose' );
 // include models
 var Sensor = mongoose.model('Sensor');
 var Data = mongoose.model('Data');
+var Overview = mongoose.model('Overview');
 
 function dataAfter(data, time) {
   var final_data = [];
@@ -55,6 +56,20 @@ router
     res.send('Go read the api docs');
   }
 )
+
+// return a list of all items set to show in the overview
+.get('/overview' ,function(req, res, next){
+  Overview.find({}, function (err, overview) {
+    if (err) {
+      console.log("found no sensors with overviews");
+      res.send({success:false});
+    } else {
+      res.send(overview);
+    }
+  });
+})
+
+
 // return a list of sensor ids and names
 .get('/sensors', function(req, res, next) {
     Sensor.find({},'-data -__v',function (err, sensors) {
@@ -65,7 +80,7 @@ router
 })
 
 // add a sensor to the database
-.post('/sensors/', function(req, res, next) {
+.post('/sensors', function(req, res, next) {
   var sensor = new Sensor();
   sensor.name = req.body.name;
   sensor.description = req.body.description;
