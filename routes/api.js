@@ -84,6 +84,17 @@ router
   });
 })
 
+// remove overview listing by sensor_id it applies to
+.delete('/overview/:sensor_id/' ,function(req, res, next){
+  Overview.find({sensor: req.params.sensor_id}).remove().exec( function(err){
+    if (err) {
+      console.log("Failed to remove overview for "+req.params.sensor_id+" err: "+err);
+      res.send({success:false});
+    } else {
+      res.send({success:true});
+    }
+  });
+})
 
 // return a list of sensor ids and names
 .get('/sensors', function(req, res, next) {
