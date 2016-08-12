@@ -3,7 +3,7 @@ A node application for displaying data gathered from sensors, pretty MEAN.
 
 This is the eventual replacement for my sensorNet project.
 
-installing
+prepare dependencies
 ```
 npm install
 ```
