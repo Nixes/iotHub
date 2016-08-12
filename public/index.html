@@ -115,11 +115,11 @@
                 </div>
                 <div class="form-group">
                   <label for="SensorName">Sensor Name</label>
-                  <input type="text" class="form-control" id="SensorName" value="{{selected_sensor_contents.name}}">
+                  <input type="text" class="form-control" id="SensorName" ng-model="new_sensor_contents.name" value="{{selected_sensor_contents.name}}">
                 </div>
                 <div class="form-group">
                   <label for="SensorDesc">Sensor Description</label>
-                  <input type="text" class="form-control" id="SensorDesc" value="{{selected_sensor_contents.description}}">
+                  <input type="text" class="form-control" id="SensorDesc" ng-model="new_sensor_contents.description" value="{{selected_sensor_contents.description}}">
                 </div>
                 <div class="form-group">
                   <label for="ShowOverview">Show on Overview?</label>
