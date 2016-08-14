@@ -93,7 +93,7 @@ iotHub.controller('SensorsConfigController', function OverviewController($scope,
     console.log($scope.new_sensor_contents);
     console.log("Old contents");
     console.log($scope.selected_sensor_contents);
-    var diff_object = null;
+    var diff_object = {};
 
     // compare name
     if ($scope.selected_sensor_contents.name !== $scope.new_sensor_contents.name) {
@@ -124,7 +124,8 @@ iotHub.controller('SensorsConfigController', function OverviewController($scope,
   };
 
   $scope.$watch('selected_sensor_contents', function() {
-    // have to manually copy properties or javascript will try to set via a reference
+    // have to manually copy properties or javascript will try to set via a reference\
+    console.log("updated new_sensor_contents");
     $scope.new_sensor_contents = {name:  $scope.selected_sensor_contents.name, description:$scope.selected_sensor_contents.description };
   });
   // use $scope.selected_sensor to obtain id of sensor to edit
