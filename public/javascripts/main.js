@@ -85,7 +85,7 @@ iotHub.controller('SensorsController', function OverviewController($scope, $http
 
 
 iotHub.controller('SensorsConfigController', function OverviewController($scope, $http) {
-  $scope.new_sensor_contents = null;
+  $scope.new_sensor_contents = {};
 
   // check the differences between current and new sensor properties
   $scope.GenerateDiff = function() {
