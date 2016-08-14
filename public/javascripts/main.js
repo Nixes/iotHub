@@ -86,6 +86,7 @@ iotHub.controller('SensorsController', function OverviewController($scope, $http
 
 iotHub.controller('SensorsConfigController', function OverviewController($scope, $http) {
   $scope.new_sensor_contents = {};
+  $scope.show_overview = false;
 
   // check the differences between current and new sensor properties
   $scope.GenerateDiff = function() {
@@ -108,8 +109,11 @@ iotHub.controller('SensorsConfigController', function OverviewController($scope,
   };
 
   $scope.SendUpdate = function() {
+      console.log("Show on overview? : ");
+      console.log($scope.show_overview);
+
       var diff = $scope.GenerateDiff();
-      if (diff !== null) {
+      if (Object.keys(diff).length !== 0) {
         console.log("Sensor update sent to server: ");
         console.log(diff);
         $http.post('./api/sensors/'+ $scope.selected_sensor, diff).success(function(data) {
@@ -125,6 +129,5 @@ iotHub.controller('SensorsConfigController', function OverviewController($scope,
     // have to manually copy properties or javascript will try to set via a reference\
     $scope.new_sensor_contents = {name:  $scope.selected_sensor_contents.name, description:$scope.selected_sensor_contents.description };
   });
-  // use $scope.selected_sensor to obtain id of sensor to edit
 
 });
