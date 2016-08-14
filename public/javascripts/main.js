@@ -98,13 +98,11 @@ iotHub.controller('SensorsConfigController', function OverviewController($scope,
     // compare name
     if ($scope.selected_sensor_contents.name !== $scope.new_sensor_contents.name) {
       diff_object.name = $scope.new_sensor_contents.name;
-      console.log("New name detected");
     }
 
     // compare description
     if ($scope.selected_sensor_contents.description !== $scope.new_sensor_contents.description) {
       diff_object.description = $scope.new_sensor_contents.description;
-      console.log("New description detected");
     }
     return diff_object;
   };
@@ -125,7 +123,6 @@ iotHub.controller('SensorsConfigController', function OverviewController($scope,
 
   $scope.$watch('selected_sensor_contents', function() {
     // have to manually copy properties or javascript will try to set via a reference\
-    console.log("updated new_sensor_contents");
     $scope.new_sensor_contents = {name:  $scope.selected_sensor_contents.name, description:$scope.selected_sensor_contents.description };
   });
   // use $scope.selected_sensor to obtain id of sensor to edit
