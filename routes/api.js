@@ -84,8 +84,20 @@ router
   });
 })
 
+// return the listing of a given sensor_id's overview document
+.get('/overview/:sensor_id' ,function(req, res, next){
+  Overview.find({sensor: req.params.sensor_id}, function(err,overview){
+    if (err) {
+      console.log("Failed to find overview for "+req.params.sensor_id+" err: "+err);
+      res.send({success:false});
+    } else {
+      res.send(overview._id);
+    }
+  });
+})
+
 // remove overview listing by sensor_id it applies to
-.delete('/overview/:sensor_id/' ,function(req, res, next){
+.delete('/overview/:sensor_id' ,function(req, res, next){
   Overview.find({sensor: req.params.sensor_id}).remove().exec( function(err){
     if (err) {
       console.log("Failed to remove overview for "+req.params.sensor_id+" err: "+err);

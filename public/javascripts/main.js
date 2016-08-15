@@ -88,6 +88,17 @@ iotHub.controller('SensorsConfigController', function OverviewController($scope,
   $scope.new_sensor_contents = {};
   $scope.show_overview = false;
 
+  $scope.GetOverview = function () {
+    var on_overview;
+    $http.get('./api/overview/'+ $scope.selected_sensor).success(function(data) {
+      console.log("Received on get: ");
+      console.log(data);
+    });
+  };
+  $scope.SetOverview = function () {
+
+  };
+
   // check the differences between current and new sensor properties
   $scope.GenerateDiff = function() {
     console.log("Generating Diff new contents");
@@ -111,6 +122,7 @@ iotHub.controller('SensorsConfigController', function OverviewController($scope,
   $scope.SendUpdate = function() {
       console.log("Show on overview? : ");
       console.log($scope.show_overview);
+      $scope.GetOverview();
 
       var diff = $scope.GenerateDiff();
       if (Object.keys(diff).length !== 0) {
