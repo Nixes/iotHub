@@ -58,7 +58,7 @@
                   <option value="" selected>Select Sensor</option>
                   <option ng-repeat="sensor in sensors" value="{{sensor._id}}">{{sensor.name}} (id:{{sensor._id}})</option>
                 </select>
-                <select class="form-control" id="periodselect"  ng-model="time_period" ng-change="change()">
+                <select class="form-control" id="periodselect"  ng-model="time_period" ng-change="change()" ng-show="selected_sensor">
                   <option value="" selected>Select Period</option>
                   <option value="hour">hour</option>
                   <option value="day">day</option>
@@ -67,13 +67,13 @@
                   <option value="sixmonth">sixmonth</option>
                 </select>
               </div>
-              <button type="button" class="btn" data-toggle="modal" data-target="#SensorSettings"><span class="glyphicon glyphicon-cog"></span></button>
+              <button type="button" class="btn" data-toggle="modal" data-target="#SensorSettings" ng-show="selected_sensor"><span class="glyphicon glyphicon-cog"></span></button>
             </form>
           </div>
           <div class="panel-body">
 
             <div class="panel panel-default">
-              <div class="panel-body">Description: {{selected_sensor_contents.description}}</div>
+              <div class="panel-body" ng-show="selected_sensor">Description: {{selected_sensor_contents.description}}</div>
             </div>
 
               <canvas id="line" class="chart chart-line ng-isolate-scope" chart-data="data" chart-labels="labels" chart-click="onClick" chart-hover="onHover" chart-series="series" chart-options="options" chart-dataset-override="datasetOverride" width="756" height="378" style="display: block; width: 688px; height: 344px;"></canvas>
