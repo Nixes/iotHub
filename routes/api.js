@@ -91,7 +91,8 @@ router
       console.log("Failed to find overview for "+req.params.sensor_id+" err: "+err);
       res.send({success:false});
     } else {
-      res.send(overview._id);
+      console.log("Got overview");
+      res.send(overview[0]);
     }
   });
 })
