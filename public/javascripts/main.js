@@ -140,10 +140,6 @@ iotHub.controller('SensorsConfigController', function OverviewController($scope,
   };
 
   $scope.SendUpdate = function() {
-      console.log("Show on overview? : ");
-      console.log($scope.show_overview);
-      $scope.GetOverview();
-
       $scope.UpdateOverview();
 
       var diff = $scope.GenerateDiff();
