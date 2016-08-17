@@ -97,19 +97,26 @@ iotHub.controller('SensorsConfigController', function OverviewController($scope,
     $http.get('./api/overview/'+ $scope.selected_sensor).success(function(data) {
       if (data.sensor === $scope.selected_sensor) {
         console.log("Sensor Was on Overview and validated");
+        $scope.on_overview = true;
         $scope.show_overview = true;
       } else {
+        $scope.on_overview = false;
         $scope.show_overview = false;
       }
     });
   };
-  $scope.SetOverview = function () {
-    var data = {};
-    data.sensor =  $scope.selected_sensor;
-    $http.post('./api/overview/'+ $scope.selected_sensor, data).success(function(received) {
-      console.log("Received on Add Overview: ");
-      console.log(received);
-    });
+  $scope.UpdateOverview = function () {
+    // compare overview state
+    if ($scope.show_overview !== $scope.on_overview) {
+      // only update if the state was changed
+      var data = {};
+      data.sensor =  $scope.selected_sensor;
+      $http.post('./api/overview/'+ $scope.selected_sensor, data).success(function(received) {
+        console.log("Received on Add Overview: ");
+        console.log(received);
+      });
+
+    }
   };
 
   // check the differences between current and new sensor properties
@@ -136,6 +143,8 @@ iotHub.controller('SensorsConfigController', function OverviewController($scope,
       console.log("Show on overview? : ");
       console.log($scope.show_overview);
       $scope.GetOverview();
+
+      $scope.UpdateOverview();
 
       var diff = $scope.GenerateDiff();
       if (Object.keys(diff).length !== 0) {
