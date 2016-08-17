@@ -7,6 +7,7 @@ var Sensor = mongoose.model('Sensor');
 var Data = mongoose.model('Data');
 var Overview = mongoose.model('Overview');
 
+// returns a subset of data from that passed in that has timestamps after the time specified
 function dataAfter(data, time) {
   var final_data = [];
 
@@ -29,7 +30,7 @@ function filterData(data, filter_date_string) {
   var today = new Date();
   var compare_date;
 
-  // determine type filter date, and calculate time period
+  // determine type of filter date, and calculate time period
   if (filter_date_string === "hour") {
     compare_date = new Date(today.getFullYear(), today.getMonth(), today.getDate(),today.getDay(), today.getHours() - 1);
   }

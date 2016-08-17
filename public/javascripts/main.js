@@ -86,9 +86,14 @@ iotHub.controller('SensorsController', function OverviewController($scope, $http
 
 iotHub.controller('SensorsConfigController', function OverviewController($scope, $http) {
   $scope.new_sensor_contents = {};
+
+  // what the new overview state will be
   $scope.show_overview = false;
 
-  $scope.GetOverview = function () {    
+  // what the current overview state is
+  $scope.on_overview;
+
+  $scope.GetOverview = function () {
     $http.get('./api/overview/'+ $scope.selected_sensor).success(function(data) {
       if (data.sensor === $scope.selected_sensor) {
         console.log("Sensor Was on Overview and validated");
@@ -97,7 +102,12 @@ iotHub.controller('SensorsConfigController', function OverviewController($scope,
     });
   };
   $scope.SetOverview = function () {
-
+    var data = {};
+    data.sensor =  $scope.selected_sensor;
+    $http.post('./api/overview/'+ $scope.selected_sensor, data).success(function(received) {
+      console.log("Received on Add Overview: ");
+      console.log(received);
+    });
   };
 
   // check the differences between current and new sensor properties
