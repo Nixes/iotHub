@@ -111,7 +111,7 @@ iotHub.controller('SensorsConfigController', function OverviewController($scope,
       // only update if the state was changed
       var data = {};
       data.sensor =  $scope.selected_sensor;
-      $http.post('./api/overview/'+ $scope.selected_sensor, data).success(function(received) {
+      $http.post('./api/overview', data).success(function(received) {
         console.log("Received on Add Overview: ");
         console.log(received);
       });
