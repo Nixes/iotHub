@@ -98,6 +98,8 @@ iotHub.controller('SensorsConfigController', function OverviewController($scope,
       if (data.sensor === $scope.selected_sensor) {
         console.log("Sensor Was on Overview and validated");
         $scope.show_overview = true;
+      } else {
+        $scope.show_overview = false;
       }
     });
   };
