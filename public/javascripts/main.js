@@ -88,11 +88,12 @@ iotHub.controller('SensorsConfigController', function OverviewController($scope,
   $scope.new_sensor_contents = {};
   $scope.show_overview = false;
 
-  $scope.GetOverview = function () {
-    var on_overview;
+  $scope.GetOverview = function () {    
     $http.get('./api/overview/'+ $scope.selected_sensor).success(function(data) {
-      console.log("Received on get: ");
-      console.log(data);
+      if (data.sensor === $scope.selected_sensor) {
+        console.log("Sensor Was on Overview and validated");
+        $scope.show_overview = true;
+      }
     });
   };
   $scope.SetOverview = function () {
@@ -140,6 +141,7 @@ iotHub.controller('SensorsConfigController', function OverviewController($scope,
   $scope.$watch('selected_sensor_contents', function() {
     // have to manually copy properties or javascript will try to set via a reference\
     $scope.new_sensor_contents = {name:  $scope.selected_sensor_contents.name, description:$scope.selected_sensor_contents.description };
+    $scope.GetOverview();
   });
 
 });
