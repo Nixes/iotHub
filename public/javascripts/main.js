@@ -163,9 +163,22 @@ iotHub.controller('SensorsConfigController', function OverviewController($scope,
   };
 
   $scope.$watch('selected_sensor_contents', function() {
-    // have to manually copy properties or javascript will try to set via a reference\
+    // have to manually copy properties or javascript will try to set via a reference
     $scope.new_sensor_contents = {name:  $scope.selected_sensor_contents.name, description:$scope.selected_sensor_contents.description };
     $scope.GetOverview();
   });
+
+  // delete all existing sensor data
+  $scope.WipeData = function() {
+    var confirmed = confirm("Are you sure you want to nuke ALL SENSOR DATA from the beginning of time?");
+    if (confirmed) {
+      $http.delete('./api/sensors/' + $scope.selected_sensor + '/data').success(function(received) {
+        console.log("Received on wiping sensor data: ");
+        console.log(received);
+      });
+    } else {
+      console.log("Declined wiping sensor data");
+    }
+  };
 
 });
