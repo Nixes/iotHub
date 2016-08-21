@@ -10,8 +10,7 @@ npm install
 
 running
 ```
-cd bin
-node www
+node bin/www
 ```
 
 Make sure you have a MongoDB server running first.
