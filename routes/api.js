@@ -172,6 +172,18 @@ router
   });
 })
 
+// delete an existing sensor by Id
+.delete('/sensors/:sensor_id/', function(req, res, next){
+  Sensor.findById(req.params.sensor_id).remove().exec( function(err,sensor){
+    if (err) {
+      console.log("Failed to delete sensor err: "+err);
+      res.send({success:false});
+    } else {
+      res.send({success:true});
+    }
+  });
+})
+
 // add sensor data to the database
 // note that Content-Type MUST be set to application/json for data to be accepted
 .post('/sensors/:sensor_id/data',function(req, res, next){
