@@ -180,5 +180,16 @@ iotHub.controller('SensorsConfigController', function OverviewController($scope,
       console.log("Declined wiping sensor data");
     }
   };
+  $scope.DeleteSensor = function() {
+    var confirmed = confirm("Are you sure you want to delete the sensor and all its data?");
+    if (confirmed) {
+      $http.delete('./api/sensors/' + $scope.selected_sensor).success(function(received) {
+        console.log("Received on deleting sensor: ");
+        console.log(received);
+      });
+    } else {
+      console.log("Declined sensor deletion");
+    }
+  };
 
 });
