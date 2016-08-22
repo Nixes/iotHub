@@ -123,7 +123,7 @@ router
 .post('/sensors', function(req, res, next) {
   var sensor = new Sensor();
   sensor.name = req.body.name || "default name";
-  sensor.description = req.body.description || "default description";
+  sensor.description = req.body.description || undefined;
   console.log("Tried to add a new sensor: " + sensor.id + ", name: " +sensor.name + ", description: " +sensor.description );
 
   // handle issues with conversion
