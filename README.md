@@ -18,6 +18,7 @@ For now there is no intention to support glue modules for different protocols, i
 - Event based: Sensors only send data when they have something to show for it, no polling
 
 #Installation
+Make sure you have a MongoDB server running first.
 
 grab the latest version from github
 ```
@@ -30,9 +31,7 @@ prepare dependencies
 npm install
 ```
 
-running
+run
 ```
 node bin/www
 ```
-
-Make sure you have a MongoDB server running first.
