@@ -14,10 +14,10 @@ function dataAfter(data, time) {
   for (var i = 0; i < data.length;i++) {
     // parse date
     var tmp_date = new Date(data[i].collection_time);
-    console.log(tmp_date.toDateString());
+    //console.log(tmp_date.toDateString());
 
     if ( tmp_date > time) {
-      console.log("Passed");
+      //console.log("Passed");
       final_data.push(data[i]);
     }
   }
