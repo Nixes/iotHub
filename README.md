@@ -5,7 +5,10 @@ This is the eventual replacement for my sensorNet project.
 
 Companion arduino library is found https://github.com/Nixes/iotHub_lib
 
+For now there is no intention to support glue modules for different protocols, in the interest of preventing bloat. That deosn't stop you from developing external bridges yourself.
+
 #Features
+- Local: Your data is under your control, nothing leaves the local network
 - One Language: Javascript all the way down.
 - Cross Platform: Runs on anything with a node implementation
 - Arduino Library: Comes with a companion arduino library to make adding sensors easy
