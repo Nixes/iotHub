@@ -9,7 +9,7 @@ Companion arduino library is found https://github.com/Nixes/iotHub_lib
 - One Language: Javascript all the way down.
 - Cross Platform: Runs on anything with a node implementation
 - Arduino Library: Comes with a companion arduino library to make adding sensors easy
-- Standardised Database: All data stored in a mongoose database, no weird proprietry solutions
+- Standardised Database: All data stored in a mongo database, no weird proprietry solutions
 - REST API: Easy to use REST API for both sensors and data queries
 - Built in Web UI: view and control your environment from any device with a browser
 - Event based: Sensors only send data when they have something to show for it, no polling
