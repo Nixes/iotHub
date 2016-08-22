@@ -10,8 +10,8 @@ var Overview = mongoose.model('Overview');
 // returns a subset of data from that passed in that has timestamps after the time specified
 function dataAfter(data, time) {
   var final_data = [];
-
-  for (var i = 0; i < data.length;i++) {
+  var len = data.length;
+  for (var i = 0; i < len; i++) {
     // parse date
     var tmp_date = new Date(data[i].collection_time);
     //console.log(tmp_date.toDateString());
