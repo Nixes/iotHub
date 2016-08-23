@@ -187,34 +187,36 @@ router
 // add sensor data to the database
 // note that Content-Type MUST be set to application/json for data to be accepted
 .post('/sensors/:sensor_id/data',function(req, res, next){
-  Sensor.findById(req.params.sensor_id, function(err,sensor){
-    if (err) {
-      console.log("Sensor not registered err: "+err);
-      res.send({success:false});
-    } else {
-      // make sure we actually obtained valid data
-      console.log("value was: "+req.body.value);
-      if (req.body.value !== (null || undefined)) {
-        var data;
-        if (req.body.collection_time !== (null || undefined)) {
-          data = {value: req.body.value,collection_time:req.body.collection_time};
-        } else {
-          data = {value: req.body.value};
-        }
-        sensor.data.push(data);
-        sensor.save( function(err) {
-          if (err) {
-            console.log("Something broke: "+err);
-            res.send({success:false});
-          } else {
-            res.send({success:true});
-          }
-        });
-      } else {
+  if (req.params.sensor_id !== null) {
+    Sensor.findById(req.params.sensor_id, function(err,sensor){
+      if (err) {
+        console.log("Sensor not registered err: "+err);
         res.send({success:false});
+      } else {
+        // make sure we actually obtained valid data
+        console.log("value was: "+req.body.value);
+        if (req.body.value !== (null || undefined)) {
+          var data;
+          if (req.body.collection_time !== (null || undefined)) {
+            data = {value: req.body.value,collection_time:req.body.collection_time};
+          } else {
+            data = {value: req.body.value};
+          }
+          sensor.data.push(data);
+          sensor.save( function(err) {
+            if (err) {
+              console.log("Something broke: "+err);
+              res.send({success:false});
+            } else {
+              res.send({success:true});
+            }
+          });
+        } else {
+          res.send({success:false});
+        }
       }
-    }
-  });
+    });
+  }
 })
 
 .delete('/sensors/:sensor_id/data',function(req, res, next){
