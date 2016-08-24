@@ -187,17 +187,20 @@ router
 // add sensor data to the database
 // note that Content-Type MUST be set to application/json for data to be accepted
 .post('/sensors/:sensor_id/data',function(req, res, next){
-  if (req.params.sensor_id !== (null || undefined) ) {
+  if (req.params.sensor_id != null ) {
     Sensor.findById(req.params.sensor_id, function(err,sensor){
       if (err) {
+        console.log("Failed to retrieve a sensor: "+err);
+        res.send({success:false});
+      } else if (sensor == null) {
         console.log("Sensor not registered err: "+err);
         res.send({success:false});
       } else {
         // make sure we actually obtained valid data
         console.log("value was: "+req.body.value + " from sensor: "+req.params.sensor_id);
-        if (req.body.value !== (null || undefined)) {
+        if (req.body.value != null) {
           var data;
-          if (req.body.collection_time !== (null || undefined)) {
+          if (req.body.collection_time != null) {
             data = {value: req.body.value,collection_time:req.body.collection_time};
           } else {
             data = {value: req.body.value};
