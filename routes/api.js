@@ -194,7 +194,7 @@ router
         res.status(404).send({success:false});
       } else if (sensor == null) {
         console.log("Sensor not registered err: "+err);
-        resres.status(404).send({success:false,error:"sensor not registered"});
+        res.status(404).send({success:false,error:"sensor not registered"});
       } else {
         // make sure we actually obtained valid data
         console.log("value was: "+req.body.value + " from sensor: "+req.params.sensor_id);
