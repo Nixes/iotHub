@@ -191,10 +191,10 @@ router
     Sensor.findById(req.params.sensor_id, function(err,sensor){
       if (err) {
         console.log("Failed to retrieve a sensor: "+err);
-        res.send({success:false});
+        res.status(404).send({success:false});
       } else if (sensor == null) {
         console.log("Sensor not registered err: "+err);
-        res.send({success:false});
+        resres.status(404).send({success:false,error:"sensor not registered"});
       } else {
         // make sure we actually obtained valid data
         console.log("value was: "+req.body.value + " from sensor: "+req.params.sensor_id);
@@ -209,13 +209,13 @@ router
           sensor.save( function(err) {
             if (err) {
               console.log("Failed to add sensor data to db: "+err);
-              res.send({success:false});
+              res.status(500).send({success:false});
             } else {
               res.send({success:true});
             }
           });
         } else {
-          res.send({success:false});
+          res.status(406).send({success:false});
         }
       }
     });
