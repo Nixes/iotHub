@@ -187,38 +187,26 @@ router
 // add sensor data to the database
 // note that Content-Type MUST be set to application/json for data to be accepted
 .post('/sensors/:sensor_id/data',function(req, res, next){
+  console.log("value was: "+req.body.value + " from sensor: "+req.params.sensor_id);
   if (req.params.sensor_id != null ) {
-    Sensor.findById(req.params.sensor_id, function(err,sensor){
-      if (err) {
-        console.log("Failed to retrieve a sensor: "+err);
-        res.status(404).send({success:false});
-      } else if (sensor == null) {
-        console.log("Sensor not registered err: "+err);
-        res.status(404).send({success:false,error:"sensor not registered"});
+    if (req.body.value != null) {
+      var point;
+      if (req.body.collection_time != null) {
+        point = {value: req.body.value,collection_time:req.body.collection_time};
       } else {
-        // make sure we actually obtained valid data
-        console.log("value was: "+req.body.value + " from sensor: "+req.params.sensor_id);
-        if (req.body.value != null) {
-          var data;
-          if (req.body.collection_time != null) {
-            data = {value: req.body.value,collection_time:req.body.collection_time};
-          } else {
-            data = {value: req.body.value};
-          }
-          sensor.data.push(data);
-          sensor.save( function(err) {
-            if (err) {
-              console.log("Failed to add sensor data to db: "+err);
-              res.status(500).send({success:false});
-            } else {
-              res.send({success:true});
-            }
-          });
-        } else {
-          res.status(406).send({success:false});
-        }
+        point = {value: req.body.value};
       }
-    });
+
+      Sensor.findByIdAndUpdate(req.params.sensor_id, {$push: {"data": point} } ,{safe: true, upsert: true}, function(err, doc){
+        if (err) {
+          console.log("Failed to add data point: "+err);
+          res.status(404).send({success:false,error:err});
+        } else {
+          console.log("Success: "+err);
+          res.send({success:true})
+        }
+      });
+    }
   }
 })
 
