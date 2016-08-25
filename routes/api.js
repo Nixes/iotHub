@@ -197,7 +197,7 @@ router
         point = {value: req.body.value};
       }
 
-      Sensor.findByIdAndUpdate(req.params.sensor_id, {$push: {"data": point} } ,{safe: true, upsert: true}, function(err, doc){
+      Sensor.update(req.params.sensor_id, {$push: {"data": point} } ,{safe: true, upsert: true}, function(err){
         if (err) {
           console.log("Failed to add data point: "+err);
           res.status(404).send({success:false,error:err});
