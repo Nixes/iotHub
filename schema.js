@@ -15,7 +15,7 @@ var sensorSchema = mongoose.Schema({
     name: String,
     description: String,
     data_type: String,
-    historic: Boolean, // describes whether this sensor should have more than one data point stored
+    data_period: String, // determines how long data should be kept before old points removed
     settings: SensorSettingsSchema,
     data: [dataSchema]
 });
