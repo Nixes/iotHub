@@ -197,7 +197,7 @@ router
         point = {value: req.body.value};
       }
 
-      Sensor.update({_id:req.params.sensor_id}, {$push: {"data": point} } ,{upsert: false}, function(err,raw,inserts){
+      Sensor.update({_id:req.params.sensor_id}, {$push: {"data": point} } ,{upsert: false}, function(err,raw){
         if (err) {
           console.log("Failed to add data point: "+err);
           res.status(404).send({success:false,error:err});
@@ -206,8 +206,8 @@ router
           res.status(404).send({success:false});
         } else {
           console.log("Success: "+err);
-          console.log("Something: "+raw)
-          res.send({success:true,"raw":raw,"what":what})
+          console.log("Raw: "+raw)
+          res.send({success:true,"raw":raw})
         }
       });
     }
