@@ -197,13 +197,17 @@ router
         point = {value: req.body.value};
       }
 
-      Sensor.update(req.params.sensor_id, {$push: {"data": point} } ,{safe: true, upsert: true}, function(err){
+      Sensor.update({_id:req.params.sensor_id}, {$push: {"data": point} } ,{upsert: false}, function(err,raw,inserts){
         if (err) {
           console.log("Failed to add data point: "+err);
           res.status(404).send({success:false,error:err});
+        } else if (raw.n !== 1) {
+          console.log("Failed to add data point");
+          res.status(404).send({success:false});
         } else {
           console.log("Success: "+err);
-          res.send({success:true})
+          console.log("Something: "+raw)
+          res.send({success:true,"raw":raw,"what":what})
         }
       });
     }
@@ -267,6 +271,11 @@ router
       res.send(filtered_data);
     }
   });
+})
+
+// if none of these, 404
+.get('*', function(req, res){
+  res.status(404).send("No endpoint found");
 })
 
 ;
