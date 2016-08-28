@@ -15,6 +15,15 @@ function reformatData(data) {
   return [finalData];
 }
 
+// delete a sensor from an array based on a sensor id
+function DeleteSensorFromId (sensors,sensor_id) {
+  for(var i=0;i < sensors.length; i++) {
+    if (sensors[i]._id === sensor_id) {
+      sensors.splice(i, 1); // remove 1 element from position i
+    }
+  }
+}
+
 // the below manages tab location
 $(document).ready(function() {
     // show active tab on reload
@@ -186,6 +195,7 @@ iotHub.controller('SensorsConfigController', function OverviewController($scope,
       $http.delete('./api/sensors/' + $scope.selected_sensor).success(function(received) {
         console.log("Received on deleting sensor: ");
         console.log(received);
+        DeleteSensorFromId($scope.sensors,$scope.selected_sensor);
       });
     } else {
       console.log("Declined sensor deletion");
