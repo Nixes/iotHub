@@ -67,11 +67,13 @@ function decimateData(data,number_points) {
   let averaged_data = [];
 
   for (let i = 0; i < number_points; i++) {
-    let point_average;
+    let point_average_value;
+    let point_average_time;
     for(let j = 0; i < multiples_over; j++) {
-      point_average+= data[i+j];
+      point_average_value += data[i+j].value;
+      point_average_time += data[i+j].collection_time;
     }
-    averaged_data.push(point_average / multiples_over);
+    averaged_data.push({value: point_average_value / multiples_over, collection_time:point_average_time / multiples_over});
   }
   return averaged_data;
 }
