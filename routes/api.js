@@ -7,18 +7,27 @@ var Sensor = mongoose.model('Sensor');
 var Data = mongoose.model('Data');
 var Overview = mongoose.model('Overview');
 
+function itemAfter(item,date) {
+  // parse date
+  var tmp_date = new Date(date);
+  //console.log(tmp_date.toDateString());
+
+  if ( tmp_date > time) {
+    //console.log("Passed");
+
+    return true;
+  } else {
+    return false;
+  }
+}
+
 // returns a subset of data from that passed in that has timestamps after the time specified
 function dataAfter(data, time) {
   var final_data = [];
   var len = data.length;
   for (var i = 0; i < len; i++) {
-    // parse date
-    var tmp_date = new Date(data[i].collection_time);
-    //console.log(tmp_date.toDateString());
-
-    if ( tmp_date > time) {
-      //console.log("Passed");
-      final_data.push(data[i]);
+    if (itemAfter(data[i],data[i].collection_time)) {
+          final_data.push(data[i]);
     }
   }
   return final_data;
@@ -254,6 +263,25 @@ router
       res.send({success:false});
     } else {
       var filtered_data = filterData(sensor.data,req.params.time_period);
+      res.send(filtered_data);
+    }
+  });
+})
+
+// special test function for attempting to do filtering within mongodb
+.get('/sensors/:sensor_id/data/test/:time_period',function(req, res, next){
+  console.log("Getting days sensor data for id:"+req.params.sensor_id);
+  console.log("Requested sensor data from the last: "+ req.params.time_period);
+  Sensor.findById(req.params.sensor_id,"data", function(err,sensor){
+    if (err) {
+      console.log("Sensor not registered err: "+err);
+      res.send({success:false});
+    } else {
+      var filtered_data = sensor.data.filter(function(item) {
+        if (itemAfter(item,item.collection_time)) {
+          return item;
+        }
+      });
       res.send(filtered_data);
     }
   });
