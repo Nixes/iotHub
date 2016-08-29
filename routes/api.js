@@ -9,7 +9,7 @@ var Overview = mongoose.model('Overview');
 
 function itemAfter(item,time) {
   // parse date
-  var tmp_date = new Date(item.collection_time);
+  let tmp_date = new Date(item.collection_time);
   //console.log(tmp_date.toDateString());
 
   if ( tmp_date > time) {
@@ -23,9 +23,9 @@ function itemAfter(item,time) {
 
 // returns a subset of data from that passed in that has timestamps after the time specified
 function dataAfter(data, time) {
-  var final_data = [];
-  var len = data.length;
-  for (var i = 0; i < len; i++) {
+  let final_data = [];
+  let len = data.length;
+  for (let i = 0; i < len; i++) {
     if (itemAfter(data[i],time)) {
           final_data.push(data[i]);
     }
@@ -36,8 +36,8 @@ function dataAfter(data, time) {
 
 // TODO optimisation: assume data is ordered, so when we find the first element that fails the check we should stop searching
 function filterData(data, filter_date_string) {
-  var today = new Date();
-  var compare_date;
+  let today = new Date();
+  let compare_date;
 
   // determine type of filter date, and calculate time period
   if (filter_date_string === "hour") {
@@ -62,13 +62,13 @@ function filterData(data, filter_date_string) {
 
 // this function should take in a large amount of data and return averages optimised for the number of points visible on the client device
 function decimateData(data,number_points) {
-  var data_length = data.length;
-  var multiples_over = Math.floor(data_length / number_points);
-  var averaged_data = [];
+  let data_length = data.length;
+  let multiples_over = Math.floor(data_length / number_points);
+  let averaged_data = [];
 
-  for (var i = 0; i < number_points; i++) {
-    var point_average;
-    for(var j = 0; i < multiples_over; j++) {
+  for (let i = 0; i < number_points; i++) {
+    let point_average;
+    for(let j = 0; i < multiples_over; j++) {
       point_average+= data[i+j];
     }
     averaged_data.push(point_average / multiples_over);
