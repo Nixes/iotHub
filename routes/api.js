@@ -90,7 +90,7 @@ router
   Overview.find({}).populate('sensor').exec( function (err, overview) {
     if (err) {
       console.log("found no sensors with overviews");
-      res.send({success:false});
+      res.status(404).send({success:false});
     } else {
       res.send(overview);
     }
@@ -117,7 +117,7 @@ router
   Overview.find({sensor: req.params.sensor_id}, function(err,overview){
     if (err) {
       console.log("Failed to find overview for "+req.params.sensor_id+" err: "+err);
-      res.send({success:false});
+      res.status(404).send({success:false});
     } else {
       console.log("Got overview");
       res.send(overview[0]);
@@ -170,7 +170,7 @@ router
   Sensor.findById(req.params.sensor_id,'-data -__v', function(err,sensor){
     if (err) {
       console.log("Sensor not registered err: "+err);
-      res.send({success:false});
+      res.status(404).send({success:false});
     } else {
       sensor.name = req.body.name;
       sensor.description = req.body.description;
@@ -192,7 +192,7 @@ router
   Sensor.findById(req.params.sensor_id,'-data -__v', function(err,sensor){
     if (err) {
       console.log("Sensor not registered err: "+err);
-      res.send({success:false});
+      res.status(404).send({success:false});
     } else {
       res.send(sensor);
     }
@@ -245,7 +245,7 @@ router
   Sensor.findById(req.params.sensor_id,"data", function(err,sensor){
     if (err) {
       console.log("Sensor not registered err: "+err);
-      res.send({success:false});
+      res.status(404).send({success:false});
     } else {
       // empty the array
       var i = sensor.data.length;
@@ -264,7 +264,7 @@ router
   Sensor.findById(req.params.sensor_id,"data", function(err,sensor){
     if (err) {
       console.log("Sensor not registered err: "+err);
-      res.send({success:false});
+      res.status(404).send({success:false});
     } else {
       res.send(sensor.data);
     }
@@ -278,7 +278,7 @@ router
   Sensor.findById(req.params.sensor_id,"data", function(err,sensor){
     if (err) {
       console.log("Sensor not registered err: "+err);
-      res.send({success:false});
+      res.status(404).send({success:false});
     } else {
       var filtered_data = filterData(sensor.data,req.params.time_period);
       res.send(filtered_data);
@@ -292,7 +292,7 @@ router
   Sensor.findById(req.params.sensor_id,"data", function(err,sensor){
     if (err) {
       console.log("Sensor not registered err: "+err);
-      res.send({success:false});
+      res.status(404).send({success:false});
     } else {
       var filtered_data = sensor.data.filter(function(item) {
         if (itemAfter(item,req.params.time)) {
@@ -310,7 +310,7 @@ router
   Sensor.findById(req.params.sensor_id,"data", function(err,sensor){
     if (err) {
       console.log("Sensor not registered err: "+err);
-      res.send({success:false});
+      res.status(404).send({success:false});
     } else {
       var filtered_data = dataAfter(sensor.data,req.params.time);
       res.send(filtered_data);
