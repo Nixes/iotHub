@@ -60,6 +60,22 @@ function filterData(data, filter_date_string) {
   return dataAfter(data,compare_date);
 }
 
+// this function should take in a large amount of data and return averages optimised for the number of points visible on the client device
+function decimateData(data,number_points) {
+  var data_length = data.length;
+  var multiples_over = Math.floor(data_length / number_points);
+  var averaged_data = [];
+
+  for (var i = 0; i < number_points; i++) {
+    var point_average;
+    for(var j = 0; i < multiples_over; j++) {
+      point_average+= data[i+j];
+    }
+    averaged_data.push(point_average / multiples_over);
+  }
+  return averaged_data;
+}
+
 
 router
 .get('/' ,function(req, res, next){
