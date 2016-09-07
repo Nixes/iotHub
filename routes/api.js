@@ -38,7 +38,6 @@ function dataAfterNFilter(data, time) {
   return final_data;
 }
 
-
 // TODO optimisation: assume data is ordered, so when we find the first element that fails the check we should stop searching
 function filterData(data, filter_date_string) {
   let today = new Date();
@@ -302,23 +301,6 @@ router
   });
 })
 
-// special test function for attempting to do filtering within mongodb
-.get('/sensors/:sensor_id/data/after-test/:time',function(req, res, next){
-  console.log("Requested all sensor data from "+ req.params.sensor_id + " collected after "+ req.params.time);
-  Sensor.findById(req.params.sensor_id,"data", function(err,sensor){
-    if (err) {
-      console.log("Sensor not registered err: "+err);
-      res.status(404).send({success:false});
-    } else {
-      var filtered_data = sensor.data.filter(function(item) {
-        if (itemAfter(item,req.params.time)) {
-          return item;
-        }
-      });
-      res.send(filtered_data);
-    }
-  });
-})
 
 // return all data with a collection_time later than that Requested
 .get('/sensors/:sensor_id/data/after/:time',function(req, res, next){
