@@ -7,73 +7,6 @@ var Sensor = mongoose.model('Sensor');
 var Data = mongoose.model('Data');
 var Overview = mongoose.model('Overview');
 
-function itemAfter(item,time) {
-  // parse date
-  let tmp_date = new Date(item.collection_time);
-  //console.log(tmp_date.toDateString());
-  if ( tmp_date > time) {
-    //console.log("Passed");
-
-    return true;
-  } else {
-    return false;
-  }
-}
-
-// returns a subset of data from that passed in that has timestamps after the time specified
-function dataAfter(data, time) {
-  let final_data = [];
-  let len = data.length;
-  for (let i = 0; i < len; i++) {
-    if (itemAfter(data[i],time)) {
-          final_data.push(data[i]);
-    }
-  }
-  return final_data;
-}
-
-// same as above but using native filter function (ES5+)
-function dataAfterNFilter(data, time) {
-  let final_data = data.filter(itemAfter.bind(this,time) ) ;
-  return final_data;
-}
-
-// TODO optimisation: assume data is ordered, so when we find the first element that fails the check we should stop searching
-function filterData(data, filter_date_string) {
-  let today = new Date();
-  let compare_date;
-
-  // determine type of filter date, and calculate time period
-  if (filter_date_string === "hour") {
-    compare_date = new Date(today.getFullYear(), today.getMonth(), today.getDate(),today.getDay(), today.getHours() - 1);
-  }
-  if (filter_date_string === "day") {
-    compare_date = new Date(today.getFullYear(), today.getMonth(), today.getDate(),today.getDay() - 1);
-  }
-  if (filter_date_string === "week") {
-    compare_date = new Date(today.getFullYear(), today.getMonth(), today.getDate() - 7);
-  }
-  if (filter_date_string === "month") {
-    compare_date = new Date(today.getFullYear(), today.getMonth() - 1, today.getDate());
-  }
-  if (filter_date_string === "sixmonth") {
-    compare_date = new Date(today.getFullYear(), today.getMonth() - 6, today.getDate());
-  }
-
-  console.log("Today: "+ today.toDateString());
-
-  // benchmark both filter methods on same data
-  console.time('dataAfter');
-  let final_data = dataAfter(data,compare_date)
-  console.timeEnd('dataAfter');
-
-  console.time('dataAfterNFilter');
-  let final_data_nf = dataAfterNFilter(data,compare_date)
-  console.timeEnd('dataAfterNFilter');
-
-
-  return final_data;
-}
 
 // this function should take in a large amount of data and return averages optimised for the number of points visible on the client device
 function decimateData(data,number_points) {
@@ -295,8 +228,9 @@ router
       console.log("Sensor not registered err: "+err);
       res.status(404).send({success:false});
     } else {
-      var filtered_data = filterData(sensor.data,req.params.time_period);
-      res.send(filtered_data);
+      res.send( sensor.data.filterData(sensor.data,req.params.time_period) );
+      //var filtered_data = filterData(sensor.data,req.params.time_period);
+      //res.send(filtered_data);
     }
   });
 })
