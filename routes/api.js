@@ -11,7 +11,6 @@ function itemAfter(item,time) {
   // parse date
   let tmp_date = new Date(item.collection_time);
   //console.log(tmp_date.toDateString());
-
   if ( tmp_date > time) {
     //console.log("Passed");
 
@@ -30,6 +29,12 @@ function dataAfter(data, time) {
           final_data.push(data[i]);
     }
   }
+  return final_data;
+}
+
+// same as above but using native filter function (ES5+)
+function dataAfterNFilter(data, time) {
+  let final_data = data.filter(itemAfter.bind(this,time) ) ;
   return final_data;
 }
 
@@ -57,7 +62,18 @@ function filterData(data, filter_date_string) {
   }
 
   console.log("Today: "+ today.toDateString());
-  return dataAfter(data,compare_date);
+
+  // benchmark both filter methods on same data
+  console.time('dataAfter');
+  let final_data = dataAfter(data,compare_date)
+  console.timeEnd('dataAfter');
+
+  console.time('dataAfterNFilter');
+  let final_data_nf = dataAfterNFilter(data,compare_date)
+  console.timeEnd('dataAfterNFilter');
+
+
+  return final_data;
 }
 
 // this function should take in a large amount of data and return averages optimised for the number of points visible on the client device
