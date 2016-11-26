@@ -228,7 +228,7 @@ router
       console.log("Sensor not registered err: "+err);
       res.status(404).send({success:false});
     } else {
-      res.send( sensor.data.filterData(sensor.data,req.params.time_period) );
+      res.send( sensor.filterData(req.params.time_period) );
       //var filtered_data = filterData(sensor.data,req.params.time_period);
       //res.send(filtered_data);
     }
