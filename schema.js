@@ -18,8 +18,23 @@ dataSchema.methods.itemAfter = function(item,time) {
   }
 }
 
+// this will eventually become a package that is downloaded by the sensors to change device settings
+var SensorSettingsSchema = mongoose.Schema({
+  polling_time: Number,
+});
+
+var sensorSchema = mongoose.Schema({
+    // don't need an id as mongodb creates one for us anyway
+    name: String,
+    description: String,
+    data_type: String,
+    data_period: String, // determines how long data should be kept before old points removed
+    settings: SensorSettingsSchema,
+    data: [dataSchema]
+});
+
 // returns a subset of data from that passed in that has timestamps after the time specified
-dataSchema.methods.dataAfter = function (data, time) {
+sensorSchema.methods.dataAfter = function (data, time) {
   let final_data = [];
   let len = data.length;
   for (let i = 0; i < len; i++) {
@@ -31,7 +46,7 @@ dataSchema.methods.dataAfter = function (data, time) {
 }
 
 // TODO optimisation: assume data is ordered, so when we find the first element that fails the check we should stop searching
-dataSchema.methods.filterData = function (data, filter_date_string) {
+sensorSchema.methods.filterData = function (data, filter_date_string) {
   let today = new Date();
   let compare_date;
 
@@ -68,23 +83,6 @@ dataSchema.methods.filterData = function (data, filter_date_string) {
 };
 
 
-
-
-
-// this will eventually become a package that is downloaded by the sensors to change device settings
-var SensorSettingsSchema = mongoose.Schema({
-  polling_time: Number,
-});
-
-var sensorSchema = mongoose.Schema({
-    // don't need an id as mongodb creates one for us anyway
-    name: String,
-    description: String,
-    data_type: String,
-    data_period: String, // determines how long data should be kept before old points removed
-    settings: SensorSettingsSchema,
-    data: [dataSchema]
-});
 
 var overviewSchema = mongoose.Schema({
   //user_id: // reference to user in user schema
