@@ -79,7 +79,7 @@
 
               <canvas id="line" class="chart chart-line ng-isolate-scope" chart-data="data" chart-labels="labels" chart-click="onClick" chart-hover="onHover" chart-series="series" chart-options="options" chart-dataset-override="datasetOverride" width="756" height="378" style="display: block; width: 688px; height: 344px;"></canvas>
 
-              <table ng-show="data[0]" class="table table-striped" ng-repeat="subdata in data">
+              <table ng-show="data[0][0]" class="table table-striped" ng-repeat="subdata in data">
                 <thead>
                   <tr>
                     <th>Value</th>
@@ -94,7 +94,7 @@
                 </tbody>
               </table>
 
-              <p ng-show="data[0]" >Points loaded: <div ng-bind="data[0].length"></div></p>
+              <div ng-show="data[0][0]" >Points loaded: <div ng-bind="data[0].length"></div></div>
 
             </div>
           </div>
