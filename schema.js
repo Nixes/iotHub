@@ -1,6 +1,7 @@
 var mongoose = require( 'mongoose' );
 
 var dataSchema = mongoose.Schema({
+  sensor_id: {type: mongoose.Schema.Types.ObjectId, ref: 'Sensor'},
   value: Number, // mongoose.Schema.Types.Mixed might be the wrong type for this
   collection_time: { type: Date, default: Date.now, required: true }
 });
@@ -29,8 +30,7 @@ var sensorSchema = mongoose.Schema({
     description: String,
     data_type: String,
     data_period: String, // determines how long data should be kept before old points removed
-    settings: SensorSettingsSchema,
-    data: {type: mongoose.Schema.Types.ObjectId, ref: 'Data'}
+    settings: SensorSettingsSchema //
 });
 
 // returns a subset of data from that passed in that has timestamps after the time specified
@@ -73,7 +73,7 @@ sensorSchema.methods.filterData = function (filter_date_string) {
 
   // benchmark both filter methods on same data
   console.time('dataAfter');
-  let final_data = this.dataAfter(compare_date)
+  //let final_data = this.dataAfter(compare_date);
   console.timeEnd('dataAfter');
 
   //console.time('dataAfterNFilter');
