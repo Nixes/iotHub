@@ -137,7 +137,7 @@ router
 // update an existing sensor based on an id
 .post('/sensors/:sensor_id/', function(req, res, next) {
 
-  Sensor.findById(req.params.sensor_id,'-data -__v', function(err,sensor){
+  Sensor.findById(req.params.sensor_id, function(err,sensor){
     if (err) {
       console.log("Sensor not registered err: "+err);
       res.status(404).send({success:false});
@@ -219,7 +219,7 @@ router
 })
 
 .delete('/sensors/:sensor_id/data',function(req, res, next){
-  Sensor.findById(req.params.sensor_id,"data", function(err,sensor){
+  Sensor.findById(req.params.sensor_id, function(err,sensor){
     if (err) {
       console.log("Sensor not registered err: "+err);
       res.status(404).send({success:false});
@@ -238,7 +238,7 @@ router
 
 // return all data provided by the sensor with the given id
 .get('/sensors/:sensor_id/data',function(req, res, next){
-  Data.find({sensor_id:req.params.sensor_id},"data", function(err,sensor){
+  Data.find({sensor_id:req.params.sensor_id}, function(err,sensor){
     if (err) {
       console.log("Sensor not registered err: "+err);
       res.status(404).send({success:false});
