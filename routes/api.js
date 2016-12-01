@@ -259,7 +259,7 @@ router
     } else {
       var from_time = getCompareDateFromString(req.params.time_period);
 
-      Data.find({ sensor_id:sensor._id /*, collection_time: { $gt: from_time }*/ } ,function(err,data){
+      Data.find({ sensor_id:sensor._id ,collection_time: { $gt: from_time } } ,function(err,data){
         if (err) {
           console.log("Failed to get data err: "+err);
           res.status(404).send({success:false});
