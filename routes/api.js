@@ -185,13 +185,23 @@ router
 // note that Content-Type MUST be set to application/json for data to be accepted
 .post('/sensors/:sensor_id/data',function(req, res, next){
   console.log("value was: "+req.body.value + " from sensor: "+req.params.sensor_id);
-  if (req.params.sensor_id != null ) {
-    if (req.body.value != null) {
+  // check that the data point sent is valid
+  if (req.params.sensor_id === null || req.body.value === null) {
+    res.status(404).send({success:false,error:"data point or sensor id null"});
+    return;
+  }
+
+  // then check that a sensor with the specified id actually exists
+  Sensor.findById(req.params.sensor_id, function(err,sensor){
+    if (err || !sensor) {
+      console.log("Sensor not registered err: "+err);
+      res.status(404).send({success:false,error:"Sensor not registered"});
+    } else {
       var point;
-      if (req.body.collection_time != null) {
-        point = {sensor_id:req.params.sensor_id, value: req.body.value,collection_time:req.body.collection_time};
+      if (req.body.collection_time !== null) {
+        point = {sensor_id:sensor._id, value: req.body.value,collection_time:req.body.collection_time};
       } else {
-        point = {sensor_id:req.params.sensor_id, value: req.body.value};
+        point = {sensor_id:sensor._id, value: req.body.value};
       }
 
       Data.create(point, function (err, point) {
@@ -200,12 +210,12 @@ router
           res.status(404).send({success:false,error:err});
         } else {
           console.log("Success: "+err);
-          console.log("Point: "+point)
-          res.send({success:true,"point":point})
+          console.log("Point: "+point);
+          res.send({success:true});
         }
-      })
+      });
     }
-  }
+  });
 })
 
 .delete('/sensors/:sensor_id/data',function(req, res, next){
