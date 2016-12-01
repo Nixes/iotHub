@@ -252,7 +252,7 @@ router
 .get('/sensors/:sensor_id/data/:time_period',function(req, res, next){
   console.log("Getting days sensor data for id:"+req.params.sensor_id);
   console.log("Requested sensor data from the last: "+ req.params.time_period);
-  Sensor.findById(req.params.sensor_id,"data", function(err,sensor){
+  Sensor.findById(req.params.sensor_id, function(err,sensor){
     if (err) {
       console.log("Sensor not registered err: "+err);
       res.status(404).send({success:false});
@@ -283,8 +283,17 @@ router
       console.log("Sensor not registered err: "+err);
       res.status(404).send({success:false});
     } else {
-      var filtered_data = dataAfter(sensor.data,req.params.time);
-      res.send(filtered_data);
+      Data.find({ sensor_id:sensor._id ,collection_time: { $gt: req.params.time } } ,function(err,data){
+        if (err) {
+          console.log("Failed to get data err: "+err);
+          res.status(404).send({success:false});
+        } else {
+          console.log("Returned data was: ");
+          console.log(JSON.stringify(data, null, 4));
+          res.send(data);
+        }
+      }
+    );
     }
   });
 })
