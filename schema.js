@@ -1,7 +1,7 @@
 var mongoose = require( 'mongoose' );
 
 var dataSchema = mongoose.Schema({
-  sensor_id: {type: mongoose.Schema.Types.ObjectId, ref: 'Sensor'},
+  sensor_id: {type: mongoose.Schema.Types.ObjectId, ref: 'Sensor', required: true},
   value: Number, // mongoose.Schema.Types.Mixed might be the wrong type for this
   collection_time: { type: Date, default: Date.now, required: true }
 });
