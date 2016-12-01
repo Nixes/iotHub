@@ -26,6 +26,28 @@ function decimateData(data,number_points) {
   return averaged_data;
 }
 
+function getCompareDateFromString() {
+  let today = new Date();
+  let compare_date;
+
+  // determine type of filter date, and calculate time period
+  if (filter_date_string === "hour") {
+    compare_date = new Date(today.getFullYear(), today.getMonth(), today.getDate(),today.getDay(), today.getHours() - 1);
+  }
+  if (filter_date_string === "day") {
+    compare_date = new Date(today.getFullYear(), today.getMonth(), today.getDate(),today.getDay() - 1);
+  }
+  if (filter_date_string === "week") {
+    compare_date = new Date(today.getFullYear(), today.getMonth(), today.getDate() - 7);
+  }
+  if (filter_date_string === "month") {
+    compare_date = new Date(today.getFullYear(), today.getMonth() - 1, today.getDate());
+  }
+  if (filter_date_string === "sixmonth") {
+    compare_date = new Date(today.getFullYear(), today.getMonth() - 6, today.getDate());
+  }
+  return compare_date;
+}
 
 router
 .get('/' ,function(req, res, next){
