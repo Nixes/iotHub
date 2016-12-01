@@ -30,7 +30,7 @@ var sensorSchema = mongoose.Schema({
     data_type: String,
     data_period: String, // determines how long data should be kept before old points removed
     settings: SensorSettingsSchema,
-    data: [dataSchema]
+    data: {type: mongoose.Schema.Types.ObjectId, ref: 'Data'}
 });
 
 // returns a subset of data from that passed in that has timestamps after the time specified
