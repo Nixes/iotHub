@@ -43,7 +43,7 @@ sensorSchema.methods.dataAfter = function ( time) {
     }
   }
   return final_data;
-}
+};
 
 // TODO optimisation: assume data is ordered, so when we find the first element that fails the check we should stop searching
 sensorSchema.methods.filterData = function (filter_date_string) {
