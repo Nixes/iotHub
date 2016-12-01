@@ -26,7 +26,7 @@ function decimateData(data,number_points) {
   return averaged_data;
 }
 
-function getCompareDateFromString() {
+function getCompareDateFromString(filter_date_string) {
   let today = new Date();
   let compare_date;
 
@@ -189,24 +189,21 @@ router
     if (req.body.value != null) {
       var point;
       if (req.body.collection_time != null) {
-        point = {value: req.body.value,collection_time:req.body.collection_time};
+        point = {sensor_id:req.params.sensor_id, value: req.body.value,collection_time:req.body.collection_time};
       } else {
-        point = {value: req.body.value};
+        point = {sensor_id:req.params.sensor_id, value: req.body.value};
       }
 
-      Sensor.update({_id:req.params.sensor_id}, {$push: {"data": point} } ,{upsert: false}, function(err,raw){
+      Data.create(point, function (err, point) {
         if (err) {
           console.log("Failed to add data point: "+err);
           res.status(404).send({success:false,error:err});
-        } else if (raw.n !== 1) {
-          console.log("Failed to add data point");
-          res.status(404).send({success:false});
         } else {
           console.log("Success: "+err);
-          console.log("Raw: "+raw)
-          res.send({success:true,"raw":raw})
+          console.log("Point: "+point)
+          res.send({success:true,"point":point})
         }
-      });
+      })
     }
   }
 })
@@ -231,7 +228,7 @@ router
 
 // return all data provided by the sensor with the given id
 .get('/sensors/:sensor_id/data',function(req, res, next){
-  Sensor.findById(req.params.sensor_id,"data", function(err,sensor){
+  Data.find({sensor_id:req.params.sensor_id},"data", function(err,sensor){
     if (err) {
       console.log("Sensor not registered err: "+err);
       res.status(404).send({success:false});
@@ -250,9 +247,19 @@ router
       console.log("Sensor not registered err: "+err);
       res.status(404).send({success:false});
     } else {
-      res.send( sensor.filterData(req.params.time_period) );
-      //var filtered_data = filterData(sensor.data,req.params.time_period);
-      //res.send(filtered_data);
+      var from_time = getCompareDateFromString(req.params.time_period);
+
+      Data.find({ sensor_id:sensor._id /*, collection_time: { $gt: from_time }*/ } ,function(err,data){
+        if (err) {
+          console.log("Failed to get data err: "+err);
+          res.status(404).send({success:false});
+        } else {
+          console.log("Returned data was: ");
+          console.log(JSON.stringify(data, null, 4));
+          res.send(data);
+        }
+      }
+    );
     }
   });
 })
