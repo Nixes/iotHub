@@ -1,0 +1,12 @@
+language: node_js
+node_js:
+  - node
+
+services: mongodb
+
+install:
+  npm install
+  node bin/www
+  wget https://github.com/matryer/silk/releases/download/0.5.1/silk-0.5.1-linux-amd64.zip
+  unzip silk-0.5.1-linux-amd64.zip silk
+  silk
