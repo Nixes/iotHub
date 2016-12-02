@@ -26,6 +26,17 @@ function decimateData(data,number_points) {
   return averaged_data;
 }
 
+function checkSensorExists(res,sensor_id,callback) {
+  Sensor.findById(sensor_id, function(err,sensor){
+    if (err || !sensor) {
+      console.log("Sensor not registered err: "+err);
+      res.status(404).send({success:false,error:"Sensor not registered"});
+    } else {
+      callback(sensor._id);
+    }
+  });
+}
+
 function getCompareDateFromString(filter_date_string) {
   let today = new Date();
   let compare_date;
@@ -109,7 +120,7 @@ router
 
 // return a list of sensor ids and names
 .get('/sensors', function(req, res, next) {
-    Sensor.find({},'-data -__v',function (err, sensors) {
+    Sensor.find({},function (err, sensors) {
       if (err) return console.error(err);
       console.log(sensors);
       res.send(sensors);
