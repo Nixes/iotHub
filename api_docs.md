@@ -14,6 +14,7 @@ add a sensor and optional metadata to the database
 }
 ```
 ---
+response:
 * Status: 200
 * Data.id: /^[a-f\d]{24}$/ // The nodes unique {sensor_id}.
 
@@ -29,6 +30,7 @@ update an existing sensors metadata
 }
 ```
 ---
+response:
 * Status: 200
 
 
@@ -37,6 +39,7 @@ update an existing sensors metadata
 get an existing sensors metadata
 * Content-Type: "application/json"
 ---
+response:
 * Status: 200
 ```json
 {
@@ -60,6 +63,7 @@ send sensor data to the server
 
 Note collection_time is optional. In case sensor does not do own time sampling the time of receipt by the server is placed here instead.
 ---
+response:
 * Status: 200
 
 
@@ -68,6 +72,7 @@ Note collection_time is optional. In case sensor does not do own time sampling t
 obtain all data for a given sensor
 * Content-Type: "application/json"
 ---
+response:
 * Status: 200
 ```json
 [
@@ -85,6 +90,7 @@ obtain all data for a given sensor
 obtain the latest sample from a given sensor
 * Content-Type: "application/json"
 ---
+response:
 * Status: 200
 ```json
 {
