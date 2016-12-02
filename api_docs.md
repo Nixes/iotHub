@@ -1,4 +1,3 @@
-#API Design Notes
 api is found at http://hostname:port/api
 
 
