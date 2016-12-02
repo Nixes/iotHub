@@ -70,15 +70,13 @@ obtain all data for a given sensor
 ---
 * Status: 200
 ```json
-{
-  [
-    {
+[
+  {
 
-      "value":12,
-      "collection_time":"2016-12-02T08:36:55.743Z"
-    }
-  ]
-}
+    "value":12,
+    "collection_time":"2016-12-02T08:36:55.743Z"
+  }
+]
 ```
 
 
