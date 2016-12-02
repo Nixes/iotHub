@@ -1,4 +1,4 @@
-# iotHub
+# iotHub [![Build Status](https://travis-ci.org/Nixes/iotHub.svg?branch=master)](https://travis-ci.org/Nixes/iotHub)
 A node application for displaying data gathered from sensors, pretty MEAN.
 
 This is the eventual replacement for my sensorNet project.
