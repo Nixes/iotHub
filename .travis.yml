@@ -11,4 +11,4 @@ install:
   - unzip silk-0.5.1-linux-amd64.zip
 
 script:
-  - silk-0.5.1-linux-amd64/silk -silk.url="localhost:3000" api_docs.md
+  - silk-0.5.1-linux-amd64/silk -silk.url="http://localhost:3000" api_docs.md
