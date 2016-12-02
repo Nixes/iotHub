@@ -30,7 +30,7 @@ function checkSensorExists(res,sensor_id,callback) {
   Sensor.findById(sensor_id, function(err,sensor){
     if (err || !sensor) {
       console.log("Sensor not registered err: "+err);
-      res.status(404).send({success:false,error:"Sensor not registered"});
+      res.status(404).json({success:false,error:"Sensor not registered"});
     } else {
       callback(sensor._id);
     }
@@ -71,9 +71,9 @@ router
   Overview.find({}).populate('sensor').exec( function (err, overview) {
     if (err) {
       console.log("found no sensors with overviews");
-      res.status(404).send({success:false});
+      res.status(404).json({success:false});
     } else {
-      res.send(overview);
+      res.json(overview);
     }
   });
 })
@@ -86,9 +86,9 @@ router
   overview.save(function(err,sensor) {
     if (err) {
       console.log("Failed to add overview err: "+err);
-      res.send({success:false});
+      res.json({success:false});
     } else {
-      res.send({success:true});
+      res.json({success:true});
     }
   });
 })
@@ -98,10 +98,10 @@ router
   Overview.find({sensor: req.params.sensor_id}, function(err,overview){
     if (err) {
       console.log("Failed to find overview for "+req.params.sensor_id+" err: "+err);
-      res.status(404).send({success:false});
+      res.status(404).json({success:false});
     } else {
       console.log("Got overview");
-      res.send(overview[0]);
+      res.json(overview[0]);
     }
   });
 })
@@ -111,9 +111,9 @@ router
   Overview.find({sensor: req.params.sensor_id}).remove().exec( function(err){
     if (err) {
       console.log("Failed to remove overview for "+req.params.sensor_id+" err: "+err);
-      res.send({success:false});
+      res.json({success:false});
     } else {
-      res.send({success:true});
+      res.json({success:true});
     }
   });
 })
@@ -123,7 +123,7 @@ router
     Sensor.find({},function (err, sensors) {
       if (err) return console.error(err);
       console.log(sensors);
-      res.send(sensors);
+      res.json(sensors);
     });
 })
 
@@ -138,9 +138,9 @@ router
   sensor.save(function(err,sensor) {
     if (err) {
       console.log("Failed to add sensor err: "+err);
-      res.send({success:false});
+      res.json({success:false});
     } else {
-      res.send({success:true, id:sensor.id});
+      res.json({success:true, id:sensor.id});
     }
   });
 })
@@ -151,7 +151,7 @@ router
   Sensor.findById(req.params.sensor_id, function(err,sensor){
     if (err) {
       console.log("Sensor not registered err: "+err);
-      res.status(404).send({success:false});
+      res.status(404).json({success:false});
     } else {
       sensor.name = req.body.name;
       sensor.description = req.body.description;
@@ -159,9 +159,9 @@ router
       sensor.save(function(err,sensor) {
         if (err) {
           console.log("Failed to update sensor err: "+err);
-          res.send({success:false});
+          res.json({success:false});
         } else {
-          res.send({success:true, request:req.body });
+          res.json({success:true, request:req.body });
         }
       });
     }
@@ -173,9 +173,9 @@ router
   Sensor.findById(req.params.sensor_id,'-__v', function(err,sensor){
     if (err) {
       console.log("Sensor not registered err: "+err);
-      res.status(404).send({success:false});
+      res.status(404).json({success:false});
     } else {
-      res.send(sensor);
+      res.json(sensor);
     }
   });
 })
@@ -185,9 +185,9 @@ router
   Sensor.findById(req.params.sensor_id).remove().exec( function(err,sensor){
     if (err) {
       console.log("Failed to delete sensor err: "+err);
-      res.send({success:false});
+      res.json({success:false});
     } else {
-      res.send({success:true});
+      res.json({success:true});
     }
   });
 })
@@ -199,7 +199,7 @@ router
   // check that the data point sent is valid
   if (req.params.sensor_id === null || req.body.value === null) {
     console.log("Sensor id or value was empty");
-    res.status(404).send({success:false,error:"data value or sensor id empty"});
+    res.status(404).json({success:false,error:"data value or sensor id empty"});
     return;
   }
 
@@ -207,7 +207,7 @@ router
   Sensor.findById(req.params.sensor_id, function(err,sensor){
     if (err || !sensor) {
       console.log("Sensor not registered err: "+err);
-      res.status(404).send({success:false,error:"Sensor not registered"});
+      res.status(404).json({success:false,error:"Sensor not registered"});
     } else {
       var point;
       if (req.body.collection_time !== null) {
@@ -219,11 +219,11 @@ router
       Data.create(point, function (err, point) {
         if (err) {
           console.log("Failed to add data point: "+err);
-          res.status(404).send({success:false,error:err});
+          res.status(404).json({success:false,error:err});
         } else {
           console.log("Success: "+err);
           console.log("Point: "+point);
-          res.send({success:true});
+          res.json({success:true});
         }
       });
     }
@@ -234,7 +234,7 @@ router
   Sensor.findById(req.params.sensor_id, function(err,sensor){
     if (err) {
       console.log("Sensor not registered err: "+err);
-      res.status(404).send({success:false});
+      res.status(404).json({success:false});
     } else {
       // empty the array
       var i = sensor.data.length;
@@ -243,7 +243,7 @@ router
         sensor.data.remove(point);
       }
       sensor.save();
-      res.send({success:true});
+      res.json({success:true});
     }
   });
 })
@@ -253,9 +253,9 @@ router
   Data.find({sensor_id:req.params.sensor_id}, function(err,sensor){
     if (err) {
       console.log("Sensor not registered err: "+err);
-      res.status(404).send({success:false});
+      res.status(404).json({success:false});
     } else {
-      res.send(sensor.data);
+      res.json(sensor.data);
     }
   });
 })
@@ -266,16 +266,16 @@ router
   Sensor.findById(req.params.sensor_id,"data", function(err,sensor){
     if (err) {
       console.log("Sensor not registered err: "+err);
-      res.status(404).send({success:false});
+      res.status(404).json({success:false});
     } else {
       Data.findOne({ sensor_id:sensor._id },{},{ sort: { 'collection_time' : -1 } } ,function(err,data){
         if (err) {
           console.log("Failed to get data err: "+err);
-          res.status(404).send({success:false});
+          res.status(404).json({success:false});
         } else {
           console.log("Returned data was: ");
           console.log(JSON.stringify(data, null, 4));
-          res.send(data);
+          res.json(data);
         }
       }
     );
@@ -290,18 +290,18 @@ router
   Sensor.findById(req.params.sensor_id, function(err,sensor){
     if (err) {
       console.log("Sensor not registered err: "+err);
-      res.status(404).send({success:false});
+      res.status(404).json({success:false});
     } else {
       var from_time = getCompareDateFromString(req.params.time_period);
 
       Data.find({ sensor_id:sensor._id ,collection_time: { $gt: from_time } } ,function(err,data){
         if (err) {
           console.log("Failed to get data err: "+err);
-          res.status(404).send({success:false});
+          res.status(404).json({success:false});
         } else {
           console.log("Returned data was: ");
           console.log(JSON.stringify(data, null, 4));
-          res.send(data);
+          res.json(data);
         }
       }
     );
@@ -316,16 +316,16 @@ router
   Sensor.findById(req.params.sensor_id,"data", function(err,sensor){
     if (err) {
       console.log("Sensor not registered err: "+err);
-      res.status(404).send({success:false});
+      res.status(404).json({success:false});
     } else {
       Data.find({ sensor_id:sensor._id ,collection_time: { $gt: req.params.time } } ,function(err,data){
         if (err) {
           console.log("Failed to get data err: "+err);
-          res.status(404).send({success:false});
+          res.status(404).json({success:false});
         } else {
           console.log("Returned data was: ");
           console.log(JSON.stringify(data, null, 4));
-          res.send(data);
+          res.json(data);
         }
       }
     );
