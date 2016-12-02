@@ -170,7 +170,7 @@ router
 
 // get information about a specific sensor
 .get('/sensors/:sensor_id/', function(req, res, next){
-  Sensor.findById(req.params.sensor_id,'-data -__v', function(err,sensor){
+  Sensor.findById(req.params.sensor_id,'-__v', function(err,sensor){
     if (err) {
       console.log("Sensor not registered err: "+err);
       res.status(404).send({success:false});
