@@ -146,7 +146,7 @@ router
 })
 
 // update an existing sensor based on an id
-.post('/sensors/:sensor_id/', function(req, res, next) {
+.post('/sensors/:sensor_id', function(req, res, next) {
 
   Sensor.findById(req.params.sensor_id, function(err,sensor){
     if (err) {
@@ -169,7 +169,7 @@ router
 })
 
 // get information about a specific sensor
-.get('/sensors/:sensor_id/', function(req, res, next){
+.get('/sensors/:sensor_id', function(req, res, next){
   Sensor.findById(req.params.sensor_id,'-__v', function(err,sensor){
     if (err) {
       console.log("Sensor not registered err: "+err);
@@ -181,7 +181,7 @@ router
 })
 
 // delete an existing sensor by Id
-.delete('/sensors/:sensor_id/', function(req, res, next){
+.delete('/sensors/:sensor_id', function(req, res, next){
   Sensor.findById(req.params.sensor_id).remove().exec( function(err,sensor){
     if (err) {
       console.log("Failed to delete sensor err: "+err);
@@ -198,7 +198,8 @@ router
   console.log("value was: "+req.body.value + " from sensor: "+req.params.sensor_id);
   // check that the data point sent is valid
   if (req.params.sensor_id === null || req.body.value === null) {
-    res.status(404).send({success:false,error:"data point or sensor id null"});
+    console.log("Sensor id or value was empty");
+    res.status(404).send({success:false,error:"data value or sensor id empty"});
     return;
   }
 
@@ -255,6 +256,29 @@ router
       res.status(404).send({success:false});
     } else {
       res.send(sensor.data);
+    }
+  });
+})
+
+// return the last point added to db by a sensor
+.get('/sensors/:sensor_id/data/latest',function(req, res, next){
+  console.log("Requested the last point from"+ req.params.sensor_id);
+  Sensor.findById(req.params.sensor_id,"data", function(err,sensor){
+    if (err) {
+      console.log("Sensor not registered err: "+err);
+      res.status(404).send({success:false});
+    } else {
+      Data.findOne({ sensor_id:sensor._id },{},{ sort: { 'collection_time' : -1 } } ,function(err,data){
+        if (err) {
+          console.log("Failed to get data err: "+err);
+          res.status(404).send({success:false});
+        } else {
+          console.log("Returned data was: ");
+          console.log(JSON.stringify(data, null, 4));
+          res.send(data);
+        }
+      }
+    );
     }
   });
 })
