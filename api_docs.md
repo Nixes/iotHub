@@ -12,7 +12,7 @@ add a sensor and optional metadata to the database
 ---
 * Status: 200
 * Data.success: true
-* Data.id: /.*/  // The nodes unique {sensor_id}.
+* Data.id: /^[a-f\d]{24}$/ // The nodes unique {sensor_id}.
 
 
 ## POST /api/sensors/{sensor_id}
