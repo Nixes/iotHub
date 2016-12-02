@@ -4,6 +4,7 @@ api is found at http://hostname:port/api
 # Sensors
 
 ## POST /api/sensors
+
 add a sensor and optional metadata to the database
 * Content-Type: "application/json"
 ```
@@ -18,6 +19,7 @@ add a sensor and optional metadata to the database
 
 
 ## POST /api/sensors/{sensor_id}
+
 update an existing sensors metadata
 * Content-Type: "application/json"
 ```
@@ -31,6 +33,7 @@ update an existing sensors metadata
 
 
 ## GET /api/sensors/{sensor_id}
+
 get an existing sensors metadata
 * Content-Type: "application/json"
 ---
@@ -44,6 +47,7 @@ get an existing sensors metadata
 
 
 ## POST /api/sensors/{sensor_id}/data
+
 send sensor data to the server
 * Content-Type: "application/json"
 ```
@@ -60,6 +64,7 @@ Note collection_time is optional. In case sensor does not do own time sampling t
 
 
 ## GET /api/sensors/{sensor_id}/data
+
 obtain all data for a given sensor
 * Content-Type: "application/json"
 ---
@@ -68,6 +73,7 @@ obtain all data for a given sensor
 {
   [
     {
+
       "value":12,
       "collection_time":"2016-12-02T08:36:55.743Z"
     }
@@ -77,6 +83,7 @@ obtain all data for a given sensor
 
 
 ## GET /api/sensors/{sensor_id}/data/latest
+
 obtain the latest sample from a given sensor
 * Content-Type: "application/json"
 ---
