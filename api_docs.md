@@ -14,7 +14,6 @@ add a sensor and optional metadata to the database
 ```
 ---
 * Status: 200
-* Data.success: true
 * Data.id: /^[a-f\d]{24}$/ // The nodes unique {sensor_id}.
 
 
@@ -28,7 +27,8 @@ update an existing sensors metadata
 }
 ```
 ---
-* Data.success: true
+* Status: 200
+
 
 ## GET /api/sensors/{sensor_id}
 get an existing sensors metadata
@@ -64,6 +64,16 @@ obtain all data for a given sensor
 * Content-Type: "application/json"
 ---
 * Status: 200
+```json
+{
+  [
+    {
+      "value":12,
+      "collection_time":"2016-12-02T08:36:55.743Z"
+    }
+  ]
+}
+```
 
 
 ## GET /api/sensors/{sensor_id}/data/latest
