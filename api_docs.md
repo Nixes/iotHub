@@ -9,38 +9,49 @@ add a sensor and optional metadata to the database
 ```
 {name:"the human friendly sensor name", description:"a short description of the sensor"}
 ```
-```
-* Data.UserID: /.*/ // The nodes unique {id}.
-```
+---
+* Status: 200
+* Data.success: true
+* Data.id: /.*/  // The nodes unique {sensor_id}.
 
-Note data_type may be any of String, Number or Boolean.
 
-
-## POST /api/sensors/21fds32f1h2ga
-
+## POST /api/sensors/{sensor_id}
 update an existing sensors metadata
 ```
 {name:"the human friendly sensor name",description:"a different short description of the sensor"}
 ```
-Where "21fds32f1h2ga" is a sensor
+---
+* Status: 200
 
+## GET /api/sensors/{sensor_id}
+get an existing sensors metadata
+---
+* Status: 200
+```
+{name:"the human friendly sensor name",description:"a different short description of the sensor"}
+```
 
-
-## POST /api/sensors/:sensor_id/data
+## POST /api/sensors/{sensor_id}/data
 send sensor data to the server
 ```
-{value:"the value returned from the sensor" , collection_time:"" }
+{value:"12" , collection_time:"" }
 ```
+'value' is a js number, 'collection_time' is a js Date
 Note collection_time is optional. In case sensor does not do own time sampling the time of receipt by the server is placed here instead.
+---
+* Status: 200
 
 
-## GET /api/sensors/:sensor_id/data
+## GET /api/sensors/{sensor_id}/data
 obtain all data for a given sensor
+---
+* Status: 200
 
 
-## GET /api/sensors/:sensor_id/data/latest
+## GET /api/sensors/{sensor_id}/data/latest
 obtain the latest sample from a given sensor
-returns
+---
+* Status: 200
 ```
-{value:"", collection_time:""}
+{value:"12", collection_time:""}
 ```
