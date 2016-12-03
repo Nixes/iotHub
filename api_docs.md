@@ -64,6 +64,19 @@ send sensor data to the server
 response:
 * Status: 200
 
+## GET /api/sensors/{sensor_id}/data/latest
+
+obtain the latest sample from a given sensor
+* Content-Type: "application/json"
+---
+response:
+* Status: 200
+```json
+{
+  "value":12,
+  "collection_time":"2016-12-02T08:36:55.743Z"
+}
+```
 
 ## POST /api/sensors/{sensor_id}/data
 
@@ -90,26 +103,13 @@ obtain all data for a given sensor
 response:
 * Status: 200
 ```json
-[
-  {
-
-    "value":12,
-    "collection_time":"2016-12-02T08:36:55.743Z"
-  }
-]
-```
-
-
-## GET /api/sensors/{sensor_id}/data/latest
-
-obtain the latest sample from a given sensor
-* Content-Type: "application/json"
----
-response:
-* Status: 200
-```json
-{
-  "value":12,
-  "collection_time":"2016-12-02T08:36:55.743Z"
-}
+  [
+    {
+      "value":12,
+      "collection_time":"2016-12-02T08:36:55.743Z"
+    },
+    {
+      "value":13
+    }
+  ]
 ```
