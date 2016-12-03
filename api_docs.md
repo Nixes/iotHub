@@ -60,8 +60,23 @@ send sensor data to the server
 }
 ```
 'value' is a js number, 'collection_time' is a js Date
+---
+response:
+* Status: 200
 
-Note collection_time is optional. In case sensor does not do own time sampling the time of receipt by the server is placed here instead.
+
+## POST /api/sensors/{sensor_id}/data
+
+send sensor data to the server
+* Content-Type: "application/json"
+```
+{
+  "value":13
+}
+```
+'value' is a js number
+
+As shown here collection_time is optional. In case the sensor does not do its own time sampling the time of receipt by the server can be placed here automatically.
 ---
 response:
 * Status: 200
