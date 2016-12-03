@@ -78,21 +78,6 @@ response:
 }
 ```
 
-## POST /api/sensors/{sensor_id}/data
-
-send sensor data to the server
-* Content-Type: "application/json"
-```
-{
-  "value":13
-}
-```
-'value' is a js number
-
-As shown here collection_time is optional. In case the sensor does not do its own time sampling the time of receipt by the server can be placed here automatically.
----
-response:
-* Status: 200
 
 
 ## GET /api/sensors/{sensor_id}/data
@@ -103,13 +88,10 @@ obtain all data for a given sensor
 response:
 * Status: 200
 ```json
-  [
+[
     {
       "value":12,
       "collection_time":"2016-12-02T08:36:55.743Z"
-    },
-    {
-      "value":13
     }
-  ]
+]
 ```
