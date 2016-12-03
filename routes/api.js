@@ -254,16 +254,13 @@ router
 
 // return all data provided by the sensor with the given id
 .get('/sensors/:sensor_id/data',function(req, res, next){
-  Data.find({sensor_id:req.params.sensor_id}).lean().exec( function(err,sensor){
+  Data.find({sensor_id:req.params.sensor_id}).lean().exec( function(err,data){
     if (err) {
       console.log("Sensor not registered err: "+err);
       res.status(404).json({success:false});
     } else {
-      console.log("ALL data from sensor ");
-      console.log( JSON.stringify(sensor) );
-      console.log(+": ");
-      console.log( JSON.stringify(sensor.data) );
-      res.json(sensor.data);
+      console.log("ALL data requested for sensor: "+ req.params.sensor_id );
+      res.json(data);
     }
   });
 })
