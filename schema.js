@@ -33,6 +33,13 @@ var sensorSchema = mongoose.Schema({
     settings: SensorSettingsSchema //
 });
 
+var actorSchema = mongoose.Schema({
+  name: String,
+  description: String,
+  data_type: String,
+  last_seen_host: String, // the last known ip or hostname of the actor device
+  last_seen_time: Date, // the date that the actor last interacted with the hub
+});
 
 var overviewSchema = mongoose.Schema({
   //user_id: // reference to user in user schema
