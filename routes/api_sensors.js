@@ -198,7 +198,7 @@ router
 
 // return all data provided by the sensor with the given id
 .get('/:sensor_id/data',function(req, res, next){
-  Data.find({sensor_id:req.params.sensor_id}).lean().exec( function(err,data){
+  Data.find({sensor_id:req.params.sensor_id},'-_id -sensor_id -__v').lean().exec( function(err,data){
     if (err) {
       console.log("Sensor not registered err: "+err);
       res.status(404).json({success:false});
@@ -217,7 +217,7 @@ router
       console.log("Sensor not registered err: "+err);
       res.status(404).json({success:false});
     } else {
-      Data.findOne({ sensor_id:sensor._id },{},{ sort: { 'collection_time' : -1 } } ,function(err,data){
+      Data.findOne({ sensor_id:sensor._id },'-_id -sensor_id -__v',{ sort: { 'collection_time' : -1 } } ,function(err,data){
         if (err) {
           console.log("Failed to get data err: "+err);
           res.status(404).json({success:false});
@@ -243,7 +243,7 @@ router
     } else {
       var from_time = getCompareDateFromString(req.params.time_period);
 
-      Data.find({ sensor_id:sensor._id ,collection_time: { $gt: from_time } }).lean().exec(function(err,data){
+      Data.find({ sensor_id:sensor._id ,collection_time: { $gt: from_time } },'-_id -sensor_id -__v').lean().exec(function(err,data){
         if (err) {
           console.log("Failed to get data err: "+err);
           res.status(404).json({success:false});
@@ -267,7 +267,7 @@ router
       console.log("Sensor not registered err: "+err);
       res.status(404).json({success:false});
     } else {
-      Data.find({ sensor_id:sensor._id ,collection_time: { $gt: req.params.time } }).lean().exec(function(err,data){
+      Data.find({ sensor_id:sensor._id ,collection_time: { $gt: req.params.time } },'-_id -sensor_id -__v').lean().exec(function(err,data){
         if (err) {
           console.log("Failed to get data err: "+err);
           res.status(404).json({success:false});
