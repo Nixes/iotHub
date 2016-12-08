@@ -8,6 +8,12 @@ var Actor = mongoose.model('Actor');
 var Data = mongoose.model('Data');
 var Overview = mongoose.model('Overview');
 
+// this function should be run everytime the actor interacts with the hub
+function ActorInteraction(actor_id) {
+  checkActorExists(actor_id, function() {
+
+  });
+}
 
 // shared functions
 function checkActorExists(actor_id,callback,res) {
