@@ -26,11 +26,11 @@ function decimateData(data,number_points) {
   return averaged_data;
 }
 
-function checkSensorExists(res,sensor_id,callback) {
+function checkSensorExists(sensor_id,callback,res) {
   Sensor.findById(sensor_id, function(err,sensor){
     if (err || !sensor) {
       console.log("Sensor not registered err: "+err);
-      res.status(404).json({success:false,error:"Sensor not registered"});
+      if (res) res.status(404).json({success:false,error:"Sensor not registered"});
     } else {
       callback(sensor._id);
     }
