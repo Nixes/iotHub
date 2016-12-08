@@ -49,5 +49,6 @@ var overviewSchema = mongoose.Schema({
 
 // register as model to mongoose
 mongoose.model('Sensor', sensorSchema);
+mongoose.model('Actor', actorSchema);
 mongoose.model('Data', dataSchema);
 mongoose.model('Overview', overviewSchema);
