@@ -12,6 +12,7 @@ require('./schema.js');
 var routes = require('./routes/index');
 var users = require('./routes/users');
 var api = require('./routes/api');
+var api_sensors = require('./routes/api_sensors');
 
 var app = express();
 
@@ -44,6 +45,7 @@ app.use('/node_modules',express.static(path.join(__dirname, 'node_modules')));
 app.use('/', routes);
 app.use('/users', users);
 app.use('/api', api);
+app.use('/api/sensors', api_sensors);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
