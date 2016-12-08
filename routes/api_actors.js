@@ -10,10 +10,10 @@ var Overview = mongoose.model('Overview');
 
 // shared functions
 function checkActorExists(res,sensor_id,callback) {
-  Sensor.findById(sensor_id, function(err,sensor){
-    if (err || !sensor) {
-      console.log("Sensor not registered err: "+err);
-      res.status(404).json({success:false,error:"Sensor not registered"});
+  Actor.findById(sensor_id, function(err,actor){
+    if (err || !actor) {
+      console.log("Actor not registered err: "+err);
+      res.status(404).json({success:false,error:"Actor not registered"});
     } else {
       callback(sensor._id);
     }
