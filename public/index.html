@@ -25,6 +25,7 @@
     <ul class="nav nav-tabs">
       <li><a href="#overview-tab" data-toggle="tab">Overview</a></li>
       <li><a href="#sensors-tab" data-toggle="tab">Sensors</a></li>
+      <li><a href="#actors-tab" data-toggle="tab">Actors</a></li>
     </ul>
 
     <div class="tab-content">
@@ -143,6 +144,20 @@
         </div>
 
       </div>
+      </div>
+
+      <div id="actors-tab" class="tab-pane fade in" ng-controller="ActorsController">
+      <div class="panel tab-panel panel-default">
+      <div class="panel-body">
+        <h1>Actors</h1>
+        <div ng-repeat="actor in actors" class="panel panel-default">
+          <div class="panel-heading">
+            {{actor.name}} ({{actor._id}})
+          </div>
+          <div class="panel-body">
+
+          </div>
+        </div>
       </div>
 
     </div>
