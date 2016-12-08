@@ -13,6 +13,7 @@ var routes = require('./routes/index');
 var users = require('./routes/users');
 var api = require('./routes/api');
 var api_sensors = require('./routes/api_sensors');
+var api_actors = require('./routes/api_actors');
 
 var app = express();
 
@@ -46,6 +47,7 @@ app.use('/', routes);
 app.use('/users', users);
 app.use('/api', api);
 app.use('/api/sensors', api_sensors);
+app.use('/api/actors', api_actors);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
