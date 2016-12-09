@@ -10,7 +10,15 @@ var Overview = mongoose.model('Overview');
 // this function should be run everytime the actor interacts with the hub
 function ActorInteraction(actor_id) {
   checkActorExists(actor_id, function() {
-
+    actor.last_seen_time = new Date();
+    actor.save(function(err,actor) {
+      if (err) {
+        console.log("Failed to update last seen time err: "+err);
+        res.json({success:false});
+      } else {
+        res.json({success:true});
+      }
+    });
   });
 }
 
@@ -42,6 +50,7 @@ router
   var actor = new Actor();
   actor.name = req.body.name || "default name";
   actor.description = req.body.description || undefined;
+  actor.last_seen_time = new Date();
   console.log("Tried to add a new actor: " + actor.id + ", name: " +actor.name + ", description: " +actor.description );
 
   // handle issues with conversion
