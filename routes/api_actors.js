@@ -3,7 +3,6 @@ var router = express.Router();
 var mongoose = require( 'mongoose' );
 
 // include models
-var Sensor = mongoose.model('Sensor');
 var Actor = mongoose.model('Actor');
 var Data = mongoose.model('Data');
 var Overview = mongoose.model('Overview');
@@ -22,14 +21,14 @@ function checkActorExists(actor_id,callback,res) {
       console.log("Actor not registered err: "+err);
       if (res) res.status(404).json({success:false,error:"Actor not registered"});
     } else {
-      callback(sensor._id);
+      callback(actor._id);
     }
   });
 }
 
 router
 
-// return a list of sensor ids and names
+// return a list of actor ids and names
 .get('/', function(req, res, next) {
     Actor.find({},function (err, actors) {
       if (err) return console.error(err);
@@ -38,7 +37,7 @@ router
     });
 })
 
-// add a sensor to the database
+// add a actor to the database
 .post('/', function(req, res, next) {
   var actor = new Actor();
   actor.name = req.body.name || "default name";
@@ -48,7 +47,7 @@ router
   // handle issues with conversion
   actor.save(function(err,actor) {
     if (err) {
-      console.log("Failed to add sensor err: "+err);
+      console.log("Failed to add actor err: "+err);
       res.json({success:false});
     } else {
       res.json({success:true, id:actor.id});
@@ -56,15 +55,15 @@ router
   });
 })
 
-// update an existing sensor based on an id
+// update an existing actor based on an id
 .post('/:actor_id', function(req, res, next) {
 
-  Actor.findById(req.params.actor_id, function(err,sensor){
+  Actor.findById(req.params.actor_id, function(err,actor){
     if (err) {
       console.log("Actor not registered err: "+err);
       res.status(404).json({success:false});
     } else {
-      console.log("Updating sensor: ", sensor._id);
+      console.log("Updating actor: ", actor._id);
       actor.name = req.body.name;
       actor.description = req.body.description;
       console.log(" New actor name: "+actor.name + " description: "+actor.description );
@@ -81,23 +80,23 @@ router
   });
 })
 
-// get information about a specific sensor
+// get information about a specific actor
 .get('/:actor_id', function(req, res, next){
-  Actor.findById(req.params.actor_id,'-__v', function(err,sensor){
+  Actor.findById(req.params.actor_id,'-__v', function(err,actor){
     if (err) {
       console.log("Actor not registered err: "+err);
       res.status(404).json({success:false});
     } else {
       console.log("Retrieved Actor: ");
-      console.log(JSON.stringify(sensor) );
-      res.json(sensor);
+      console.log(JSON.stringify(actor) );
+      res.json(actor);
     }
   });
 })
 
-// delete an existing sensor by Id
+// delete an existing actor by Id
 .delete('/:actor_id', function(req, res, next){
-  Actor.findById(req.params.actor_id).remove().exec( function(err,sensor){
+  Actor.findById(req.params.actor_id).remove().exec( function(err,actor){
     if (err) {
       console.log("Failed to delete actor err: "+err);
       res.json({success:false});
