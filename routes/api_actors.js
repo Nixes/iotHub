@@ -21,7 +21,7 @@ function checkActorExists(actor_id,callback,res) {
       console.log("Actor not registered err: "+err);
       if (res) res.status(404).json({success:false,error:"Actor not registered"});
     } else {
-      callback(actor._id);
+      callback(actor);
     }
   });
 }
