@@ -8,6 +8,34 @@ var Actor = mongoose.model('Actor');
 var Data = mongoose.model('Data');
 var Overview = mongoose.model('Overview');
 
+// this function is called everytime a new actor state is received
+function updateActorState(actor,req,res){
+  if (actor.state == req.body.state) return; // only process when something changed
+
+  // change the state of the actor itself
+  request.post('http://' + actor.last_seen_host + '/actor/' + actor._id + '', {state:req.body.state}, function (error, response, body) {
+    if (!error && response.statusCode == 200) {
+      console.log(body);
+
+      // if all goes well then update the db with the new state
+      console.log("Updating actor " + actor._id + " state to " + req.body.state );
+      actor.state = req.body.state;
+      // handle issues with conversion
+      actor.save(function(err,actor) {
+        if (err) {
+          console.log("Failed to update local actor state err: "+err);
+          res.status(404).json({success:false});
+        } else {
+          res.json({success:true, request:req.body });
+        }
+      });
+    } else {
+      console.log("Failed to update remote actor state")
+      res.status(404).json({success:false});
+    }
+  });
+}
+
 // this function should be run everytime the actor interacts with the hub
 function actorInteraction(actor_id) {
   checkActorExists(actor_id, function() {
@@ -119,17 +147,7 @@ router
 // update the value of the actor (for if the actors state changed without being requested (manually overridden) )
 .post('/:actor_id/state', function(req, res, next) {
   checkActorExists(req.params.actor_id,function (actor) {
-    console.log("Updating actor " + actor._id + " state to " + req.body.state );
-    actor.state = req.body.state;
-    // handle issues with conversion
-    actor.save(function(err,actor) {
-      if (err) {
-        console.log("Failed to update actor state err: "+err);
-        res.status(404).json({success:false});
-      } else {
-        res.json({success:true, request:req.body });
-      }
-    });
+    updateActorState(actor,req,res);
   },res);
 })
 
