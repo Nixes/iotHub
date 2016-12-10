@@ -9,7 +9,7 @@ var Data = mongoose.model('Data');
 var Overview = mongoose.model('Overview');
 
 // this function should be run everytime the actor interacts with the hub
-function ActorInteraction(actor_id) {
+function actorInteraction(actor_id) {
   checkActorExists(actor_id, function() {
     actor.last_seen_time = new Date();
     actor.save(function(err,actor) {
