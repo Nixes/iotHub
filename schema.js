@@ -17,7 +17,7 @@ dataSchema.methods.itemAfter = function(time) {
   } else {
     return false;
   }
-}
+};
 
 // this will eventually become a package that is downloaded by the sensors to change device settings
 var SensorSettingsSchema = mongoose.Schema({
@@ -25,18 +25,19 @@ var SensorSettingsSchema = mongoose.Schema({
 });
 
 var sensorSchema = mongoose.Schema({
-    // don't need an id as mongodb creates one for us anyway
-    name: String,
-    description: String,
-    data_type: String,
-    data_period: String, // determines how long data should be kept before old points removed
-    settings: SensorSettingsSchema //
+  // don't need an id as mongodb creates one for us anyway
+  name: String,
+  description: String,
+  data_type: String,
+  data_period: String, // determines how long data should be kept before old points removed
+  settings: SensorSettingsSchema
 });
 
 var actorSchema = mongoose.Schema({
   name: String,
   description: String,
-  data_type: String,
+  value_type: String, // the type of value, used for validation when set by the sensor
+  value: mongoose.Schema.Types.Mixed, // the current value/state of the actor
   last_seen_host: String, // the last known ip or hostname of the actor device
   last_seen_time: Date, // the date that the actor last interacted with the hub
 });
