@@ -116,6 +116,23 @@ router
   });
 })
 
+// update the value of the actor (for if the actors state changed without being requested (manually overridden) )
+.post('/:actor_id/state', function(req, res, next) {
+  checkActorExists(req.params.actor_id,function (actor) {
+    console.log("Updating actor " + actor._id + " state to " + req.body.state );
+    actor.state = req.body.state;
+    // handle issues with conversion
+    actor.save(function(err,actor) {
+      if (err) {
+        console.log("Failed to update actor state err: "+err);
+        res.json({success:false});
+      } else {
+        res.json({success:true, request:req.body });
+      }
+    });
+  },res);
+})
+
 // if none of these, 404
 .get('*', function(req, res){
   res.status(404).send("No endpoint found");
