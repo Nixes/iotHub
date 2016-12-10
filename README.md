@@ -5,7 +5,9 @@ This is the eventual replacement for my sensorNet project.
 
 Companion arduino library is found https://github.com/Nixes/iotHub_lib
 
-For now there is no intention to support glue modules for different protocols, in the interest of preventing bloat. That doesn't stop you from developing external bridges yourself.
+For now there is no intention to support glue modules for different protocols in the interest of preventing bloat. 
+
+But you are welcome to develop external bridges yourself.
 
 #Features
 - Local: Your data is under your control, nothing leaves the local network
