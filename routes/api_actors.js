@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var mongoose = require( 'mongoose' );
+var request = require('request'); // request api is required for sending posts to the actors internal server
 
 // include models
 var Actor = mongoose.model('Actor');
