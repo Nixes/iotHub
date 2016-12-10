@@ -36,8 +36,8 @@ var sensorSchema = mongoose.Schema({
 var actorSchema = mongoose.Schema({
   name: String,
   description: String,
-  value_type: String, // the type of value, used for validation when set by the sensor
-  value: mongoose.Schema.Types.Mixed, // the current value/state of the actor
+  state_type: String, // the type of state, used for validation when set by the actor
+  state: mongoose.Schema.Types.Mixed, // the current state of the actor
   last_seen_host: String, // the last known ip or hostname of the actor device
   last_seen_time: Date, // the date that the actor last interacted with the hub
 });
