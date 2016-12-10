@@ -81,7 +81,7 @@ router
       actor.save(function(err,actor) {
         if (err) {
           console.log("Failed to update actor err: "+err);
-          res.json({success:false});
+          res.status(404).json({success:false});
         } else {
           res.json({success:true, request:req.body });
         }
@@ -125,7 +125,7 @@ router
     actor.save(function(err,actor) {
       if (err) {
         console.log("Failed to update actor state err: "+err);
-        res.json({success:false});
+        res.status(404).json({success:false});
       } else {
         res.json({success:true, request:req.body });
       }
