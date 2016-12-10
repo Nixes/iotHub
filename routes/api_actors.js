@@ -13,7 +13,7 @@ function updateActorState(actor,req,res){
   if (actor.state == req.body.state) return; // only process when something changed
 
   // change the state of the actor itself
-  request.post('http://' + actor.last_seen_host + '/actor/' + actor._id + '', {state:req.body.state}, function (error, response, body) {
+  request.post('http://' + actor.last_seen_host + '/actor/' + actor._id + '',{ json: {state:req.body.state} }, function (error, response, body) {
     if (!error && response.statusCode == 200) {
       console.log(body);
 
