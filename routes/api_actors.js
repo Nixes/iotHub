@@ -11,6 +11,7 @@ var Overview = mongoose.model('Overview');
 // this function is called everytime a new actor state is received
 function updateActorState(actor,req,res){
   if (actor.state == req.body.state) return; // only process when something changed
+  // TODO: check that received state type matches the state_type of the model
 
   // change the state of the actor itself
   request.post('http://' + actor.last_seen_host + '/actor/' + actor._id + '',{ json: {state:req.body.state} }, function (error, response, body) {
@@ -30,7 +31,7 @@ function updateActorState(actor,req,res){
         }
       });
     } else {
-      console.log("Failed to update remote actor state")
+      console.log("Failed to update remote actor state");
       res.status(404).json({success:false});
     }
   });
@@ -88,7 +89,8 @@ router
       console.log("Failed to add actor err: "+err);
       res.json({success:false});
     } else {
-      res.json({success:true, id:actor.id});
+      actorInteraction(actor._id)
+      res.json({success:true, id:actor._id});
     }
   });
 })
@@ -147,6 +149,7 @@ router
 // update the value of the actor (for if the actors state changed without being requested (manually overridden) )
 .post('/:actor_id/state', function(req, res, next) {
   checkActorExists(req.params.actor_id,function (actor) {
+    actorInteraction(actor._id)
     updateActorState(actor,req,res);
   },res);
 })
