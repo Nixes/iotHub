@@ -89,7 +89,7 @@ router
       console.log("Failed to add actor err: "+err);
       res.json({success:false});
     } else {
-      actorInteraction(actor._id)
+      actorInteraction(actor._id);
       res.json({success:true, id:actor._id});
     }
   });
@@ -149,7 +149,7 @@ router
 // update the value of the actor (for if the actors state changed without being requested (manually overridden) )
 .post('/:actor_id/state', function(req, res, next) {
   checkActorExists(req.params.actor_id,function (actor) {
-    actorInteraction(actor._id)
+    actorInteraction(actor._id);
     updateActorState(actor,req,res);
   },res);
 })
