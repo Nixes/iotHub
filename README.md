@@ -3,7 +3,7 @@ A node application for displaying data gathered from sensors, pretty MEAN.
 
 This is the eventual replacement for my sensorNet project.
 
-Companion arduino library is found https://github.com/Nixes/iotHub_lib
+Companion arduino library is found https://github.com/Nixes/iotHubLib
 
 For now there is no intention to support glue modules for different protocols in the interest of preventing bloat. 
 
