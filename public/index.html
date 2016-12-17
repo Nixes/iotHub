@@ -150,11 +150,21 @@
       <div class="panel tab-panel panel-default">
       <div class="panel-body">
         <h1>Actors</h1>
+        <div class="switch" ng-show="typeof actor === 'boolean'" >
+          <input type="checkbox">
+          <div class="slider"></div>
+        </div>
+        
         <div ng-repeat="actor in actors" class="panel panel-default">
           <div class="panel-heading">
             {{actor.name}} ({{actor._id}})
           </div>
           <div class="panel-body">
+            <p>Actor State: {{actor.state}}</p>
+            <div class="switch" ng-show="typeof actor === 'boolean'" >
+              <input type="checkbox">
+              <div class="slider"></div>
+            </div>
 
           </div>
         </div>
