@@ -94,6 +94,12 @@ iotHub.controller('SensorsController', function OverviewController($scope, $http
 
 
 iotHub.controller('ActorController', function ActorController($scope, $http) {
+  /*
+  Each actor will have a structure like follows:
+    - _id
+    - name
+    - state (varies from boolean to number to string)
+  */
   $http.get('./api/actors',{ cache: true }).success(function(actors) {
     $scope.actors = actors;
   });
