@@ -95,7 +95,7 @@ iotHub.controller('SensorsController', function OverviewController($scope, $http
 
 iotHub.controller('ActorController', function ActorController($scope, $http) {
   $http.get('./api/actors',{ cache: true }).success(function(actors) {
-    $scope.actor = actor;
+    $scope.actors = actors;
   });
 });
 
