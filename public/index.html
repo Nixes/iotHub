@@ -172,6 +172,27 @@
       <div class="panel tab-panel panel-default">
       <div class="panel-body">
         <h1>Behaviours</h1>
+        <p>A behaviour is a programmed automated action that is activated when a sensor output meets a specified condition. They can be used to automate any connected systems even when you are not connected to the local network, while the hub is still turned on and connected.</p>
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th>Description</th>
+              <th>Sensor</th>
+              <th>Condition</th>
+              <th>Action</th>
+              <th>Actor</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr ng-repeat="behaviour in behaviours | orderBy:'description' ">
+              <td>{{behaviour.description}}</td>
+              <td>{{point.sensor}}</td>
+              <td>{{point.condition}}</td>
+              <td>{{point.action}}</td>
+              <td>{{point.actor}}</td>
+            </tr>
+          </tbody>
+        </table>
 
         <div ng-repeat="behaviour in behaviours" class="panel panel-default">
 
