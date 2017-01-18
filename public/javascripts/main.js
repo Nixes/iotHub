@@ -213,5 +213,11 @@ iotHub.controller('SensorsConfigController', function OverviewController($scope,
       console.log("Declined sensor deletion");
     }
   };
+});
 
+
+iotHub.controller('BehaviourController', function ActorController($scope, $http) {
+  $http.get('./api/behaviours',{ cache: true }).success(function(behaviours) {
+    $scope.behaviours = behaviours;
+  });
 });
