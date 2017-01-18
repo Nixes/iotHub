@@ -26,6 +26,7 @@
       <li><a href="#overview-tab" data-toggle="tab">Overview</a></li>
       <li><a href="#sensors-tab" data-toggle="tab">Sensors</a></li>
       <li><a href="#actors-tab" data-toggle="tab">Actors</a></li>
+      <li><a href="#behaviours-tab" data-toggle="tab">Behaviours</a></li>
     </ul>
 
     <div class="tab-content">
@@ -162,6 +163,18 @@
               <div class="slider"></div>
             </label>
           </div>
+        </div>
+      </div>
+      </div>
+      </div>
+
+      <div id="behaviours-tab" class="tab-pane fade in" ng-controller="BehavioursController">
+      <div class="panel tab-panel panel-default">
+      <div class="panel-body">
+        <h1>Behaviours</h1>
+
+        <div ng-repeat="behaviour in behaviours" class="panel panel-default">
+
         </div>
       </div>
       </div>
