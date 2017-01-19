@@ -135,6 +135,12 @@ router
       console.log("Failed to delete sensor err: "+err);
       res.json({success:false});
     } else {
+      // delete overview if it has one too
+      Overview.find({sensor: req.params.sensor_id}).remove().exec( function(err){
+        if (err) {
+          console.log("Failed to remove matching overview (maybe it didn't exist) err: "+err);
+        }
+      });
       res.json({success:true});
     }
   });
