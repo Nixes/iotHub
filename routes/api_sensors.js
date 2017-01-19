@@ -178,6 +178,7 @@ router
         } else {
           console.log("Success: "+err);
           console.log(" Added: "+point);
+          behaviour_helpers.CheckBehaviour(sensor._id, req.body.value);
           res.json({success:true});
         }
       });
