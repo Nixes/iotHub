@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var mongoose = require( 'mongoose' );
+var behaviour_helpers = require('../behaviour_helpers'); // add helpers for conditional support
 
 // include models
 var Sensor = mongoose.model('Sensor');
