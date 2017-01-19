@@ -221,3 +221,85 @@ iotHub.controller('BehaviourController', function ActorController($scope, $http)
     $scope.behaviours = behaviours;
   });
 });
+iotHub.controller('BehaviourModifyController', function OverviewController($scope, $http) {
+  $scope.selected_behaviour; // the id of the currently selected behaviour
+  $scope.selected_behaviour_contents = {}; // contents of currently selected behaviour
+  $scope.new_behaviour_contents = {};
+
+  $scope.GetBehaviour = function () {
+    if ($scope.selected_behaviour !== null) {
+      $http.get('./api/overview/'+ $scope.selected_behaviour).success(function(data) {
+          $scope.selected_behaviour_contents = data;
+      });
+    } else {
+      console.log("Selected behaviour was null, you are probably defining a new one.");
+    }
+  };
+
+  // check the differences between current and new behaviour properties
+  $scope.GenerateDiff = function() {
+    console.log("Generating Diff, new behaviour contents");
+    console.log($scope.new_behaviour_contents);
+    console.log("Old behaviour contents");
+    console.log($scope.selected_behaviour_contents);
+    var diff_object = {};
+
+    // compare actor
+    if ($scope.selected_behaviour_contents.actor !== $scope.new_behaviour_contents.actor) {
+      diff_object.actor = $scope.new_behaviour_contents.actor;
+    }
+
+    // compare sensor
+    if ($scope.selected_behaviour_contents.sensor !== $scope.new_behaviour_contents.sensor) {
+      diff_object.sensor = $scope.new_behaviour_contents.sensor;
+    }
+
+    // compare condition
+    if ($scope.selected_behaviour_contents.condition !== $scope.new_behaviour_contents.condition) {
+      diff_object.condition = $scope.new_behaviour_contents.condition;
+    }
+
+    // compare action
+    if ($scope.selected_behaviour_contents.action !== $scope.new_behaviour_contents.action) {
+      diff_object.action = $scope.new_behaviour_contents.action;
+    }
+
+    // compare description
+    if ($scope.selected_behaviour_contents.description !== $scope.new_behaviour_contents.description) {
+      diff_object.description = $scope.new_behaviour_contents.description;
+    }
+    return diff_object;
+  };
+
+  $scope.SendUpdate = function() {
+      var diff = $scope.GenerateDiff();
+      if (Object.keys(diff).length !== 0) {
+        console.log("Behaviour update sent to server: ");
+        console.log(diff);
+        $http.post('./api/behaviours/'+ $scope.selected_behaviour, diff).success(function(data) {
+          console.log("Received on post: ");
+          console.log(data);
+        });
+      } else {
+        console.log("Null diff generated, not sending");
+      }
+  };
+
+  /*$scope.$watch('selected_behaviour_contents', function() {
+    // have to manually copy properties or javascript will try to set via a reference
+    $scope.new_behaviour_contents = {name:  $scope.selected_behaviour_contents.name, description:$scope.selected_behaviour_contents.description };
+  });*/
+
+  $scope.DeleteBehaviour = function() {
+    var confirmed = confirm("Are you sure you want to delete the behaviour?");
+    if (confirmed) {
+      $http.delete('./api/behaviours/' + $scope.selected_behaviour).success(function(received) {
+        console.log("Received on deleting behaviour: ");
+        console.log(received);
+        DeleteSensorFromId($scope.behaviours,$scope.selected_behaviour);
+      });
+    } else {
+      console.log("Declined behaviour deletion");
+    }
+  };
+});
