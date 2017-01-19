@@ -48,8 +48,18 @@ var overviewSchema = mongoose.Schema({
   time_period: String,
 });
 
+var behaviourSchema = mongoose.Schema({
+  sensor: { type: mongoose.Schema.Types.ObjectId, ref: 'Sensor', required: true },// reference to the sensor to show
+  actor: { type: mongoose.Schema.Types.ObjectId, ref: 'Actor', required: true },// reference to the sensor to show
+  condition: Number,
+  value: mongoose.Schema.Types.Mixed, // value is what is compared against the state of the sensor
+  action:  mongoose.Schema.Types.Mixed,
+});
+
+
 // register as model to mongoose
 mongoose.model('Sensor', sensorSchema);
 mongoose.model('Actor', actorSchema);
 mongoose.model('Data', dataSchema);
 mongoose.model('Overview', overviewSchema);
+mongoose.model('Behaviour', behaviourSchema);
