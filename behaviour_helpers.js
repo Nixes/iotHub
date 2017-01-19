@@ -90,7 +90,7 @@ behaviour_helpers.Validate = function (behaviour){
 
 behaviour_helpers.CheckBehaviour = function(sensor_id,last_sensor_state) {
   Behaviour.find({sensor:sensor_id}).lean().exec( function(err,data){
-    if (err) {
+    if (err || data!==[]) {
       console.log("Unable to find matching behaviour");
       return;
     } else {
