@@ -23,14 +23,15 @@ router
 
 // add a behaviour to the database
 .post('/', function(req, res, next) {
+  console.log("Adding a new behaviour");
   var behaviour = new Behaviour();
   behaviour.enabled = req.body.enabled;
   behaviour.description = req.body.description || undefined;
-  behaviour.sensor = req.body.sensor;
+  behaviour.behaviour = req.body.behaviour;
   behaviour.actor = req.body.actor;
   behaviour.condition = behaviour_helpers.StringToConditional(req.body.condition);
   behaviour.value = req.body.value;
-  console.log("Tried to add a new behaviour: " + behaviour.id + ", description: " +sensor.description );
+  console.log("Tried to add a new behaviour: " + behaviour.id + ", description: " +behaviour.description );
 
   // handle issues with conversion
   behaviour.save(function(err,behaviour) {
@@ -38,7 +39,7 @@ router
       console.log("Failed to add behaviour err: "+err);
       res.json({success:false});
     } else {
-      res.json({success:true, id:sensor.id});
+      res.json({success:true, id:behaviour.id});
     }
   });
 })
@@ -54,13 +55,13 @@ router
       console.log("Updating behaviour: ", behaviour._id);
       behaviour.enabled = req.body.enabled;
       behaviour.description = req.body.description;
-      behaviour.sensor = req.body.sensor;
+      behaviour.behaviour = req.body.behaviour;
       behaviour.actor = req.body.actor;
       behaviour.condition = behaviour_helpers.StringToConditional(req.body.condition);
       behaviour.value = req.body.value;
-      console.log(" New description: "+sensor.description );
+      console.log(" New description: "+behaviour.description );
       // handle issues with conversion
-      behaviour.save(function(err,sensor) {
+      behaviour.save(function(err,behaviour) {
         if (err) {
           console.log("Failed to update behaviour err: "+err);
           res.json({success:false});
@@ -72,7 +73,7 @@ router
   });
 })
 
-// get information about a specific sensor
+// get information about a specific behaviour
 .get('/:behaviour_id', function(req, res, next){
   Behaviour.findById(req.params.behaviour_id,'-__v', function(err,behaviour){
     if (err) {
@@ -81,12 +82,12 @@ router
     } else {
       console.log("Retrieved Behaviour: ");
       console.log(JSON.stringify(behaviour) );
-      res.json(sensor);
+      res.json(behaviour);
     }
   });
 })
 
-// delete an existing sensor by Id
+// delete an existing behaviour by Id
 .delete('/:behaviour_id', function(req, res, next){
   Behaviour.findById(req.params.behaviour_id).remove().exec( function(err,behaviour){
     if (err) {
