@@ -28,7 +28,7 @@ router
   behaviour.description = req.body.description || undefined;
   behaviour.sensor = req.body.sensor;
   behaviour.actor = req.body.actor;
-  behaviour.condition = req.body.condition;
+  behaviour.condition = behaviour_helpers.StringToConditional(req.body.condition);
   behaviour.value = req.body.value;
   console.log("Tried to add a new behaviour: " + behaviour.id + ", description: " +sensor.description );
 
@@ -56,7 +56,7 @@ router
       behaviour.description = req.body.description;
       behaviour.sensor = req.body.sensor;
       behaviour.actor = req.body.actor;
-      behaviour.condition = req.body.condition;
+      behaviour.condition = behaviour_helpers.StringToConditional(req.body.condition);
       behaviour.value = req.body.value;
       console.log(" New description: "+sensor.description );
       // handle issues with conversion
