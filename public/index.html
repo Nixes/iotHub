@@ -201,7 +201,55 @@
             </tr>
           </tbody>
         </table>
-        <button type="button" class="btn" data-toggle="modal" data-target="#AddBehaviour" ng-show="selected_sensor"><span class="glyphicon glyphicon-plus"></span> Add Behaviour</button>
+        <button type="button" class="btn" data-toggle="modal" data-target="#ModifyBehaviour" ng-show="selected_sensor"><span class="glyphicon glyphicon-plus"></span> Add Behaviour</button>
+
+        <!-- Behaviour Modify Modal -->
+        <div class="modal fade" id="ModifyBehaviour" role="dialog" ng-controller="BehaviourModifyController">
+          <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Behaviour setup</h4>
+              </div>
+              <div class="modal-body">
+
+                <div class="form-group">
+                  <label for="Sensor">Sensor</label>
+                  <input type="text" class="form-control" id="Sensor" value="{{behaviour.sensor}}">
+                </div>
+                <div class="form-group">
+                  <label for="Condition">Condition</label>
+                  <input type="text" class="form-control" id="Condition" ng-model="behaviour.condition" value="{{behaviour.condition}}">
+                </div>
+                <div class="form-group">
+                  <label for="Action">Action</label>
+                  <input type="text" class="form-control" id="Action" ng-model="behaviour.action" value="{{behaviour.action}}">
+                </div>
+                <div class="form-group">
+                  <label for="Actor">Actor</label>
+                  <input type="text" class="form-control" id="Actor" ng-model="behaviour.actor" value="{{behaviour.actor}}">
+                </div>
+                <div class="form-group">
+                  <label for="Description">Description</label>
+                  <input type="text" class="form-control" id="Description" ng-model="behaviour.description" value="{{behaviour.description}}">
+                </div>
+                <div class="form-group">
+                  <label for="Enabled">Enabled</label>
+                  <input type="checkbox" class="form-control" id="Enabled" ng-model="behaviour.enabled">
+                </div>
+
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal" ng-click="DeleteBehaviour()">Delete</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-success" data-dismiss="modal" ng-click="SendUpdate()">Save</button>
+              </div>
+            </div>
+
+          </div>
+        </div>
 
       </div>
       </div>
