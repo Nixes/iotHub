@@ -49,6 +49,7 @@ var overviewSchema = mongoose.Schema({
 });
 
 var behaviourSchema = mongoose.Schema({
+  enabled: Boolean,
   sensor: { type: mongoose.Schema.Types.ObjectId, ref: 'Sensor', required: true },// reference to the sensor to show
   actor: { type: mongoose.Schema.Types.ObjectId, ref: 'Actor', required: true },// reference to the sensor to show
   condition: Number,
