@@ -72,7 +72,7 @@ behaviour_helpers.ConditionalToString = function (condition_num) {
   return behaviour_helpers.condition_list_string[condition_num];
 };
 
-behaviour_helpers.EvaluateConditional = function (conditional, value, state) {
+behaviour_helpers.EvaluateCondition = function (conditional, value, state) {
   return behaviour_helpers.condition_list_functions[conditional](value, state);
 };
 
