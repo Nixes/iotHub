@@ -38,15 +38,15 @@ function updateActorState(actor,req,res){
 }
 
 // this function should be run everytime the actor interacts with the hub
-function actorInteraction(actor_id) {
-  checkActorExists(actor_id, function() {
+function actorInteraction(actor_id, res) {
+  checkActorExists(actor_id, function(actor) {
     actor.last_seen_time = new Date();
     actor.save(function(err,actor) {
       if (err) {
         console.log("Failed to update last seen time err: "+err);
-        res.json({success:false});
+        if (res) res.json({success:false});
       } else {
-        res.json({success:true});
+        if (res) res.json({success:true});
       }
     });
   });
