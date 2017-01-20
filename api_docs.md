@@ -79,7 +79,6 @@ response:
 ```
 
 
-
 ## GET /api/sensors/{sensor_id}/data
 
 obtain all data for a given sensor
@@ -95,3 +94,39 @@ response:
     }
 ]
 ```
+
+# Actors
+
+## POST /api/actors
+
+add an actor to the database
+* Content-Type: "application/json"
+```
+{
+  "name":"lamp",
+  "description":"controls the brightness of a lamp"
+}
+```
+---
+response:
+* Status: 200
+* Data.id: /^[a-f\d]{24}$/ // The nodes unique {actor_id}.
+
+# Behaviours
+
+## POST /api/behaviours
+
+add a new behaviour
+* Content-Type: "application/json"
+```
+{
+  "description":"a behaviour for testing",
+  "sensor":{sensor_id},
+  "actor":{actor_id},
+  "condition": "equal",
+  "value": 10
+}
+```
+---
+response:
+* Status: 200
