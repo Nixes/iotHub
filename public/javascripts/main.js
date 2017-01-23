@@ -101,8 +101,29 @@ iotHub.controller('ActorsController', function ActorController($scope, $http) {
     - state (varies from boolean to number to string)
   */
   $http.get('./api/actors',{ cache: true }).success(function(actors) {
+    console.log("Actors: ");
+    console.log(actors);
     $scope.actors = actors;
   });
+  $scope.UpdateActorState = function(actor_id,new_state) {
+    var data = {"state":new_state};
+    $http.post('./api/actors/' + actor_id + '/state', data).success(function(received) {
+      console.log("Received on updating actor state: ");
+      console.log(received);
+    });
+  };
+  $scope.$watch('actors', function(new_actors, old_actors) {
+    console.log("An actor change was detected");
+    console.log(old_actors);
+    console.log(new_actors);
+    for (let i = 0; i < new_actors.length; i++) {
+      // see if the state has changed
+      if (new_actors[i].state !== old_actors[i].state) {
+        console.log("Change detected in actor id: " + new_actors[i]._id);
+        $scope.UpdateActorState(new_actors[i]._id, new_actors[i].state);
+      }
+    }
+  },true);
 });
 
 iotHub.controller('SensorsConfigController', function OverviewController($scope, $http) {
