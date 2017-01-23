@@ -104,7 +104,7 @@ add an actor to the database
 ```
 {
   "name":"lamp",
-  "description":"controls the brightness of a lamp",
+  "description":"turns the lamp on/off",
   "state_type":"boolean"
 }
 ```
@@ -123,7 +123,7 @@ response:
 ```json
 {
   "name":"lamp",
-  "description":"controls the brightness of a lamp",
+  "description":"turns the lamp on/off",
   "state_type":"boolean"
 }
 ```
@@ -134,8 +134,8 @@ update an actor entry in the database
 * Content-Type: "application/json"
 ```
 {
-  "description":"turns the lamp on/off",
-  "state_type":"boolean"
+  "description":"controls the brightness of a lamp",
+  "state_type":"number"
 }
 ```
 ---
