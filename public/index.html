@@ -162,10 +162,13 @@
           </div>
           <div class="panel-body">
             <p>Actor State: {{actor.state}}</p>
-            <label class="switch" ng-show="typeof(actor) === 'boolean'" >
-              <input type="checkbox" ng-model="actor">
+            <label class="switch" ng-show="actor.state_type === 'boolean'" >
+              <input type="checkbox" ng-model="actor.state">
               <div class="slider"></div>
             </label>
+            <form ng-show="actor.state_type === 'number'" >
+              <input type="number" ng-model="actor.state" ng-model-options="{debounce : 1000}">
+            </form>
           </div>
         </div>
       </div>
