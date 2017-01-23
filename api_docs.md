@@ -121,8 +121,8 @@ add a new behaviour
 ```
 {
   "description":"a behaviour for testing",
-  "sensor":{sensor_id},
-  "actor":{actor_id},
+  "sensor":"{sensor_id}",
+  "actor":"{actor_id}",
   "condition": "equal",
   "value": 10
 }
