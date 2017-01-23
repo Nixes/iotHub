@@ -162,7 +162,7 @@
           </div>
           <div class="panel-body">
             <p>Actor State: {{actor.state}}</p>
-            <label class="switch" ng-show="typeof actor === 'boolean'" >
+            <label class="switch" ng-show="typeof(actor) === 'boolean'" >
               <input type="checkbox" ng-model="actor">
               <div class="slider"></div>
             </label>
