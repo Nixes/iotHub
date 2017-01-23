@@ -1,7 +1,6 @@
 var express = require('express');
 var router = express.Router();
 var mongoose = require( 'mongoose' );
-var request = require('request'); // request api is required for sending posts to the actors internal server
 var actor_helpers = require('../actor_helpers'); // add helpers for conditional support
 
 // include models
@@ -96,8 +95,9 @@ router
 
 // update the value of the actor (for if the actors state changed without being requested (manually overridden) )
 .post('/:actor_id/state', function(req, res, next) {
-  checkActorExists(req.params.actor_id,function (actor) {
-    actorInteraction(actor._id);
+  console.log("Tried to update actor state");
+  actor_helpers.CheckActorExists(req.params.actor_id,function (actor) {
+    actor_helpers.ActorInteraction(actor._id);
     actor_helpers.PerformAction(actor,req.body.state,res);
   },res);
 })
