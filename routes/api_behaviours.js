@@ -54,12 +54,13 @@ router
       res.status(404).json({success:false});
     } else {
       console.log("Updating behaviour: ", behaviour._id);
-      behaviour.enabled = req.body.enabled;
-      behaviour.description = req.body.description;
-      behaviour.behaviour = req.body.behaviour;
-      behaviour.actor = req.body.actor;
-      behaviour.condition = behaviour_helpers.StringToConditional(req.body.condition);
-      behaviour.value = req.body.value;
+      if (behaviour.enabled) behaviour.enabled = req.body.enabled;
+      if (behaviour.description) behaviour.description = req.body.description;
+      if (behaviour.behaviour) behaviour.behaviour = req.body.behaviour;
+      if (behaviour.sensor) behaviour.sensor = req.body.sensor;
+      if (behaviour.actor) behaviour.actor = req.body.actor;
+      if (behaviour.condition) behaviour.condition = behaviour_helpers.StringToConditional(req.body.condition);
+      if (behaviour.value) behaviour.value = req.body.value;
       console.log(" New description: "+behaviour.description );
       // handle issues with conversion
       behaviour.save(function(err,behaviour) {
