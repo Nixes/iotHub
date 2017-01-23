@@ -1,4 +1,5 @@
 var mongoose = require( 'mongoose' );
+var request = require('request'); // request api is required for sending posts to the actors internal server
 var Actor = mongoose.model('Actor');
 
 var actor_helpers = {};
@@ -16,6 +17,7 @@ actor_helpers.CheckActorExists = function(actor_id,callback,res) {
 
 // this function should be run everytime the actor interacts with the hub
 actor_helpers.ActorInteraction = function(actor_id, res) {
+  console.log("An interaction with an actor just occured");
   actor_helpers.CheckActorExists(actor_id, function(actor) {
     actor.last_seen_time = new Date();
     actor.save(function(err,actor) {
@@ -30,7 +32,11 @@ actor_helpers.ActorInteraction = function(actor_id, res) {
 };
 
 actor_helpers.PerformAction = function (actor, action, res) {
-  if (actor.state == req.body.state) return; // only process when something changed
+  if (actor.state === action) {
+    console.log("No change detected");
+    if (res) res.status(404).json({success:false});
+    return;
+  }; // only process when something changed
   // TODO: check that received state type matches the state_type of the model
 
   // change the state of the actor itself
@@ -51,7 +57,7 @@ actor_helpers.PerformAction = function (actor, action, res) {
         }
       });
     } else {
-      console.log("Failed to update remote actor state");
+      console.log("Failed to update remote actor state, error: "+error);
       if (res) res.status(404).json({success:false});
     }
   });
