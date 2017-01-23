@@ -93,7 +93,7 @@ iotHub.controller('SensorsController', function OverviewController($scope, $http
 });
 
 
-iotHub.controller('ActorController', function ActorController($scope, $http) {
+iotHub.controller('ActorsController', function ActorController($scope, $http) {
   /*
   Each actor will have a structure like follows:
     - _id
@@ -216,12 +216,14 @@ iotHub.controller('SensorsConfigController', function OverviewController($scope,
 });
 
 
-iotHub.controller('BehaviourController', function ActorController($scope, $http) {
+iotHub.controller('BehavioursController', function ActorController($scope, $http) {
   $http.get('./api/behaviours',{ cache: true }).success(function(behaviours) {
+    console.log("Behvaiours obtained: ");
+    console.log(behaviours);
     $scope.behaviours = behaviours;
   });
 });
-iotHub.controller('BehaviourModifyController', function OverviewController($scope, $http) {
+iotHub.controller('BehavioursModifyController', function OverviewController($scope, $http) {
   $scope.selected_behaviour; // the id of the currently selected behaviour
   $scope.selected_behaviour_contents = {}; // contents of currently selected behaviour
   $scope.new_behaviour_contents = {};
