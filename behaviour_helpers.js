@@ -74,13 +74,8 @@ behaviour_helpers.ConditionalToString = function (condition_num) {
 };
 
 behaviour_helpers.EvaluateCondition = function (conditional, value, state) {
-  console.log("Conditional was: "+conditional);
-
-  var tmp_function = behaviour_helpers.condition_list_functions[conditional];
-  console.log("Typeof was: ");
-  console.log(typeof(tmp_function));
-  var result = tmp_function(value, state);
-  return result;
+  console.log("Conditional was: "+ behaviour_helpers.ConditionalToString(conditional) + " as int: " + conditional);
+  return behaviour_helpers.condition_list_functions[conditional](value, state);;
 };
 
 // run an action as found in a behaviour, TODO: Complete
@@ -90,7 +85,16 @@ behaviour_helpers.PerformAction = function (action, actor) {
 
 behaviour_helpers.Validate = function (behaviour){
   // check that number of the conditional type is within available options
-  if (behaviour.condition > behaviour_helpers.condition_list_functions.length) {return false;}
+  if (behaviour.condition > behaviour_helpers.condition_list_functions.length) {
+    console.log("Behaviour had an incorrect condition value");
+    return false;
+  }
+
+  // test that the behaviour action type is the same type as the actor state_type
+  if ( typeof(behaviour.action) !==  behaviour.actor.state_type) {
+    console.log("Actor state_type did not match action type");
+    return false;
+  }
 
   return true;
 };
