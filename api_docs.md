@@ -130,3 +130,18 @@ add a new behaviour
 ---
 response:
 * Status: 200
+
+
+## POST /api/sensors/{sensor_id}/data
+
+send sensor data to the , this time to trigger a behaviour
+* Content-Type: "application/json"
+```
+{
+  "value":10,
+  "collection_time":"2016-12-03T08:36:55.743Z"
+}
+```
+---
+response:
+* Status: 200
