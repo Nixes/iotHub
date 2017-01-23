@@ -28,6 +28,7 @@ router
   behaviour.enabled = req.body.enabled;
   behaviour.description = req.body.description || undefined;
   behaviour.behaviour = req.body.behaviour;
+  behaviour.sensor = req.body.sensor;
   behaviour.actor = req.body.actor;
   behaviour.condition = behaviour_helpers.StringToConditional(req.body.condition);
   behaviour.value = req.body.value;
@@ -37,7 +38,7 @@ router
   behaviour.save(function(err,behaviour) {
     if (err) {
       console.log("Failed to add behaviour err: "+err);
-      res.json({success:false});
+      res.status(404).json({success:false});
     } else {
       res.json({success:true, id:behaviour.id});
     }
