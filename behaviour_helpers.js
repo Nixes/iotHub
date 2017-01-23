@@ -4,7 +4,8 @@ var Actor = mongoose.model('Actor');
 
 var behaviour_helpers = {};
 
-// this entire module is designed to allow the
+// this entire module is designed to allow the execution of behaviours by any other part of the hub
+
 behaviour_helpers.condition_list_string = [
   "equal",
   "not equal",
@@ -73,7 +74,13 @@ behaviour_helpers.ConditionalToString = function (condition_num) {
 };
 
 behaviour_helpers.EvaluateCondition = function (conditional, value, state) {
-  return behaviour_helpers.condition_list_functions[conditional](value, state);
+  console.log("Conditional was: "+conditional);
+
+  var tmp_function = behaviour_helpers.condition_list_functions[conditional];
+  console.log("Typeof was: ");
+  console.log(typeof(tmp_function));
+  var result = tmp_function(value, state);
+  return result;
 };
 
 // run an action as found in a behaviour, TODO: Complete
@@ -89,20 +96,23 @@ behaviour_helpers.Validate = function (behaviour){
 };
 
 behaviour_helpers.CheckBehaviour = function(sensor_id,last_sensor_state) {
-  Behaviour.find({sensor:sensor_id}).lean().exec( function(err,data){
-    if (err || data!==[]) {
-      console.log("Unable to find matching behaviour");
+  Behaviour.find({sensor:sensor_id}).lean().populate('actor').exec( function(err,behaviours){
+    if (err || behaviours.length === 0) {
+      console.log("Unable to find matching behaviour: " + err + "data was: ");
+      console.log(behaviours);
       return;
     } else {
-      console.log("Found a matching behaviour, validating");
-      console.log("Actor found within was: ");
-      console.log(data.actor);
-      // validate the behaviour first
-      if (behaviour_helpers.Validate(data)) {
-        console.log("Passed, testing");
-        if (behaviour_helpers.EvaluateCondition(data.condition,data.value,last_sensor_state) ) {
-          console.log("Passed, running action");
-          behaviour_helpers.PerformAction(data.action,data.actor);
+      for (behaviour of behaviours) {
+        console.log("Behaviour was: ");
+        console.log(behaviour);
+        console.log("Found a matching behaviour, validating");
+        // validate the behaviour first
+        if (behaviour_helpers.Validate(behaviour)) {
+          console.log("Passed, testing");
+          if (behaviour_helpers.EvaluateCondition(behaviour.condition,behaviour.value,last_sensor_state) ) {
+            console.log("Passed, running action");
+            behaviour_helpers.PerformAction(behaviour.action,behaviour.actor);
+          }
         }
       }
     }
