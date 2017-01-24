@@ -35,7 +35,7 @@ router
       console.log("Failed to add actor err: "+err);
       res.json({success:false});
     } else {
-      actor_helpers.ActorInteraction(actor._id);
+      actor_helpers.ActorInteraction(actor._id,req);
       res.json({success:true, id:actor._id});
     }
   });
