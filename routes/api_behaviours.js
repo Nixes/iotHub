@@ -26,13 +26,14 @@ router
   console.log("Adding a new behaviour");
   var behaviour = new Behaviour();
   behaviour.enabled = req.body.enabled;
-  behaviour.description = req.body.description || undefined;
-  behaviour.behaviour = req.body.behaviour;
+  behaviour.description = req.body.description;
   behaviour.sensor = req.body.sensor;
   behaviour.actor = req.body.actor;
+  behaviour.action = req.body.action;
   behaviour.condition = behaviour_helpers.StringToConditional(req.body.condition);
   behaviour.value = req.body.value;
-  console.log("Tried to add a new behaviour: " + behaviour.id + ", description: " +behaviour.description );
+  console.log("Tried to add a new behaviour: ");
+  console.log(behaviour);
 
   // handle issues with conversion
   behaviour.save(function(err,behaviour) {
