@@ -49,12 +49,13 @@ var overviewSchema = mongoose.Schema({
 });
 
 var behaviourSchema = mongoose.Schema({
-  enabled: Boolean,
+  enabled: {type: Boolean,  required: true },
+  description: String,// reference to the sensor to show
   sensor: { type: mongoose.Schema.Types.ObjectId, ref: 'Sensor', required: true },// reference to the sensor to show
   actor: { type: mongoose.Schema.Types.ObjectId, ref: 'Actor', required: true },// reference to the sensor to show
-  condition: Number,
-  value: mongoose.Schema.Types.Mixed, // value is what is compared against the state of the sensor
-  action:  mongoose.Schema.Types.Mixed,
+  condition: {type: Number,  required: true },
+  value: {type: mongoose.Schema.Types.Mixed,  required: true }, // value is what is compared against the state of the sensor
+  action: {type: mongoose.Schema.Types.Mixed,  required: true },
 });
 
 
