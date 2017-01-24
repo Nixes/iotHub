@@ -105,11 +105,15 @@ iotHub.controller('ActorsController', function ActorController($scope, $http) {
     console.log(actors);
     $scope.actors = actors;
   });
-  $scope.UpdateActorState = function(actor_id,new_state) {
+  $scope.UpdateActorState = function(actor_id,new_state,old_state) {
     var data = {"state":new_state};
-    $http.post('./api/actors/' + actor_id + '/state', data).success(function(received) {
-      console.log("Received on updating actor state: ");
+    $http.post('./api/actors/' + actor_id + '/state', data).then(function(received) {
+      console.log("Received SUCCESS on updating actor state: ");
       console.log(received);
+    },function (received) {
+      console.log("Request FAILED received: ");
+      console.log(received);
+      new_state = old_state;
     });
   };
   $scope.$watch('actors', function(new_actors, old_actors) {
@@ -120,7 +124,7 @@ iotHub.controller('ActorsController', function ActorController($scope, $http) {
       // see if the state has changed
       if (new_actors[i].state !== old_actors[i].state) {
         console.log("Change detected in actor id: " + new_actors[i]._id);
-        $scope.UpdateActorState(new_actors[i]._id, new_actors[i].state);
+        $scope.UpdateActorState(new_actors[i]._id, new_actors[i].state, old_actors[i].state);
       }
     }
   },true);
@@ -244,14 +248,26 @@ iotHub.controller('BehavioursController', function ActorController($scope, $http
     $scope.behaviours = behaviours;
   });
 });
+
 iotHub.controller('BehavioursModifyController', function OverviewController($scope, $http) {
   $scope.selected_behaviour; // the id of the currently selected behaviour
   $scope.selected_behaviour_contents = {}; // contents of currently selected behaviour
   $scope.new_behaviour_contents = {};
 
+  $http.get('./api/sensors',{ cache: true }).success(function(sensors) {
+    $scope.sensors = sensors;
+    console.log("Got sensors");
+    console.log(sensors);
+  });
+  $http.get('./api/actors',{ cache: true }).success(function(actors) {
+    $scope.actors = actors;
+    console.log("Got actors");
+    console.log(actors);
+  });
+
   $scope.GetBehaviour = function () {
     if ($scope.selected_behaviour !== null) {
-      $http.get('./api/overview/'+ $scope.selected_behaviour).success(function(data) {
+      $http.get('./api/behaviours/'+ $scope.selected_behaviour).success(function(data) {
           $scope.selected_behaviour_contents = data;
       });
     } else {
@@ -267,8 +283,8 @@ iotHub.controller('BehavioursModifyController', function OverviewController($sco
     console.log($scope.selected_behaviour_contents);
     var diff_object = {};
 
-    // compare actor
-    if ($scope.selected_behaviour_contents.actor !== $scope.new_behaviour_contents.actor) {
+    // compare enabled
+    if ($scope.selected_behaviour_contents.enabled !== $scope.new_behaviour_contents.enabled) {
       diff_object.actor = $scope.new_behaviour_contents.actor;
     }
 
@@ -282,6 +298,15 @@ iotHub.controller('BehavioursModifyController', function OverviewController($sco
       diff_object.condition = $scope.new_behaviour_contents.condition;
     }
 
+    // compare value
+    if ($scope.selected_behaviour_contents.value !== $scope.new_behaviour_contents.value) {
+      diff_object.value = $scope.new_behaviour_contents.value;
+    }
+
+    // compare actor
+    if ($scope.selected_behaviour_contents.actor !== $scope.new_behaviour_contents.actor) {
+      diff_object.enabled = $scope.new_behaviour_contents.enabled;
+    }
     // compare action
     if ($scope.selected_behaviour_contents.action !== $scope.new_behaviour_contents.action) {
       diff_object.action = $scope.new_behaviour_contents.action;
@@ -299,19 +324,23 @@ iotHub.controller('BehavioursModifyController', function OverviewController($sco
       if (Object.keys(diff).length !== 0) {
         console.log("Behaviour update sent to server: ");
         console.log(diff);
-        $http.post('./api/behaviours/'+ $scope.selected_behaviour, diff).success(function(data) {
-          console.log("Received on post: ");
-          console.log(data);
-        });
+        if (!$scope.selected_behaviour) { // if there is no selected sensor
+          console.log("Sent a new behaviour");
+          $http.post('./api/behaviours', diff).success(function(data) {
+            console.log("Received on post: ");
+            console.log(data);
+          });
+        } else {
+          console.log("Modified an existing behaviour");
+          $http.post('./api/behaviours/'+ $scope.selected_behaviour, diff).success(function(data) {
+            console.log("Received on post: ");
+            console.log(data);
+          });
+        }
       } else {
         console.log("Null diff generated, not sending");
       }
   };
-
-  /*$scope.$watch('selected_behaviour_contents', function() {
-    // have to manually copy properties or javascript will try to set via a reference
-    $scope.new_behaviour_contents = {name:  $scope.selected_behaviour_contents.name, description:$scope.selected_behaviour_contents.description };
-  });*/
 
   $scope.DeleteBehaviour = function() {
     var confirmed = confirm("Are you sure you want to delete the behaviour?");
