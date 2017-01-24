@@ -150,9 +150,11 @@ add a new behaviour
 * Content-Type: "application/json"
 ```
 {
+  "enabled": true,
   "description":"a behaviour for testing",
   "sensor":"{sensor_id}",
   "actor":"{actor_id}",
+  "action": 123,
   "condition": "equal",
   "value": 10
 }
