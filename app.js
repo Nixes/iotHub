@@ -29,10 +29,11 @@ db.once('open', function() {
   // we're connected!
 });
 
-
-// view engine setup
-//app.set('views', path.join(__dirname, 'views'));
-//app.set('view engine', 'jade');
+// check to see if we are running as a debug release
+if ( !(process.argv[2] && process.argv[2] === "debug") ) {
+  console.log("Release Build: debug console disabled");
+  console.log = function() {};
+}
 
 // uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
