@@ -265,6 +265,23 @@ iotHub.controller('BehavioursModifyController', function OverviewController($sco
     console.log(actors);
   });
 
+  $scope.GetCompatibleValueType = function () {
+    for (let sensor of $scope.sensors) {
+      if ($scope.new_behaviour_contents.sensor === sensor._id) {
+        $scope.new_behaviour_contents.data_type = sensor.data_type;
+        console.log("Sensor data type was: ");
+        console.log(sensor.data_type);
+      }
+    }
+  };
+  $scope.GetCompatibleActionType = function () {
+    for (let actor of $scope.actors) {
+      if ($scope.new_behaviour_contents.actor === actor._id) {
+        $scope.new_behaviour_contents.state_type = actor.state_type;
+      }
+    }
+  };
+
   $scope.GetBehaviour = function () {
     if ($scope.selected_behaviour !== null) {
       $http.get('./api/behaviours/'+ $scope.selected_behaviour).success(function(data) {
@@ -275,6 +292,12 @@ iotHub.controller('BehavioursModifyController', function OverviewController($sco
     }
   };
 
+  $scope.$watch('new_behaviour_contents.actor', function() {
+    $scope.GetCompatibleActionType();
+  });
+  $scope.$watch('new_behaviour_contents.sensor', function() {
+    $scope.GetCompatibleValueType();
+  });
   // check the differences between current and new behaviour properties
   $scope.GenerateDiff = function() {
     console.log("Generating Diff, new behaviour contents");

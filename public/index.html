@@ -227,21 +227,38 @@
                 </div>
                 <div class="form-group">
                   <label for="Condition">Condition</label>
-                  <input type="text" class="form-control" id="Condition" ng-model="new_behaviour_contents.condition" required>
+                  <select class="form-control" id="Condition"  ng-model="new_behaviour_contents.condition">
+                    <option value="equal">equal</option>
+                    <option value="not equal">not equal</option>
+                    <option value="greater">greater</option>
+                    <option value="less">less</option>
+                    <option value="greater or equal">greater or equal</option>
+                    <option value="less or equal">less or equal</option>
+                  </select>
                 </div>
                 <div class="form-group">
                   <label for="Value">Value</label>
-                  <input type="text" class="form-control" id="Value" ng-model="new_behaviour_contents.value" required>
-                </div>
-                <div class="form-group">
-                  <label for="Action">Action</label>
-                  <input type="text" class="form-control" id="Action" ng-model="new_behaviour_contents.action" required>
+                  <input type="text" class="form-control" id="Value" ng-model="new_behaviour_contents.value" ng-if="new_behaviour_contents.data_type === 'string'" required>
+                  <input type="number" class="form-control" id="Value" ng-model="new_behaviour_contents.value" ng-if="new_behaviour_contents.data_type === 'number'" required>
+                  <label class="switch" id="Value" ng-if="new_behaviour_contents.data_type === 'boolean'" >
+                    <input type="checkbox" ng-model="new_behaviour_contents.value">
+                    <div class="slider"></div>
+                  </label>
                 </div>
                 <div class="form-group">
                   <label for="Actor">Actor</label>
                   <select class="form-control" id="Actor"  ng-model="new_behaviour_contents.actor">
                     <option ng-repeat="actor in actors" value="{{actor._id}}">{{actor.name}} (id:{{actor._id}})</option>
                   </select>
+                </div>
+                <div class="form-group">
+                  <label for="Action">Action</label>
+                  <input type="text" class="form-control" id="Action" ng-model="new_behaviour_contents.action" ng-if="new_behaviour_contents.state_type === 'string'" required>
+                  <input type="number" class="form-control" id="Action" ng-model="new_behaviour_contents.action" ng-if="new_behaviour_contents.state_type === 'number'" required>
+                  <label class="switch" id="Action" ng-if="new_behaviour_contents.state_type === 'boolean'" >
+                    <input type="checkbox" ng-model="new_behaviour_contents.action">
+                    <div class="slider"></div>
+                  </label>
                 </div>
                 <div class="form-group">
                   <label for="Description">Description</label>
