@@ -92,7 +92,15 @@ behaviour_helpers.Validate = function (behaviour){
 
   // test that the behaviour action type is the same type as the actor state_type
   if ( typeof(behaviour.action) !==  behaviour.actor.state_type) {
+    console.log("Typof action: "+ typeof(behaviour.action));
+    console.log("Action state_type: "+ behaviour.actor.state_type);
     console.log("Actor state_type did not match action type");
+    return false;
+  }
+
+  // test that the type of value is the same as the data_type of sensor
+  if ( typeof(behaviour.value) !==  behaviour.sensor.data_type) {
+    console.log("Sensor data_type did not match value type");
     return false;
   }
 
