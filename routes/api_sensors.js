@@ -75,8 +75,9 @@ router
 // add a sensor to the database
 .post('/', function(req, res, next) {
   var sensor = new Sensor();
-  sensor.name = req.body.name || "default name";
-  sensor.description = req.body.description || undefined;
+  sensor.name = req.body.name;
+  sensor.description = req.body.description;
+  sensor.data_type = req.body.data_type;
   console.log("Tried to add a new sensor: " + sensor.id + ", name: " +sensor.name + ", description: " +sensor.description );
 
   // handle issues with conversion
