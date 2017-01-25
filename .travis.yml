@@ -6,7 +6,7 @@ services: mongodb
 
 install:
   - npm install
-  - node bin/www &
+  - node bin/www debug &
   - wget https://github.com/matryer/silk/releases/download/0.5.1/silk-0.5.1-linux-amd64.zip
   - unzip silk-0.5.1-linux-amd64.zip
   - sleep 2 # give node a little more time to start
