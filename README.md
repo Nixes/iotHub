@@ -19,6 +19,9 @@ But you are welcome to develop external bridges yourself.
 - Built in Web UI: view and control your environment from any device with a browser
 - Event based: Sensors only send data when they have something to show for it, no polling
 
+#Architecture
+![Alt text](iothub-architecture.png)
+
 #Installation
 Make sure you have a MongoDB server running first.
 
