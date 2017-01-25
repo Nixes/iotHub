@@ -30,7 +30,7 @@ function decimateData(data,number_points) {
 function checkSensorExists(sensor_id,callback,res) {
   Sensor.findById(sensor_id, function(err,sensor){
     if (err || !sensor) {
-      console.log("Sensor not registered err: "+err);
+      console.error("Sensor not registered err: "+err);
       if (res) res.status(404).json({success:false,error:"Sensor not registered"});
     } else {
       callback(sensor._id);
@@ -83,7 +83,7 @@ router
   // handle issues with conversion
   sensor.save(function(err,sensor) {
     if (err) {
-      console.log("Failed to add sensor err: "+err);
+      console.error("Failed to add sensor err: "+err);
       res.json({success:false});
     } else {
       res.json({success:true, id:sensor.id});
@@ -96,7 +96,7 @@ router
 
   Sensor.findById(req.params.sensor_id, function(err,sensor){
     if (err) {
-      console.log("Sensor not registered err: "+err);
+      console.error("Sensor not registered err: "+err);
       res.status(404).json({success:false});
     } else {
       console.log("Updating sensor: ", sensor._id);
@@ -106,7 +106,7 @@ router
       // handle issues with conversion
       sensor.save(function(err,sensor) {
         if (err) {
-          console.log("Failed to update sensor err: "+err);
+          console.error("Failed to update sensor err: "+err);
           res.json({success:false});
         } else {
           res.json({success:true, request:req.body });
@@ -120,7 +120,7 @@ router
 .get('/:sensor_id', function(req, res, next){
   Sensor.findById(req.params.sensor_id,'-__v', function(err,sensor){
     if (err) {
-      console.log("Sensor not registered err: "+err);
+      console.error("Sensor not registered err: "+err);
       res.status(404).json({success:false});
     } else {
       console.log("Retrieved Sensor: ");
@@ -134,7 +134,7 @@ router
 .delete('/:sensor_id', function(req, res, next){
   Sensor.findById(req.params.sensor_id).remove().exec( function(err,sensor){
     if (err) {
-      console.log("Failed to delete sensor err: "+err);
+      console.error("Failed to delete sensor err: "+err);
       res.json({success:false});
     } else {
       // delete overview if it has one too
@@ -162,7 +162,7 @@ router
   // then check that a sensor with the specified id actually exists
   Sensor.findById(req.params.sensor_id, function(err,sensor){
     if (err || !sensor) {
-      console.log("Sensor not registered err: "+err);
+      console.error("Sensor not registered err: "+err);
       res.status(404).json({success:false,error:"Sensor not registered"});
     } else {
       var point;
@@ -174,7 +174,7 @@ router
 
       Data.create(point, function (err, point) {
         if (err) {
-          console.log("Failed to add data point: "+err);
+          console.error("Failed to add data point: "+err);
           res.status(404).json({success:false,error:err});
         } else {
           console.log("Success: "+err);
@@ -190,7 +190,7 @@ router
 .delete('/:sensor_id/data',function(req, res, next){
   Sensor.findById(req.params.sensor_id, function(err,sensor){
     if (err) {
-      console.log("Sensor not registered err: "+err);
+      console.error("Sensor not registered err: "+err);
       res.status(404).json({success:false});
     } else {
       // empty the array
@@ -209,7 +209,7 @@ router
 .get('/:sensor_id/data',function(req, res, next){
   Data.find({sensor_id:req.params.sensor_id},'-_id -sensor_id -__v').lean().exec( function(err,data){
     if (err) {
-      console.log("Sensor not registered err: "+err);
+      console.error("Sensor not registered err: "+err);
       res.status(404).json({success:false});
     } else {
       console.log("ALL data requested for sensor: "+ req.params.sensor_id );
@@ -223,12 +223,12 @@ router
   console.log("Requested the last point from"+ req.params.sensor_id);
   Sensor.findById(req.params.sensor_id,"data", function(err,sensor){
     if (err) {
-      console.log("Sensor not registered err: "+err);
+      console.error("Sensor not registered err: "+err);
       res.status(404).json({success:false});
     } else {
       Data.findOne({ sensor_id:sensor._id },'-_id -sensor_id -__v',{ sort: { 'collection_time' : -1 } } ,function(err,data){
         if (err) {
-          console.log("Failed to get data err: "+err);
+          console.error("Failed to get data err: "+err);
           res.status(404).json({success:false});
         } else {
           console.log("Returned data was: ");
@@ -247,14 +247,14 @@ router
   console.log("Requested sensor data from the last: "+ req.params.time_period);
   Sensor.findById(req.params.sensor_id, function(err,sensor){
     if (err) {
-      console.log("Sensor not registered err: "+err);
+      console.error("Sensor not registered err: "+err);
       res.status(404).json({success:false});
     } else {
       var from_time = getCompareDateFromString(req.params.time_period);
 
       Data.find({ sensor_id:sensor._id ,collection_time: { $gt: from_time } },'-_id -sensor_id -__v').lean().exec(function(err,data){
         if (err) {
-          console.log("Failed to get data err: "+err);
+          console.error("Failed to get data err: "+err);
           res.status(404).json({success:false});
         } else {
           console.log("Returned data was: ");
@@ -273,12 +273,12 @@ router
   console.log("Requested all sensor data from "+ req.params.sensor_id + " collected after "+ req.params.time);
   Sensor.findById(req.params.sensor_id,"data", function(err,sensor){
     if (err) {
-      console.log("Sensor not registered err: "+err);
+      console.error("Sensor not registered err: "+err);
       res.status(404).json({success:false});
     } else {
       Data.find({ sensor_id:sensor._id ,collection_time: { $gt: req.params.time } },'-_id -sensor_id -__v').lean().exec(function(err,data){
         if (err) {
-          console.log("Failed to get data err: "+err);
+          console.error("Failed to get data err: "+err);
           res.status(404).json({success:false});
         } else {
           console.log("Returned data was: ");

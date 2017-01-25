@@ -7,7 +7,7 @@ var actor_helpers = {};
 actor_helpers.CheckActorExists = function(actor_id,callback,res) {
   Actor.findById(actor_id, function(err,actor){
     if (err || !actor) {
-      console.log("Actor not registered err: "+err);
+      console.error("Actor not registered err: "+err);
       if (res) res.status(404).json({success:false,error:"Actor not registered"});
     } else {
       callback(actor);
@@ -32,7 +32,7 @@ actor_helpers.ActorInteraction = function(actor_id, req, res) {
     }
     actor.save(function(err,actor) {
       if (err) {
-        console.log("Failed to update last seen time err: "+err);
+        console.error("Failed to update last seen time err: "+err);
         if (res) res.json({success:false});
       } else {
         if (res) res.json({success:true});
@@ -60,14 +60,14 @@ actor_helpers.PerformAction = function (actor, action, res) {
       // handle issues with conversion
       actor.save(function(err,actor) {
         if (err) {
-          console.log("Failed to update local actor state err: "+err);
+          console.error("Failed to update local actor state err: "+err);
           if (res) res.status(404).json({success:false});
         } else {
           if (res) res.json({success:true});
         }
       });
     } else {
-      console.log("Failed to update remote actor state, error: "+error);
+      console.error("Failed to update remote actor state, error: "+error);
       if (res) res.status(404).json({success:false});
     }
   });

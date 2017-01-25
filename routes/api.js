@@ -18,7 +18,7 @@ router
 .get('/overview' ,function(req, res, next){
   Overview.find({}).populate('sensor').exec( function (err, overview) {
     if (err) {
-      console.log("found no sensors with overviews");
+      console.error("found no sensors with overviews");
       res.status(404).json({success:false});
     } else {
       res.json(overview);
@@ -33,7 +33,7 @@ router
   // handle issues with conversion
   overview.save(function(err,sensor) {
     if (err) {
-      console.log("Failed to add overview err: "+err);
+      console.error("Failed to add overview err: "+err);
       res.json({success:false});
     } else {
       res.json({success:true});
@@ -45,7 +45,7 @@ router
 .get('/overview/:sensor_id' ,function(req, res, next){
   Overview.find({sensor: req.params.sensor_id}, function(err,overview){
     if (err) {
-      console.log("Failed to find overview for "+req.params.sensor_id+" err: "+err);
+      console.error("Failed to find overview for "+req.params.sensor_id+" err: "+err);
       res.status(404).json({success:false});
     } else {
       console.log("Got overview");
@@ -58,7 +58,7 @@ router
 .delete('/overview/:sensor_id' ,function(req, res, next){
   Overview.find({sensor: req.params.sensor_id}).remove().exec( function(err){
     if (err) {
-      console.log("Failed to remove overview for "+req.params.sensor_id+" err: "+err);
+      console.error("Failed to remove overview for "+req.params.sensor_id+" err: "+err);
       res.json({success:false});
     } else {
       res.json({success:true});

@@ -26,7 +26,6 @@ router
 
 // add a behaviour to the database
 .post('/', function(req, res, next) {
-  console.log("Adding a new behaviour");
   var behaviour = new Behaviour();
   behaviour.enabled = req.body.enabled;
   behaviour.description = req.body.description;
@@ -44,7 +43,7 @@ router
   // handle issues with conversion
   behaviour.save(function(err,behaviour) {
     if (err) {
-      console.log("Failed to add behaviour err: "+err);
+      console.error("Failed to add behaviour err: "+err);
       res.status(404).json({success:false});
     } else {
       res.json({success:true, id:behaviour.id});
@@ -57,7 +56,7 @@ router
 
   Behaviour.findById(req.params.behaviour_id, function(err,behaviour){
     if (err) {
-      console.log("Behaviour not registered err: "+err);
+      console.error("Behaviour not registered err: "+err);
       res.status(404).json({success:false});
     } else {
       console.log("Updating behaviour: ", behaviour._id);
@@ -72,7 +71,7 @@ router
       // handle issues with conversion
       behaviour.save(function(err,behaviour) {
         if (err) {
-          console.log("Failed to update behaviour err: "+err);
+          console.error("Failed to update behaviour err: "+err);
           res.json({success:false});
         } else {
           res.json({success:true, request:req.body });
@@ -86,7 +85,7 @@ router
 .get('/:behaviour_id', function(req, res, next){
   Behaviour.findById().lean().exec(req.params.behaviour_id,'-__v', function(err,behaviour){
     if (err) {
-      console.log("Behaviour not registered err: "+err);
+      console.error("Behaviour not registered err: "+err);
       res.status(404).json({success:false});
     } else {
       console.log("Retrieved Behaviour: ");
@@ -101,7 +100,7 @@ router
 .delete('/:behaviour_id', function(req, res, next){
   Behaviour.findById(req.params.behaviour_id).remove().exec( function(err,behaviour){
     if (err) {
-      console.log("Failed to delete behaviour err: "+err);
+      console.error("Failed to delete behaviour err: "+err);
       res.json({success:false});
     } else {
       res.json({success:true});

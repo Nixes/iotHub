@@ -32,7 +32,7 @@ router
   // handle issues with conversion
   actor.save(function(err,actor) {
     if (err) {
-      console.log("Failed to add actor err: "+err);
+      console.error("Failed to add actor err: "+err);
       res.json({success:false});
     } else {
       actor_helpers.ActorInteraction(actor._id,req);
@@ -46,7 +46,7 @@ router
 
   Actor.findById(req.params.actor_id, function(err,actor){
     if (err) {
-      console.log("Actor not registered err: "+err);
+      console.error("Actor not registered err: "+err);
       res.status(404).json({success:false});
     } else {
       console.log("Updating actor: ", actor._id);
@@ -71,7 +71,7 @@ router
 .get('/:actor_id', function(req, res, next){
   Actor.findById(req.params.actor_id,'-__v', function(err,actor){
     if (err) {
-      console.log("Actor not registered err: "+err);
+      console.error("Actor not registered err: "+err);
       res.status(404).json({success:false});
     } else {
       console.log("Retrieved Actor: ");
@@ -85,7 +85,7 @@ router
 .delete('/:actor_id', function(req, res, next){
   Actor.findById(req.params.actor_id).remove().exec( function(err,actor){
     if (err) {
-      console.log("Failed to delete actor err: "+err);
+      console.error("Failed to delete actor err: "+err);
       res.json({success:false});
     } else {
       res.json({success:true});
