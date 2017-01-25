@@ -1,6 +1,7 @@
 var mongoose = require( 'mongoose' );
 var Behaviour = mongoose.model('Behaviour');
 var Actor = mongoose.model('Actor');
+var actor_helpers = require('./actor_helpers'); // add helpers to allow us to perform an action
 
 var behaviour_helpers = {};
 
@@ -79,8 +80,14 @@ behaviour_helpers.EvaluateCondition = function (conditional, value, state) {
 };
 
 // run an action as found in a behaviour, TODO: Complete
-behaviour_helpers.PerformAction = function (action, actor) {
-  console.log("Action " + action + " to be performed by "+actor);
+behaviour_helpers.PerformAction = function (actor_id, action) {
+  Actor.findById(actor_id, function(err,actor){
+    if (err || !actor) {
+      console.log("Could not find actor to perform action on");
+    } else {
+      actor_helpers.PerformAction(actor, action);
+    }
+  });
 };
 
 behaviour_helpers.Validate = function (behaviour){
@@ -108,7 +115,7 @@ behaviour_helpers.Validate = function (behaviour){
 };
 
 behaviour_helpers.CheckBehaviour = function(sensor_id,last_sensor_state) {
-  Behaviour.find({sensor:sensor_id}).lean().populate('actor').exec( function(err,behaviours){
+  Behaviour.find({sensor:sensor_id}).lean().populate('actor').populate('sensor').exec( function(err,behaviours){
     if (err || behaviours.length === 0) {
       console.log("Unable to find matching behaviour: " + err + "data was: ");
       console.log(behaviours);
@@ -123,7 +130,7 @@ behaviour_helpers.CheckBehaviour = function(sensor_id,last_sensor_state) {
           console.log("Passed, testing");
           if (behaviour_helpers.EvaluateCondition(behaviour.condition,behaviour.value,last_sensor_state) ) {
             console.log("Passed, running action");
-            behaviour_helpers.PerformAction(behaviour.action,behaviour.actor);
+            behaviour_helpers.PerformAction(behaviour.actor._id, behaviour.action);
           }
         }
       }
