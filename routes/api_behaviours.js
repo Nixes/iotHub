@@ -14,9 +14,12 @@ router
 
 // return a list of behaviours
 .get('/', function(req, res, next) {
-    Behaviour.find({},function (err, behaviours) {
+    Behaviour.find().lean().exec({},function (err, behaviours) {
       if (err) return console.error(err);
-      console.log(behaviours);
+      // replace the encoded conditions with the string versions
+      for (let i = 0; i < behaviours.length; i++) {
+        behaviours[i].condition = behaviour_helpers.ConditionalToString(behaviours[i].condition);
+      }
       res.json(behaviours);
     });
 })
@@ -34,6 +37,9 @@ router
   behaviour.value = req.body.value;
   console.log("Tried to add a new behaviour: ");
   console.log(behaviour);
+
+  // validate the behaviour using common rules
+  if (behaviour_helpers.Validate(behaviour)) return;
 
   // handle issues with conversion
   behaviour.save(function(err,behaviour) {
@@ -78,13 +84,14 @@ router
 
 // get information about a specific behaviour
 .get('/:behaviour_id', function(req, res, next){
-  Behaviour.findById(req.params.behaviour_id,'-__v', function(err,behaviour){
+  Behaviour.findById().lean().exec(req.params.behaviour_id,'-__v', function(err,behaviour){
     if (err) {
       console.log("Behaviour not registered err: "+err);
       res.status(404).json({success:false});
     } else {
       console.log("Retrieved Behaviour: ");
       console.log(JSON.stringify(behaviour) );
+      behaviour.condition = behaviour_helpers.ConditionalToString(behaviour.condition);
       res.json(behaviour);
     }
   });
