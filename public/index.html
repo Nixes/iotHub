@@ -159,6 +159,8 @@
         <div ng-repeat="actor in actors" class="panel panel-default">
           <div class="panel-heading">
             {{actor.name}} ({{actor._id}})
+            <button type="button" class="close" ng-click="DeleteActor($index)"><span class="glyphicon glyphicon-trash"></span></button>
+
           </div>
           <div class="panel-body">
             <p>Actor State: {{actor.state}}</p>

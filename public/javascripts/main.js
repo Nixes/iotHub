@@ -116,6 +116,22 @@ iotHub.controller('ActorsController', function ActorController($scope, $http) {
       new_state = old_state;
     });
   };
+  $scope.DeleteActor = function (actor_index) {
+    // delete from the server
+    var confirmed = confirm("Are you sure you want to delete the actor?");
+    if (confirmed) {
+      $http.delete('./api/actors/' + $scope.actors[actor_index]._id ).success(function(received) {
+        console.log("Received on deleting actor: ");
+        console.log(received);
+        // delete locally if successful
+        $scope.actors.splice(actor_index,1);
+      });
+    } else {
+      console.log("Declined actor deletion");
+    }
+
+
+  }
   $scope.$watch('actors', function(new_actors, old_actors) {
     console.log("An actor change was detected");
     console.log(old_actors);
