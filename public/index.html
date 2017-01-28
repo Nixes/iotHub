@@ -160,7 +160,6 @@
           <div class="panel-heading">
             {{actor.name}} ({{actor._id}})
             <button type="button" class="close" ng-click="DeleteActor($index)"><span class="glyphicon glyphicon-trash"></span></button>
-
           </div>
           <div class="panel-body">
             <p>Actor State: {{actor.state}}</p>
@@ -185,6 +184,7 @@
         <table class="table table-striped">
           <thead>
             <tr>
+              <th>Edit</th>
               <th>Enabled</th>
               <th>Description</th>
               <th>Sensor</th>
@@ -195,6 +195,7 @@
           </thead>
           <tbody>
             <tr ng-repeat="behaviour in behaviours">
+              <td><button type="button" class="btn" ng-click="SelectBehaviour($index)" data-toggle="modal" data-target="#ModifyBehaviour"><span class="glyphicon glyphicon-edit"></span></button></td>
               <td>
                 <input type="checkbox" class="form-control" id="BehaviourEnabled" ng-model="behaviour.enabled">
               </td>
@@ -207,7 +208,7 @@
           </tbody>
         </table>
 
-        <button type="button" class="btn" data-toggle="modal" data-target="#ModifyBehaviour"><span class="glyphicon glyphicon-plus"></span> Add Behaviour</button>
+        <button type="button" class="btn" data-toggle="modal" data-target="#ModifyBehaviour" ng-click="ResetBehaviour()"><span class="glyphicon glyphicon-plus"></span> Add Behaviour</button>
 
         <!-- Behaviour Modify Modal -->
         <div class="modal fade" id="ModifyBehaviour" role="dialog" ng-controller="BehavioursModifyController">
