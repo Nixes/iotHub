@@ -258,17 +258,34 @@ iotHub.controller('SensorsConfigController', function OverviewController($scope,
 
 
 iotHub.controller('BehavioursController', function ActorController($scope, $http) {
+  $scope.selected_behaviour_contents = {}; // contents of currently selected behaviour
+  $scope.new_behaviour_contents = {};
+
   $http.get('./api/behaviours',{ cache: true }).success(function(behaviours) {
     console.log("Behvaiours obtained: ");
     console.log(behaviours);
     $scope.behaviours = behaviours;
   });
+
+  // used to reset behaviour contents before a new one is created
+  $scope.ResetBehaviour = function () {
+    console.log("Behaviour reset called");
+    $scope.selected_behaviour_contents = null;
+    $scope.new_behaviour_contents = null;
+  }
+
+  $scope.SelectBehaviour = function (behaviour_index) {
+    console.log("SelectBehaviour has run, behaviour_index: "+behaviour_index);
+    console.log("Contents at index:  ");
+    console.log($scope.behaviours[behaviour_index]);
+    // equalise the contents of both to allow a comparison
+    $scope.selected_behaviour_contents = $scope.behaviours[behaviour_index];
+    $scope.new_behaviour_contents = $scope.behaviours[behaviour_index];
+  };
 });
 
 iotHub.controller('BehavioursModifyController', function OverviewController($scope, $http) {
-  $scope.selected_behaviour; // the id of the currently selected behaviour
-  $scope.selected_behaviour_contents = {}; // contents of currently selected behaviour
-  $scope.new_behaviour_contents = {};
+
 
   $http.get('./api/sensors',{ cache: true }).success(function(sensors) {
     $scope.sensors = sensors;
@@ -295,16 +312,6 @@ iotHub.controller('BehavioursModifyController', function OverviewController($sco
       if ($scope.new_behaviour_contents.actor === actor._id) {
         $scope.new_behaviour_contents.state_type = actor.state_type;
       }
-    }
-  };
-
-  $scope.GetBehaviour = function () {
-    if ($scope.selected_behaviour !== null) {
-      $http.get('./api/behaviours/'+ $scope.selected_behaviour).success(function(data) {
-          $scope.selected_behaviour_contents = data;
-      });
-    } else {
-      console.log("Selected behaviour was null, you are probably defining a new one.");
     }
   };
 
@@ -363,7 +370,7 @@ iotHub.controller('BehavioursModifyController', function OverviewController($sco
       if (Object.keys(diff).length !== 0) {
         console.log("Behaviour update sent to server: ");
         console.log(diff);
-        if (!$scope.selected_behaviour) { // if there is no selected sensor
+        if (!$scope.selected_behaviour_contents) { // if there is no selected sensor
           console.log("Sent a new behaviour");
           $http.post('./api/behaviours', diff).success(function(data) {
             console.log("Received on post: ");
@@ -371,9 +378,11 @@ iotHub.controller('BehavioursModifyController', function OverviewController($sco
           });
         } else {
           console.log("Modified an existing behaviour");
-          $http.post('./api/behaviours/'+ $scope.selected_behaviour, diff).success(function(data) {
+          $http.post('./api/behaviours/'+ $scope.selected_behaviour_contents._id, diff).success(function(data) {
             console.log("Received on post: ");
             console.log(data);
+            // after change is made we should reset the currently selected behaviour
+            $scope.selected_behaviour_contents = null;
           });
         }
       } else {
@@ -384,10 +393,10 @@ iotHub.controller('BehavioursModifyController', function OverviewController($sco
   $scope.DeleteBehaviour = function() {
     var confirmed = confirm("Are you sure you want to delete the behaviour?");
     if (confirmed) {
-      $http.delete('./api/behaviours/' + $scope.selected_behaviour).success(function(received) {
+      $http.delete('./api/behaviours/' + $scope.selected_behaviour_contents._id).success(function(received) {
         console.log("Received on deleting behaviour: ");
         console.log(received);
-        DeleteSensorFromId($scope.behaviours,$scope.selected_behaviour);
+        DeleteSensorFromId($scope.behaviours,$scope.selected_behaviour_contents._id);
       });
     } else {
       console.log("Declined behaviour deletion");
