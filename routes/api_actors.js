@@ -70,7 +70,7 @@ router
 // get information about a specific actor
 .get('/:actor_id', function(req, res, next){
   Actor.findById(req.params.actor_id,'-__v', function(err,actor){
-    if (err) {
+    if (err || !actor) {
       console.error("Actor not registered err: "+err);
       res.status(404).json({success:false});
     } else {
