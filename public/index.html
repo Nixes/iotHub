@@ -228,7 +228,7 @@
                     <option ng-repeat="sensor in sensors" value="{{sensor._id}}">{{sensor.name}} (id:{{sensor._id}})</option>
                   </select>
                 </div>
-                <div class="form-group">
+                <div class="form-group" ng-show="new_behaviour_contents.sensor">
                   <label for="Condition">Condition</label>
                   <select class="form-control" id="Condition"  ng-model="new_behaviour_contents.condition">
                     <option value="equal">equal</option>
@@ -239,7 +239,7 @@
                     <option value="less or equal">less or equal</option>
                   </select>
                 </div>
-                <div class="form-group">
+                <div class="form-group" ng-show="new_behaviour_contents.condition">
                   <label for="Value">Value</label>
                   <input type="text" class="form-control" id="Value" ng-model="new_behaviour_contents.value" ng-if="new_behaviour_contents.data_type === 'string'" required>
                   <input type="number" class="form-control" id="Value" ng-model="new_behaviour_contents.value" ng-if="new_behaviour_contents.data_type === 'number'" required>
@@ -248,13 +248,13 @@
                     <div class="slider"></div>
                   </label>
                 </div>
-                <div class="form-group">
+                <div class="form-group" ng-show="new_behaviour_contents.value">
                   <label for="Actor">Actor</label>
                   <select class="form-control" id="Actor"  ng-model="new_behaviour_contents.actor">
                     <option ng-repeat="actor in actors" value="{{actor._id}}">{{actor.name}} (id:{{actor._id}})</option>
                   </select>
                 </div>
-                <div class="form-group">
+                <div class="form-group" ng-show="new_behaviour_contents.actor">
                   <label for="Action">Response</label>
                   <input type="text" class="form-control" id="Action" ng-model="new_behaviour_contents.action" ng-if="new_behaviour_contents.state_type === 'string'" required>
                   <input type="number" class="form-control" id="Action" ng-model="new_behaviour_contents.action" ng-if="new_behaviour_contents.state_type === 'number'" required>
@@ -263,11 +263,11 @@
                     <div class="slider"></div>
                   </label>
                 </div>
-                <div class="form-group">
+                <div class="form-group" ng-show="new_behaviour_contents.action">
                   <label for="Description">Description</label>
                   <input type="text" class="form-control" id="Description" ng-model="new_behaviour_contents.description" required>
                 </div>
-                <div class="form-group">
+                <div class="form-group" ng-show="new_behaviour_contents.description">
                   <label for="Enabled">Enabled</label>
                   <input type="checkbox" class="form-control" id="Enabled" ng-model="new_behaviour_contents.enabled">
                 </div>
