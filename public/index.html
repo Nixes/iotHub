@@ -189,7 +189,7 @@
               <th>Description</th>
               <th>Sensor</th>
               <th>Condition</th>
-              <th>Action</th>
+              <th>Response</th>
               <th>Actor</th>
             </tr>
           </thead>
@@ -255,7 +255,7 @@
                   </select>
                 </div>
                 <div class="form-group">
-                  <label for="Action">Action</label>
+                  <label for="Action">Response</label>
                   <input type="text" class="form-control" id="Action" ng-model="new_behaviour_contents.action" ng-if="new_behaviour_contents.state_type === 'string'" required>
                   <input type="number" class="form-control" id="Action" ng-model="new_behaviour_contents.action" ng-if="new_behaviour_contents.state_type === 'number'" required>
                   <label class="switch" id="Action" ng-if="new_behaviour_contents.state_type === 'boolean'" >
