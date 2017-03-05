@@ -143,6 +143,18 @@ router
           console.log("Failed to remove matching overview (maybe it didn't exist) err: "+err);
         }
       });
+      // delete associated data
+      if (sensor.data > 0) {
+        var i = sensor.data.length;
+        while (i--) {
+          var point = sensor.data[i];
+          sensor.data.remove(point);
+        }
+        sensor.save();
+      } else {
+        console.log("No sensor data found to delete");
+      }
+
       res.json({success:true});
     }
   });
