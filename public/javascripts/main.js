@@ -46,15 +46,15 @@ $(document).ready(function() {
 
 
 iotHub.controller('OverviewController', function OverviewController($scope, $http) {
-  $http.get('./api/overview',{ cache: true }).success(function(data) {
-    $scope.items = data;
-    console.log(data);
+  $http.get('./api/overview',{ cache: true }).then(function onSuccess(response) {
+    $scope.items = response.data;
+    console.log(response.data);
   });
 });
 
 iotHub.controller('SensorsController', function OverviewController($scope, $http) {
-  $http.get('./api/sensors',{ cache: true }).success(function(sensors) {
-    $scope.sensors = sensors;
+  $http.get('./api/sensors',{ cache: true }).then(function onSuccess(response) {
+    $scope.sensors = response.data;
   });
   $scope.selected_sensor_contents = null;
   $scope.selected_sensor = null;
@@ -65,15 +65,15 @@ iotHub.controller('SensorsController', function OverviewController($scope, $http
   $scope.change = function () {
     console.log($scope.selected_sensor);
     if ($scope.selected_sensor !== null ) {
-      $http.get('./api/sensors/'+ $scope.selected_sensor).success(function(sensor) {
-        $scope.selected_sensor_contents = sensor;
-        console.log(sensor);
+      $http.get('./api/sensors/'+ $scope.selected_sensor).then(function onSuccess(response) {
+        $scope.selected_sensor_contents = response.data;
+        console.log(response.data);
       });
     }
 
     if ( ( $scope.selected_sensor !== null ) &&  ( $scope.time_period !== null ) ) {
-      $http.get('./api/sensors/'+ $scope.selected_sensor +'/data/' + $scope.time_period ).success(function(data) {
-        $scope.data = reformatData(data);
+      $http.get('./api/sensors/'+ $scope.selected_sensor +'/data/' + $scope.time_period ).then(function onSuccess(response) {
+        $scope.data = reformatData(response.data);
       });
     }
   };
@@ -100,10 +100,10 @@ iotHub.controller('ActorsController', function ActorController($scope, $http) {
     - name
     - state (varies from boolean to number to string)
   */
-  $http.get('./api/actors',{ cache: true }).success(function(actors) {
+  $http.get('./api/actors',{ cache: true }).then(function onSuccess(response) {
     console.log("Actors: ");
-    console.log(actors);
-    $scope.actors = actors;
+    console.log(response.data);
+    $scope.actors = response.data;
   });
   $scope.UpdateActorState = function(actor_id,new_state,old_state) {
     var data = {"state":new_state};
@@ -120,9 +120,9 @@ iotHub.controller('ActorsController', function ActorController($scope, $http) {
     // delete from the server
     var confirmed = confirm("Are you sure you want to delete the actor?");
     if (confirmed) {
-      $http.delete('./api/actors/' + $scope.actors[actor_index]._id ).success(function(received) {
+      $http.delete('./api/actors/' + $scope.actors[actor_index]._id ).then(function onSuccess(response) {
         console.log("Received on deleting actor: ");
-        console.log(received);
+        console.log(response.data);
         // delete locally if successful
         $scope.actors.splice(actor_index,1);
       });
@@ -155,8 +155,8 @@ iotHub.controller('SensorsConfigController', function OverviewController($scope,
   $scope.on_overview;
 
   $scope.GetOverview = function () {
-    $http.get('./api/overview/'+ $scope.selected_sensor).success(function(data) {
-      if (data.sensor === $scope.selected_sensor) {
+    $http.get('./api/overview/'+ $scope.selected_sensor).then(function onSuccess(response) {
+      if (response.data.sensor === $scope.selected_sensor) {
         console.log("Sensor Was on Overview and validated");
         $scope.on_overview = true;
         $scope.show_overview = true;
@@ -173,15 +173,15 @@ iotHub.controller('SensorsConfigController', function OverviewController($scope,
         // only update if the state was changed
         var data = {};
         data.sensor =  $scope.selected_sensor;
-        $http.post('./api/overview', data).success(function(received) {
+        $http.post('./api/overview', data).then(function onSuccess(response) {
           console.log("Received on Add Overview: ");
-          console.log(received);
+          console.log(response.data);
         });
       } else {
         // remove existing overview entry
-        $http.delete('./api/overview/' + $scope.selected_sensor ).success(function(received) {
+        $http.delete('./api/overview/' + $scope.selected_sensor ).then(function onSuccess(response) {
           console.log("Received on Delete Overview: ");
-          console.log(received);
+          console.log(response.data);
         });
       }
     }
@@ -214,9 +214,9 @@ iotHub.controller('SensorsConfigController', function OverviewController($scope,
       if (Object.keys(diff).length !== 0) {
         console.log("Sensor update sent to server: ");
         console.log(diff);
-        $http.post('./api/sensors/'+ $scope.selected_sensor, diff).success(function(data) {
+        $http.post('./api/sensors/'+ $scope.selected_sensor, diff).then(function onSuccess(response) {
           console.log("Received on post: ");
-          console.log(data);
+          console.log(response.data);
         });
       } else {
         console.log("Null diff generated, not sending");
@@ -233,9 +233,9 @@ iotHub.controller('SensorsConfigController', function OverviewController($scope,
   $scope.WipeData = function() {
     var confirmed = confirm("Are you sure you want to nuke ALL SENSOR DATA from the beginning of time?");
     if (confirmed) {
-      $http.delete('./api/sensors/' + $scope.selected_sensor + '/data').success(function(received) {
+      $http.delete('./api/sensors/' + $scope.selected_sensor + '/data').then(function onSuccess(response) {
         console.log("Received on wiping sensor data: ");
-        console.log(received);
+        console.log(response.data);
       });
     } else {
       console.log("Declined wiping sensor data");
@@ -244,9 +244,9 @@ iotHub.controller('SensorsConfigController', function OverviewController($scope,
   $scope.DeleteSensor = function() {
     var confirmed = confirm("Are you sure you want to delete the sensor and all its data?");
     if (confirmed) {
-      $http.delete('./api/sensors/' + $scope.selected_sensor).success(function(received) {
+      $http.delete('./api/sensors/' + $scope.selected_sensor).then(function onSuccess(response) {
         console.log("Received on deleting sensor: ");
-        console.log(received);
+        console.log(response.data);
         DeleteSensorFromId($scope.sensors,$scope.selected_sensor);
       });
     } else {
@@ -260,10 +260,10 @@ iotHub.controller('BehavioursController', function ActorController($scope, $http
   $scope.selected_behaviour_contents = {}; // contents of currently selected behaviour
   $scope.new_behaviour_contents = {};
 
-  $http.get('./api/behaviours',{ cache: true }).success(function(behaviours) {
+  $http.get('./api/behaviours',{ cache: true }).then(function onSuccess(response) {
     console.log("Behvaiours obtained: ");
-    console.log(behaviours);
-    $scope.behaviours = behaviours;
+    console.log(response.data);
+    $scope.behaviours = response.data;
   });
 
   // used to reset behaviour contents before a new one is created
@@ -284,15 +284,15 @@ iotHub.controller('BehavioursController', function ActorController($scope, $http
 });
 
 iotHub.controller('BehavioursModifyController', function OverviewController($scope, $http) {
-  $http.get('./api/sensors',{ cache: true }).success(function(sensors) {
-    $scope.sensors = sensors;
+  $http.get('./api/sensors',{ cache: true }).then(function onSuccess(response) {
+    $scope.sensors = response.data;
     console.log("Got sensors");
-    console.log(sensors);
+    console.log(response.data);
   });
-  $http.get('./api/actors',{ cache: true }).success(function(actors) {
-    $scope.actors = actors;
+  $http.get('./api/actors',{ cache: true }).then(function onSuccess(response) {
+    $scope.actors = response.data;
     console.log("Got actors");
-    console.log(actors);
+    console.log(response.data);
   });
 
   $scope.GetCompatibleValueType = function () {
@@ -369,15 +369,15 @@ iotHub.controller('BehavioursModifyController', function OverviewController($sco
         console.log(diff);
         if (!$scope.selected_behaviour_contents) { // if there is no selected sensor
           console.log("Sent a new behaviour");
-          $http.post('./api/behaviours', diff).success(function(data) {
+          $http.post('./api/behaviours', diff).then(function onSuccess(response) {
             console.log("Received on post: ");
-            console.log(data);
+            console.log(response.data);
           });
         } else {
           console.log("Modified an existing behaviour");
-          $http.post('./api/behaviours/'+ $scope.selected_behaviour_contents._id, diff).success(function(data) {
+          $http.post('./api/behaviours/'+ $scope.selected_behaviour_contents._id, diff).then(function onSuccess(response) {
             console.log("Received on post: ");
-            console.log(data);
+            console.log(response.data);
             // after change is made we should reset the currently selected behaviour
             $scope.selected_behaviour_contents = null;
           });
@@ -390,7 +390,8 @@ iotHub.controller('BehavioursModifyController', function OverviewController($sco
   $scope.DeleteBehaviour = function() {
     var confirmed = confirm("Are you sure you want to delete the behaviour?");
     if (confirmed) {
-      $http.delete('./api/behaviours/' + $scope.selected_behaviour_contents._id).success(function(received) {
+      $http.delete('./api/behaviours/' + $scope.selected_behaviour_contents._id).then(function onSuccess(response) {
+        var received = response.data;
         console.log("Received on deleting behaviour: ");
         console.log(received);
         DeleteSensorFromId($scope.behaviours,$scope.selected_behaviour_contents._id);
