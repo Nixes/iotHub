@@ -76,7 +76,7 @@ behaviour_helpers.ConditionalToString = function (condition_num) {
 
 behaviour_helpers.EvaluateCondition = function (conditional, value, state) {
   console.log("Conditional was: "+ behaviour_helpers.ConditionalToString(conditional) + " as int: " + conditional);
-  return behaviour_helpers.condition_list_functions[conditional](value, state);;
+  return behaviour_helpers.condition_list_functions[conditional](value, state);
 };
 
 // run an action as found in a behaviour, TODO: Complete
@@ -121,7 +121,7 @@ behaviour_helpers.CheckBehaviour = function(sensor_id,last_sensor_state) {
       console.log(behaviours);
       return;
     } else {
-      for (behaviour of behaviours) {
+      for (let behaviour of behaviours) {
         console.log("Behaviour was: ");
         console.log(behaviour);
         console.log("Found a matching behaviour, validating");

@@ -129,9 +129,8 @@ iotHub.controller('ActorsController', function ActorController($scope, $http) {
     } else {
       console.log("Declined actor deletion");
     }
+  };
 
-
-  }
   $scope.$watch('actors', function(new_actors, old_actors) {
     console.log("An actor change was detected");
     console.log(old_actors);
@@ -143,7 +142,7 @@ iotHub.controller('ActorsController', function ActorController($scope, $http) {
         $scope.UpdateActorState(new_actors[i]._id, new_actors[i].state, old_actors[i].state);
       }
     }
-  },true);
+  },true); // deep watch
 });
 
 iotHub.controller('SensorsConfigController', function OverviewController($scope, $http) {
@@ -285,8 +284,6 @@ iotHub.controller('BehavioursController', function ActorController($scope, $http
 });
 
 iotHub.controller('BehavioursModifyController', function OverviewController($scope, $http) {
-
-
   $http.get('./api/sensors',{ cache: true }).success(function(sensors) {
     $scope.sensors = sensors;
     console.log("Got sensors");
