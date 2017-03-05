@@ -117,8 +117,8 @@ behaviour_helpers.Validate = function (behaviour){
 behaviour_helpers.CheckBehaviour = function(sensor_id,last_sensor_state) {
   Behaviour.find({sensor:sensor_id}).lean().populate('actor').populate('sensor').exec( function(err,behaviours){
     if (err || behaviours.length === 0) {
-      console.error("Unable to find matching behaviour: " + err + "data was: ");
-      console.error(behaviours);
+      console.log("Unable to find matching behaviour: " + err + "data was: ");
+      console.log(behaviours);
       return;
     } else {
       for (behaviour of behaviours) {
