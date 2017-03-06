@@ -39,24 +39,23 @@ function checkSensorExists(sensor_id,callback,res) {
 }
 
 function getCompareDateFromString(filter_date_string) {
-  let today = new Date();
-  let compare_date;
+  let compare_date = new Date();
 
   // determine type of filter date, and calculate time period
   if (filter_date_string === "hour") {
-    compare_date = new Date(today.getFullYear(), today.getMonth(), today.getDate(),today.getDay(), today.getHours() - 1);
+    compare_date.setHours(compare_date.getHours() - 1);
   }
   if (filter_date_string === "day") {
-    compare_date = new Date(today.getFullYear(), today.getMonth(), today.getDate(),today.getDay() - 1);
+    compare_date.setDate(compare_date.getDate()-1);
   }
   if (filter_date_string === "week") {
-    compare_date = new Date(today.getFullYear(), today.getMonth(), today.getDate() - 7);
+    compare_date.setDate(compare_date.getDate()-7);
   }
   if (filter_date_string === "month") {
-    compare_date = new Date(today.getFullYear(), today.getMonth() - 1, today.getDate());
+    compare_date.setMonth(compare_date.getMonth() - 1);
   }
   if (filter_date_string === "sixmonth") {
-    compare_date = new Date(today.getFullYear(), today.getMonth() - 6, today.getDate());
+    compare_date.setMonth(compare_date.getMonth() - 6);
   }
   return compare_date;
 }
