@@ -1,4 +1,13 @@
 var mongoose = require( 'mongoose' );
+var passportLocalMongoose = require('passport-local-mongoose');
+
+// user account stored in DB, for authentication with passport
+var account = mongoose.Schema({
+    username: String,
+    password: String
+});
+account.plugin(passportLocalMongoose); // register it with the passport plugin
+
 
 var dataSchema = mongoose.Schema({
   sensor_id: {type: mongoose.Schema.Types.ObjectId, ref: 'Sensor', required: true},
@@ -9,10 +18,7 @@ var dataSchema = mongoose.Schema({
 dataSchema.methods.itemAfter = function(time) {
   // parse date
   let tmp_date = new Date(this.collection_time);
-  //console.log(tmp_date.toDateString());
   if ( tmp_date > time) {
-    //console.log("Passed");
-
     return true;
   } else {
     return false;
@@ -20,7 +26,7 @@ dataSchema.methods.itemAfter = function(time) {
 };
 
 // this will eventually become a package that is downloaded by the sensors to change device settings
-var SensorSettingsSchema = mongoose.Schema({
+var sensorSettingsSchema = mongoose.Schema({
   polling_time: Number,
 });
 
@@ -30,7 +36,7 @@ var sensorSchema = mongoose.Schema({
   description: String,
   data_type: String,
   data_period: String, // determines how long data should be kept before old points removed
-  settings: SensorSettingsSchema
+  settings: sensorSettingsSchema
 });
 
 var actorSchema = mongoose.Schema({
@@ -65,3 +71,4 @@ mongoose.model('Actor', actorSchema);
 mongoose.model('Data', dataSchema);
 mongoose.model('Overview', overviewSchema);
 mongoose.model('Behaviour', behaviourSchema);
+mongoose.model('Account', account);

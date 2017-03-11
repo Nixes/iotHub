@@ -13,12 +13,17 @@
     "chart.js": "^2.2.1",
     "cookie-parser": "~1.4.3",
     "debug": "~2.2.0",
-    "express": "~4.13.4",
+    "express": "~4.15.2",
     "moment": "^2.14.1",
     "mongoose": "^4.5.9",
     "morgan": "~1.7.0",
     "request": "^2.79.0",
     "serve-favicon": "~2.3.0",
-    "threads": "^0.7.0"
+    "threads": "^0.7.0",
+    "passport": "^0.3.2",
+    "passport-local": "^1.0.0",
+    "passport-local-mongoose": "^1.0.0",
+    "express-session": "^1.15.1",
+    "ip": "^1.1.5"
   }
 }

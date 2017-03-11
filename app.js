@@ -4,6 +4,12 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+var ip = require('ip');
+
+// include authentication dependencies
+var passport = require('passport');
+var LocalStrategy = require('passport-local').Strategy;
+
 // include mongoose
 var mongoose = require('mongoose');
 // schema
@@ -35,18 +41,47 @@ if ( !(process.argv[2] && process.argv[2] === "debug") ) {
   console.log = function() {};
 }
 
-// uncomment after placing your favicon in /public
-//app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
+// register the passport middleware
+app.use(require('express-session')({
+    secret: ':!:11Nb"VEpAWt~B&&?l"46AMc38*VFE',
+    resave: false,
+    saveUninitialized: false
+}));
+app.use(passport.initialize());
+app.use(passport.session());
+
+// configure the passport middleware with our mongo db
+var Account = mongoose.model('Account');
+passport.use(new LocalStrategy(Account.authenticate()));
+passport.serializeUser(Account.serializeUser());
+passport.deserializeUser(Account.deserializeUser());
+
+
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
+
+// enable authentication for all pages when user is remote
+app.use(function(req, res, next){
+  if(req.isAuthenticated()) {
+    next();
+  }
+  res.status(200).send("Not logged in");
+  //res.redirect('/login.html');
+  //express.static(path.join(__dirname + '/login.html'));
+});
+
 // serve static js dependencies
 app.use('/node_modules',express.static(path.join(__dirname, 'node_modules')));
 
+// serve static html
+app.use(express.static(path.join(__dirname, 'public')));
+
+// authentication
 app.use('/', routes);
-app.use('/users', users);
+
+// json api routes
 app.use('/api', api);
 app.use('/api/sensors', api_sensors);
 app.use('/api/actors', api_actors);
