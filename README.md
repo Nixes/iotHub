@@ -9,7 +9,7 @@ For now there is no intention to support glue modules for different protocols in
 
 But you are welcome to develop external bridges yourself.
 
-#Features
+# Features
 - Local: Your data is under your control, nothing leaves the local network
 - One Language: Javascript all the way down.
 - Cross Platform: Runs on anything with a node implementation
@@ -19,10 +19,10 @@ But you are welcome to develop external bridges yourself.
 - Built in Web UI: view and control your environment from any device with a browser
 - Event based: Sensors only send data when they have something to show for it, no polling
 
-#Architecture
+# Architecture
 ![Alt text](iothub-architecture.png)
 
-#Installation
+# Installation
 Make sure you have a MongoDB server running first.
 
 grab the latest version from github
